@@ -3,6 +3,7 @@ using UnityEngine;
 public class ShipController : MonoBehaviour
 {
     [SerializeField] private PlayerShipInput playerInput;
+
      public Vector2 moveValue;
 
     private ShipMovment shipMovement;
