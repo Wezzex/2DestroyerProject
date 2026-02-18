@@ -2,26 +2,20 @@ using UnityEngine;
 
 public class AimTurret : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
+    [SerializeField] private float rotationSpeed = 150.0f;
 
-    [SerializeField] private float rotationSpeed = 15.0f;
-
-    private void Aim()
+    public void Aim(Vector2 inputValue)
     {
         //Get camera look rotation
-        Quaternion turretDirection = mainCamera.transform.rotation;
+        var turretDirection = (Vector3)inputValue - transform.position;
 
-        var desiredAngle = Mathf.Atan2(turretDirection.y, turretDirection.x) * Mathf.Rad2Deg;
+        var desiredAngle = Mathf.Atan2(turretDirection.x, -turretDirection.y) * Mathf.Rad2Deg;
 
         var turretRotationSpeed = rotationSpeed * Time.deltaTime;
 
-        transform.rotation = Quaternion.RotateTowards(turretDirection, turretDirection, turretRotationSpeed);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, desiredAngle - 180, 0), turretRotationSpeed);
 
 
         Debug.Log(turretDirection);
-    }
-
-    private void OnDrawGizmos()
-    {
     }
 }
