@@ -17,6 +17,7 @@ public class ShipController : MonoBehaviour
     private bool bIsShooting;
 
 
+
     private void Awake()
     {
         if(shipMovement == null)
@@ -51,6 +52,7 @@ public class ShipController : MonoBehaviour
         foreach(var turret in turrets) 
         { 
             turret.Shoot(); 
+
         }
     }
 
@@ -78,7 +80,7 @@ public class ShipController : MonoBehaviour
             return;
         }
 
-        Vector2 aimDirection = new Vector2(cameraForward.x, -cameraForward.z);
+        Vector3 aimDirection = new Vector3(cameraForward.x, cameraForward.z);
 
         MovementVector();
         HandleTurretMovement(aimDirection);
