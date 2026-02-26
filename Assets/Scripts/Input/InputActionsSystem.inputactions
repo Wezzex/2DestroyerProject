@@ -1,15 +1,14 @@
 {
-    "version": 1,
-    "name": "ShipInputActions",
+    "name": "InputActionsSystem",
     "maps": [
         {
             "name": "Player",
-            "id": "5bf1d2ef-a939-4b1e-a39c-b79f68f132ba",
+            "id": "abf61d87-e40a-4785-b697-9f9599629038",
             "actions": [
                 {
                     "name": "Movement",
                     "type": "Value",
-                    "id": "5f983f20-ff48-4526-8b11-1e7074ed7e89",
+                    "id": "f2934a9d-f6cd-4559-8490-f3e8aaf286d1",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -18,7 +17,7 @@
                 {
                     "name": "Shooting",
                     "type": "Button",
-                    "id": "e37bab2e-5eda-48cb-a779-6b923c9a090a",
+                    "id": "db2097b1-73c0-402b-9bed-d7c28e96a936",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -28,7 +27,7 @@
             "bindings": [
                 {
                     "name": "2D Vector",
-                    "id": "ac725eee-e818-4d27-919b-454aa72c4e3f",
+                    "id": "08af6196-1927-4538-93f3-d85ecf922111",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -39,7 +38,7 @@
                 },
                 {
                     "name": "up",
-                    "id": "6e5da499-d3ce-407e-aa05-0abf1ff833d7",
+                    "id": "ad70e160-86ee-4094-947f-932bad2bae15",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -50,7 +49,7 @@
                 },
                 {
                     "name": "down",
-                    "id": "4bee20aa-1b2f-44ba-b8e3-d5ea1c323934",
+                    "id": "bca79a28-704a-43d0-8aab-bab1a7671be7",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -61,7 +60,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "27b372c9-a501-4bee-9151-ccc798b230b0",
+                    "id": "3792ca4f-81c6-4644-a4c5-da18638a8c99",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -72,7 +71,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "f0041858-0078-43aa-84fb-25afbe309312",
+                    "id": "82b5b95a-5e4a-4ded-8cfe-4134e89c8deb",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -83,7 +82,7 @@
                 },
                 {
                     "name": "",
-                    "id": "302f4e83-51b9-4cef-8222-9d53eca8c6e5",
+                    "id": "68988695-3f00-4256-ac9a-51033cfbd02c",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
@@ -95,17 +94,5 @@
             ]
         }
     ],
-    "controlSchemes": [
-        {
-            "name": "Keyboard",
-            "bindingGroup": "Keyboard",
-            "devices": [
-                {
-                    "devicePath": "<Keyboard>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        }
-    ]
+    "controlSchemes": []
 }

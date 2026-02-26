@@ -4013,15 +4013,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 247109159}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 090901d0a715f854ebdea41798f99038, type: 3}
+  m_Script: {fileID: 11500000, guid: 194c6063ed999c349a53b6037044da6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurretCannon
   laserSpawnPoint:
   - {fileID: 485736040}
   - {fileID: 3100429}
   - {fileID: 1987746601}
-  laserPrefab: {fileID: 6777504909542678953, guid: 6db6075b10b67024caaabc485f691e90, type: 3}
-  reloadDelay: 0.5
+  laserPrefab: {fileID: 0}
+  reloadDelay: 1
+  bCanShoot: 1
 --- !u!1 &247348492
 GameObject:
   m_ObjectHideFlags: 0
@@ -5638,9 +5639,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 328012588}
-  - component: {fileID: 328012590}
-  - component: {fileID: 328012591}
   - component: {fileID: 328012589}
+  - component: {fileID: 328012592}
+  - component: {fileID: 328012591}
+  - component: {fileID: 328012590}
   m_Layer: 0
   m_Name: ShipMotor
   m_TagString: Untagged
@@ -5702,14 +5704,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 328012587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7084caf1977554147bf0583614b60b1b, type: 3}
+  m_Script: {fileID: 11500000, guid: 87be36e865315384ab10facedd7b63d9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShipMovment
-  shipController: {fileID: 328012591}
-  velocity: 0
-  bIsThrusting: 0
-  yawVelocity: 0
-  bIsRotating: 0
+  m_EditorClassIdentifier: Assembly-CSharp::ShipMover
+  rb: {fileID: 0}
+  maxSpeed: 10
+  rotationSpeed: 100
+  acceleration: 70
+  deacceleration: 50
+  currentSpeed: 0
 --- !u!114 &328012591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5719,14 +5722,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 328012587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 740085fb3d797f44d9ce020de936324b, type: 3}
+  m_Script: {fileID: 11500000, guid: ddcdb845e331ad541bd3647bef55da4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipController
-  playerInput: {fileID: 588180448}
-  cameraTransform: {fileID: 195319140}
-  moveValue: {x: 0, y: 0}
+  shipMover: {fileID: 0}
   aimTurrets: []
   turrets: []
+  bIsShooting: 0
+--- !u!136 &328012592
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328012587}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 4.09
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.72}
 --- !u!1 &328978687
 GameObject:
   m_ObjectHideFlags: 0
@@ -8242,11 +8267,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 488079592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9074abbb989fbc040a81eb928de8c8ca, type: 3}
+  m_Script: {fileID: 11500000, guid: e27faac3d630c4d498711aaafbd5a7c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AimTurret
   rotationSpeed: 150
-  offset: 180
 --- !u!1 &494081401
 GameObject:
   m_ObjectHideFlags: 0
@@ -9519,28 +9543,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 588180446}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d89fdbd760172ca49a0da96a19fd3592, type: 3}
+  m_Script: {fileID: 11500000, guid: 0829358c5839e8b4ebe7d3fc9e0cc368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
-  inputVector: {x: 0, y: 0}
+  OnShoot:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMoveShip:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMoveTurret:
+    m_PersistentCalls:
+      m_Calls: []
   OnShootPressed:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 328012591}
-        m_TargetAssemblyTypeName: ShipController, Assembly-CSharp
-        m_MethodName: HandleShoot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnShootReleased:
     m_PersistentCalls:
       m_Calls: []
+  shipController: {fileID: 328012591}
+  cameraTransform: {fileID: 195319140}
+  CameraLookDirection: {x: 0, y: 0}
 --- !u!1 &594394520
 GameObject:
   m_ObjectHideFlags: 0
@@ -16081,7 +16104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 962143648}
-  - component: {fileID: 962143650}
+  - component: {fileID: 962143649}
   m_Layer: 0
   m_Name: TurretBase_01
   m_TagString: Untagged
@@ -16106,7 +16129,7 @@ Transform:
   - {fileID: 485736040}
   m_Father: {fileID: 247109160}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &962143650
+--- !u!114 &962143649
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16115,11 +16138,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 962143647}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9074abbb989fbc040a81eb928de8c8ca, type: 3}
+  m_Script: {fileID: 11500000, guid: e27faac3d630c4d498711aaafbd5a7c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AimTurret
   rotationSpeed: 150
-  offset: 180
 --- !u!1 &966334049
 GameObject:
   m_ObjectHideFlags: 0
@@ -30200,11 +30222,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1896335558}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9074abbb989fbc040a81eb928de8c8ca, type: 3}
+  m_Script: {fileID: 11500000, guid: e27faac3d630c4d498711aaafbd5a7c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AimTurret
   rotationSpeed: 150
-  offset: 180
 --- !u!1 &1904616898
 GameObject:
   m_ObjectHideFlags: 0

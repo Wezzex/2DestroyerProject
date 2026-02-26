@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TurretCannon : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class TurretCannon : MonoBehaviour
     [SerializeField] private GameObject laserPrefab;
     [SerializeField] private float reloadDelay = 1;
 
-    private bool bCanShoot = true;
+    [SerializeField] private bool bCanShoot = true;
     private Collider[] shipColliders;
     private float currentReloadDelay;
 
@@ -28,6 +29,8 @@ public class TurretCannon : MonoBehaviour
             }
         }
     }
+
+   
 
     public void Shoot()
     {

@@ -44,9 +44,15 @@ public class LaserProjectile : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("Collided " + other.name);
+        Debug.Log("Collided " + collision.name);
+
+        var damagable = collision.GetComponent<Damagable>();
+        if (damagable != null)
+        {
+            damagable.Hit(damage);
+        }
         DisableObject();
     }
 }

@@ -99,8 +99,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7969697578374907429}
   - component: {fileID: 5490286904060810847}
-  - component: {fileID: -3943044409575208786}
   - component: {fileID: -5559164559515162761}
+  - component: {fileID: 4040448445394777448}
   m_Layer: 0
   m_Name: LaserProjectile
   m_TagString: Untagged
@@ -151,21 +151,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-3943044409575208786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6777504909542678953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e44bcd85419aebe4e85a4d561d59a663, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LaserProjectile
-  speed: 10
-  damage: 5
-  maxDistance: 20
 --- !u!65 &-5559164559515162761
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -187,3 +172,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.02, y: 0.19, z: 0.02}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4040448445394777448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6777504909542678953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b606c43ddbbb4e4ca21d6598b99ae12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LaserProjectile
+  speed: 10
+  damage: 5
+  maxDistance: 100
