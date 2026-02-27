@@ -1,16 +1,96 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class AIDetector : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField, Range(1, 15)] private float viewRadius = 50;
+    [SerializeField] private float detectionCheckDelay = 0.1f;
+    [SerializeField] private Transform target = null;
+    [SerializeField] private LayerMask playerLayerMask;
+    [SerializeField] private LayerMask visibilityLayer;
+
+    [field: SerializeField]
+    public bool TargetVisible { get; private set; }
+
+    public Transform Target
     {
-        
+        get => target;
+
+        set 
+        { 
+            target = value; 
+            TargetVisible = false;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        StartCoroutine(DetectionCoroutine());
+    }
+
+    private void Update()
+    {
+        if (Target != null)
+        {
+            TargetVisible = CheckTargetVisible();
+        }
+    }
+
+    private bool CheckTargetVisible()
+    {
+        Vector3 origin = transform.position;
+        Vector3 direction = (Target.position - origin);
+        float distance = direction.magnitude;
+
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, Mathf.Min(viewRadius, distance), visibilityLayer))
+        {
+            return (playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0;
+        }
+        return false;
+    }
+
+    private void DetectTarget()
+    {
+        if (Target == null)
+        {
+            CheckIfPlayerInRange();
+        }
+        else if (Target != null)
+        {
+            DetectIfOutOfRange();
+        }
+    
+    }
+
+    private void CheckIfPlayerInRange()
+    {
+        Collider[] collision = Physics.OverlapSphere(transform.position, viewRadius, playerLayerMask);
+        if (collision.Length > 0)
+        {
+            Target = collision[0].transform;
+        }
+    }
+
+    private void DetectIfOutOfRange()
+    {
+        if (Target == null || Target.gameObject.activeSelf == false || Vector2.Distance(transform.position, Target.position) > viewRadius)
+        {
+            Target = null;
+        }
+    }
+
+    IEnumerator DetectionCoroutine()
+    {
+        yield return new WaitForSeconds(detectionCheckDelay);
+        DetectTarget();
+        StartCoroutine(DetectionCoroutine());
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, viewRadius);
     }
 }

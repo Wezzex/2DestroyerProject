@@ -5,7 +5,7 @@ public class ShipController : MonoBehaviour
     [SerializeField] private ShipMover shipMover;
 
     [Header("Turret Settings")]
-    [SerializeField] private AimTurret[] aimTurrets;
+    public AimTurret[] aimTurrets;
     [SerializeField] private TurretCannon[] turrets;
     private float turretAimValue;
     [SerializeField]private bool bIsShooting;
