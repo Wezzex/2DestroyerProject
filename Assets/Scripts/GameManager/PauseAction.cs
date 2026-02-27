@@ -16,14 +16,10 @@ public class PauseAction : ActionStack.Action
         gameManager.ApplyPause(true);
         bDone = false;
     }
-
-    public override void OnUpdate()
+    public void RequestUnpaused()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            gameManager.ApplyPause(false);
-            bDone = true;
-        }
+        gameManager.ApplyPause(false);
+        bDone = true;
     }
 
     public override void OnEnd()

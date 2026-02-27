@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public float GameRemaining { get; private set; }
 
     private bool bIsPaused;
+    private PauseAction activePauseAction;
+    public bool IsPaused => bIsPaused;
 
     private void Awake()
     {
@@ -48,6 +50,35 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ActionStack.Main.PushAction(new WaitToStartAction(this, waitingToStartTime));
+    }
+
+    private void OnEnable()
+    {
+        if (PlayerInput.Instance != null)
+        {
+            PlayerInput.Instance.OnPauseAction += PlayerInput_OnPauseAction;
+        }
+    }
+    private void OnDisable()
+    {
+        if (PlayerInput.Instance != null)
+        {
+            PlayerInput.Instance.OnPauseAction -= PlayerInput_OnPauseAction;
+        }
+    }
+
+    private void PlayerInput_OnPauseAction(object sender, EventArgs e)
+    {
+        if (!bIsPaused)
+        {
+            activePauseAction = new PauseAction(this);
+            ActionStack.Main.PushAction(activePauseAction);
+        }
+        else
+        {
+            activePauseAction?.RequestUnpaused();
+            activePauseAction = null;
+        }
     }
 
     public void SetState(State newState)
@@ -81,21 +112,26 @@ public class GameManager : MonoBehaviour
 
     public void ApplyPause(bool bPaused)
     {
-        bIsPaused = bPaused;
-        Time.timeScale = bPaused ? 0.0f : 1.0f;
-
         if (bPaused)
         {
+            if (bIsPaused) return;
+
+            bIsPaused = true;
             stateBeforePausing = CurrentState;
+
+            Time.timeScale = 0f;
+            SetState(State.Paused);
             OnGamePaused?.Invoke(this, EventArgs.Empty);
         }
-        else
+        else 
         {
+            if (!bIsPaused) return;
+
+            bIsPaused = false;
+            Time.timeScale = 1f;
             SetState(stateBeforePausing);
             OnGameUnpaused?.Invoke(this, EventArgs.Empty);
         }
-
-        SetState(bPaused ? State.Paused : CurrentState);
     }
 
 

@@ -19,6 +19,7 @@ public class PlayerInput : MonoBehaviour
     public bool bIsShooting { get; private set; }
 
     public event EventHandler OnPauseAction;
+    private bool ControlsBlocked => GameManager.Instance != null && GameManager.Instance.IsPaused;
 
     [SerializeField] private ShipController shipController;
 
@@ -87,12 +88,16 @@ public class PlayerInput : MonoBehaviour
 
     public void OnMovementPerformed(InputAction.CallbackContext context)
     {
+        if(ControlsBlocked) return;
+
         movementVector = shipInput.Player.Movement.ReadValue<Vector2>();
         OnMoveShip?.Invoke(movementVector);
     }
 
     private void OnShootingPerformed(InputAction.CallbackContext context)
     {
+        if (ControlsBlocked) return;
+
         shipController.SetShootingState(true);
         OnShootPressed?.Invoke();
     }
