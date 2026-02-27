@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8daa70df65b1c6a4d9dda31d7aeee919, type: 3}
   m_Name: PlayerLaserProjectileData
   m_EditorClassIdentifier: Assembly-CSharp::LaserProjectileData
-  speed: 5
+  speed: 15
   damage: 5
   maxDistance: 100

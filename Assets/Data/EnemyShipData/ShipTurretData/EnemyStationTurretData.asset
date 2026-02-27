@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aadc1d13d747f2f48bd04bd119f58b7f, type: 3}
+  m_Name: EnemyStationTurretData
+  m_EditorClassIdentifier: Assembly-CSharp::TurretData
+  laserProjectilePrefab: {fileID: 6777504909542678953, guid: bc6672d359fb0544198f0ba4232d4e7c, type: 3}
+  reloadDelay: 5
+  laserProjectileData: {fileID: 11400000, guid: 270e09c3cadb1c94c8b81915ff6c9df8, type: 2}

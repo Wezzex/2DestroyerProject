@@ -28,7 +28,7 @@ public class CountdownAction : ActionStack.Action
         if (!bPushedNext && timer <= 0.0f)
         {
             bPushedNext = true;
-            ActionStack.Main.PushAction(new GamePlayingAction(gameManager, 3.0f));
+            ActionStack.Main.PushAction(new GamePlayingAction(gameManager, 300.0f));
         }
     }
 

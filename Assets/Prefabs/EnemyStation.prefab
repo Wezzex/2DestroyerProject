@@ -1,0 +1,194 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8145967524789791514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224927436505051576}
+  - component: {fileID: 4778908493710351071}
+  - component: {fileID: 8540342513146087837}
+  - component: {fileID: 1045424834537086580}
+  - component: {fileID: 4615836447034402551}
+  m_Layer: 0
+  m_Name: EnemyStation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &224927436505051576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145967524789791514}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.59, y: 0, z: 24.11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4941756394614181583}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4778908493710351071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145967524789791514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb117d1990b534408c3999507cfd6f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DefaultEnemyAI
+  shootBehaviour: {fileID: 8540342513146087837}
+  patrolBehaviour: {fileID: 1045424834537086580}
+  shipController: {fileID: 2506915477870301446}
+  aIDetector: {fileID: 6965533442451662982}
+--- !u!114 &8540342513146087837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145967524789791514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91e758139c58baf4f91a34ee4f70fe66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIShootBehaviour
+  fieldOfVisionForShooting: 60
+--- !u!114 &1045424834537086580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145967524789791514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce02e62af89dd6041b1a9b9a28b4ad46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIPatrolStaticBehaviour
+  patrolDelay: 4
+  randomDirection: {x: 0, y: 0}
+  currentPatrolDelay: 0
+--- !u!114 &4615836447034402551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145967524789791514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5976c3c054063449a5f591a590c611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyUtil
+--- !u!1001 &8303709426689520964
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 224927436505051576}
+    m_Modifications:
+    - target: {fileID: 1411377622541884866, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: viewRadius
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911865989535077856, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: turretData
+      value: 
+      objectReference: {fileID: 11400000, guid: 0e493992c177a734faa31e8c37de82a9, type: 2}
+    - target: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.8160915
+      objectReference: {fileID: 0}
+    - target: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.10397339
+      objectReference: {fileID: 0}
+    - target: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283625353866652593, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_Name
+      value: EnemyStationShipMotor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283625353866652593, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6925278992122360705, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+      propertyPath: shipMovementData
+      value: 
+      objectReference: {fileID: 11400000, guid: d6f6e7882dee15449805c27a78ef0b35, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+--- !u!114 &2506915477870301446 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5906165121629512770, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+  m_PrefabInstance: {fileID: 8303709426689520964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddcdb845e331ad541bd3647bef55da4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShipController
+--- !u!4 &4941756394614181583 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+  m_PrefabInstance: {fileID: 8303709426689520964}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6965533442451662982 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1411377622541884866, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+  m_PrefabInstance: {fileID: 8303709426689520964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba49a7a63c143c4a817ab6caff7cb4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIDetector

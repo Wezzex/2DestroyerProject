@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AIDetector : MonoBehaviour
 {
-    [SerializeField, Range(1, 15)] private float viewRadius = 50;
+    [SerializeField, Range(1, 100)] private float viewRadius = 100;
     [SerializeField] private float detectionCheckDelay = 0.1f;
     [SerializeField] private Transform target = null;
     [SerializeField] private LayerMask playerLayerMask;

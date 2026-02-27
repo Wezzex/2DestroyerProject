@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 1002d94c2fa1f3c43834f701189cd243
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 291824
+  packageName: 190+ 3D Space Game Asset Ultimate Pack Low Poly
+  packageVersion: 1.0
+  assetPath: Assets/SpaceGameAssetPack/Editor/AutoSwitchMaterialShader.cs
+  uploadId: 754645
