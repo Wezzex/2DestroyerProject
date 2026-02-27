@@ -146,6 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8519217953280976580}
   - component: {fileID: 1911865989535077856}
+  - component: {fileID: 4805998832472963956}
   m_Layer: 0
   m_Name: TurretParent
   m_TagString: Untagged
@@ -187,9 +188,25 @@ MonoBehaviour:
   - {fileID: 277361769591418753}
   - {fileID: 1187408493908178833}
   - {fileID: 6135067247120828933}
-  laserPrefab: {fileID: 6777504909542678953, guid: 6db6075b10b67024caaabc485f691e90, type: 3}
-  reloadDelay: 1
+  laserProjectilePrefab: {fileID: 6777504909542678953, guid: 6db6075b10b67024caaabc485f691e90, type: 3}
+  reloadDelay: 0.5
   bCanShoot: 1
+  projectilePoolCount: 100
+--- !u!114 &4805998832472963956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864428871629769865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 928dff924bc965b46bfa1f47a0d35fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
+  objectToPool: {fileID: 0}
+  poolSize: 100
+  spawnedObjectsParent: {fileID: 0}
 --- !u!1 &4283625353866652593
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,6 +220,7 @@ GameObject:
   - component: {fileID: 748770158659853977}
   - component: {fileID: 5906165121629512770}
   - component: {fileID: 6925278992122360705}
+  - component: {fileID: 1040202683866979009}
   m_Layer: 0
   m_Name: ShipMotor
   m_TagString: Untagged
@@ -312,6 +330,44 @@ MonoBehaviour:
   acceleration: 1
   deacceleration: 2
   currentSpeed: 0
+--- !u!114 &1040202683866979009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283625353866652593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4afd76d8ca497c498be23ee796d4676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Damagable
+  maxHealth: 100
+  health: 0
+  OnDead:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4283625353866652593}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHeal:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4447458304041959282
 GameObject:
   m_ObjectHideFlags: 0

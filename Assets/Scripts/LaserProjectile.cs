@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class LaserProjectile : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    [SerializeField] private int damage;
-    [SerializeField] private float maxDistance;
+    [SerializeField] private LaserProjectileData laserProjectileData;
 
     private Vector3 spawnPosition;
     private float distanceMoved = 0;
@@ -16,8 +14,10 @@ public class LaserProjectile : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public void Initialize(Vector3 direction)
+    public void Initialize(Vector3 direction, LaserProjectileData laserProjectileData)
     {
+        this.laserProjectileData = laserProjectileData;
+
         spawnPosition = transform.position; 
 
         direction.y = 0;
@@ -26,13 +26,13 @@ public class LaserProjectile : MonoBehaviour
             direction = transform.forward;
         }
         direction.Normalize();
-        rb.linearVelocity = direction * speed;
+        rb.linearVelocity = direction * this.laserProjectileData.speed;
     }
 
     private void Update()
     {
         distanceMoved = Vector3.Distance(transform.position, spawnPosition);
-        if (distanceMoved >= maxDistance)
+        if (distanceMoved >= laserProjectileData.maxDistance)
         {
             DisableObject();
         }
@@ -51,7 +51,7 @@ public class LaserProjectile : MonoBehaviour
         var damagable = collision.GetComponent<Damagable>();
         if (damagable != null)
         {
-            damagable.Hit(damage);
+            damagable.Hit(laserProjectileData.damage);
         }
         DisableObject();
     }
