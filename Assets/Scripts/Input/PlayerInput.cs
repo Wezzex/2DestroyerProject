@@ -8,6 +8,8 @@ public class PlayerInput : MonoBehaviour
 
     private InputActionsSystem shipInput;
 
+    public static PlayerInput Instance { get; private set; }
+
     public UnityEvent OnShoot = new UnityEvent();
     public UnityEvent<Vector2> OnMoveShip = new UnityEvent<Vector2>();
     public UnityEvent<Vector2> OnMoveTurret = new UnityEvent<Vector2>();
@@ -15,6 +17,8 @@ public class PlayerInput : MonoBehaviour
     public UnityEvent OnShootPressed;
     public UnityEvent OnShootReleased;
     public bool bIsShooting { get; private set; }
+
+    public event EventHandler OnPauseAction;
 
     [SerializeField] private ShipController shipController;
 
@@ -25,6 +29,8 @@ public class PlayerInput : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         if (shipInput == null)
         { 
             shipInput = new InputActionsSystem();
@@ -47,6 +53,13 @@ public class PlayerInput : MonoBehaviour
         shipInput.Player.Shooting.performed += OnShootingPerformed;
         shipInput.Player.Shooting.canceled += OnShootingCanceled;
 
+        shipInput.Player.Pause.performed += OnPausePerformed;
+
+    }
+
+    private void OnPausePerformed(InputAction.CallbackContext context)
+    {
+        OnPauseAction?.Invoke(this, EventArgs.Empty);
     }
 
     //Disables shipInput
@@ -57,6 +70,9 @@ public class PlayerInput : MonoBehaviour
 
         shipInput.Player.Shooting.performed -= OnShootingPerformed;
         shipInput.Player.Shooting.canceled -= OnShootingCanceled;
+
+        shipInput.Player.Pause.performed -= OnPausePerformed;
+
         shipInput.Disable();
 
     }

@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "InputActionsSystem",
     "maps": [
         {
@@ -18,6 +19,15 @@
                     "name": "Shooting",
                     "type": "Button",
                     "id": "db2097b1-73c0-402b-9bed-d7c28e96a936",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "e0ba37c0-2aae-48da-aba8-98185b20601c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -88,6 +98,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Shooting",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e20f89db-407e-4bb1-8000-8a2bdbe2a685",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
