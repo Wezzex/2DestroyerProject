@@ -27,6 +27,7 @@ public class EnemySpawner : MonoBehaviour
     private readonly List<Transform> stations = new List<Transform>();
     private readonly List<GameObject> aliveShips = new List<GameObject>();
 
+    private int aliveStationsCount = 0;
     private int maxShips;
     private float nextMaxIncreaseTimer;
 
@@ -51,7 +52,16 @@ public class EnemySpawner : MonoBehaviour
         {
             Vector3 spawnPosition = GetRandomPointInRange(player.position, stationRadiusMin, stationRadiusMax);
             GameObject station = Instantiate(enemyStationPrefab, spawnPosition, Quaternion.identity);
+
             stations.Add(station.transform);
+
+            aliveStationsCount++;
+
+            Damagable damagable = station.GetComponentInChildren<Damagable>();
+            if (damagable != null)
+            {
+                damagable.OnDead.AddListener(() => OnStationDestroyed(station));
+            }
         }
 
         for (int i = 0; i < stations.Count; i++)
@@ -69,6 +79,7 @@ public class EnemySpawner : MonoBehaviour
             yield return wait;
 
             CleanupDeadShips();
+            CleanupDeadStations();
             IncreaseSpawnWaveSize();
 
             if (stations.Count == 0) continue;
@@ -94,10 +105,25 @@ public class EnemySpawner : MonoBehaviour
         aliveShips.RemoveAll(x => x == null);
     }
 
+    private void CleanupDeadStations()
+    {
+        stations.RemoveAll(s => s == null);
+    }
+
+    private void OnStationDestroyed(GameObject station)
+    {
+        aliveStationsCount--;
+
+        if (aliveStationsCount <= 0)
+        {
+            GameManager.Instance.RequestGameOver(GameManager.GameOverReason.AllStationsDestroyed);
+        }
+    }
+
 
     private void TrySpawnShipNearStation(Transform station)
     {
-        if (stations == null) return;
+        if (station == null) return;
         if (aliveShips.Count >= maxShips) return;
 
         GameObject enemyShipPrefab = enemyShipsPrefabs[UnityEngine.Random.Range(0, enemyShipsPrefabs.Length)];

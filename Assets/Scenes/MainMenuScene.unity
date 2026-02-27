@@ -262,6 +262,18 @@ PrefabInstance:
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
       objectReference: {fileID: 0}
+    - target: {fileID: 1143404446469140764, guid: cf815c9bd0d844344ab1dff5e2548041, type: 3}
+      propertyPath: m_Color.b
+      value: 0.2735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143404446469140764, guid: cf815c9bd0d844344ab1dff5e2548041, type: 3}
+      propertyPath: m_Color.g
+      value: 0.19372372
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143404446469140764, guid: cf815c9bd0d844344ab1dff5e2548041, type: 3}
+      propertyPath: m_Color.r
+      value: 0.15356888
+      objectReference: {fileID: 0}
     - target: {fileID: 1573733804480627605, guid: cf815c9bd0d844344ab1dff5e2548041, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
@@ -281,6 +293,18 @@ PrefabInstance:
     - target: {fileID: 5939907796804832716, guid: cf815c9bd0d844344ab1dff5e2548041, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468970950662956159, guid: cf815c9bd0d844344ab1dff5e2548041, type: 3}
+      propertyPath: m_Color.b
+      value: 0.14150941
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468970950662956159, guid: cf815c9bd0d844344ab1dff5e2548041, type: 3}
+      propertyPath: m_Color.g
+      value: 0.119652785
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468970950662956159, guid: cf815c9bd0d844344ab1dff5e2548041, type: 3}
+      propertyPath: m_Color.r
+      value: 0.11147204
       objectReference: {fileID: 0}
     - target: {fileID: 7812221418229597991, guid: cf815c9bd0d844344ab1dff5e2548041, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
@@ -375,7 +399,8 @@ PrefabInstance:
       value: 1801810542
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 967450610378051036, guid: cf815c9bd0d844344ab1dff5e2548041, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf815c9bd0d844344ab1dff5e2548041, type: 3}

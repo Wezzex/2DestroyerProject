@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerLaserProjectileData
   m_EditorClassIdentifier: Assembly-CSharp::LaserProjectileData
   speed: 15
-  damage: 5
+  damage: 2
   maxDistance: 100

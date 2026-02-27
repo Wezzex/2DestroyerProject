@@ -4,34 +4,32 @@ using UnityEngine;
 public class GamePlayingAction : ActionStack.Action
 {
     private readonly GameManager gameManager;
-    private float timer;
     private bool bPushedNext;
 
-    public GamePlayingAction(GameManager gameManager, float gameTime)
+    public GamePlayingAction(GameManager gameManager)
     {
         this.gameManager = gameManager;
-        timer = gameTime;
     }
 
     public override void OnBegin(bool bFirstTime)
     {
         bPushedNext = false;
         gameManager.SetState(GameManager.State.GamePlaying);
-        gameManager.SetGameTime(timer);
+
+        gameManager.bGameOverRequested = false;
     }
 
     public override void OnUpdate()
     {
-        timer -= Time.deltaTime;
-        gameManager.SetGameTime(timer);
+        
 
-        if (!bPushedNext && timer <= 0.0f)
+        if (!bPushedNext && gameManager.bGameOverRequested)
         {
             bPushedNext = true;
             ActionStack.Main.PushAction(new GameOverAction(gameManager));
         }
     }
 
-    public override bool IsDone() => timer <= 0.0f;
+    public override bool IsDone() => gameManager.bGameOverRequested;
 
 }

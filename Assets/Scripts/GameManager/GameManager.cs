@@ -27,11 +27,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float countDownTime = 1.0f;
     [SerializeField] private float gamePlayingTimeMax = 300.0f;
 
+
     public State CurrentState { get; private set; } = State.WaitingToStart;
     private State stateBeforePausing;
 
     public float CountdownRemaining { get; private set; }
     public float GameRemaining { get; private set; }
+
+    public enum GameOverReason
+    {
+        None,
+        PlayerDied,
+        AllStationsDestroyed
+    }
+    public GameOverReason Reason { get; private set; } = GameOverReason.None;
+    public bool bGameOverRequested { get; set; }
+
+    [SerializeField] private Damagable playerDamagable;
+
+
 
     private bool bIsPaused;
     private PauseAction activePauseAction;
@@ -50,6 +64,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ActionStack.Main.PushAction(new WaitToStartAction(this, waitingToStartTime));
+
+        if (playerDamagable != null)
+        {
+            playerDamagable.OnDead.AddListener(OnPlayerDied);
+        }
     }
 
     private void OnEnable()
@@ -80,6 +99,20 @@ public class GameManager : MonoBehaviour
             activePauseAction = null;
         }
     }
+
+    public void RequestGameOver(GameOverReason reason)
+    {
+        if (bGameOverRequested) return;
+        bGameOverRequested = true;
+        Reason = reason;
+        ActionStack.Main.PushAction(new GameOverAction(this));
+    }
+
+    private void OnPlayerDied()
+    {
+        RequestGameOver(GameOverReason.PlayerDied);
+    }
+
 
     public void SetState(State newState)
     {

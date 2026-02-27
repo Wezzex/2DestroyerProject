@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3596568454603600032, guid: d5e28e16e9fd70542a806cdd73d6491b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4930311545345909001, guid: d5e28e16e9fd70542a806cdd73d6491b, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -210,6 +214,22 @@ PrefabInstance:
     - target: {fileID: 4930311545345909001, guid: d5e28e16e9fd70542a806cdd73d6491b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164463270591620565, guid: d5e28e16e9fd70542a806cdd73d6491b, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164463270591620565, guid: d5e28e16e9fd70542a806cdd73d6491b, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.8353392
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164463270591620565, guid: d5e28e16e9fd70542a806cdd73d6491b, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164463270591620565, guid: d5e28e16e9fd70542a806cdd73d6491b, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278244863
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -744,6 +764,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1123120036 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1040202683866979009, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
+  m_PrefabInstance: {fileID: 1260678759685794380}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4afd76d8ca497c498be23ee796d4676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Damagable
 --- !u!1 &1527656354
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,6 +1084,7 @@ MonoBehaviour:
   waitingToStartTime: 1
   countDownTime: 1
   gamePlayingTimeMax: 3
+  playerDamagable: {fileID: 1123120036}
 --- !u!1001 &997415860828065205
 PrefabInstance:
   m_ObjectHideFlags: 0
