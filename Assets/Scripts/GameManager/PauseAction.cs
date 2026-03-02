@@ -15,6 +15,9 @@ public class PauseAction : ActionStack.Action
     {
         gameManager.ApplyPause(true);
         bDone = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
     public void RequestUnpaused()
     {

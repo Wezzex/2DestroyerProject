@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LaserProjectile : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class LaserProjectile : MonoBehaviour
     private Vector3 spawnPosition;
     private float distanceMoved = 0;
     private Rigidbody rb;
+
+    public UnityEvent OnSpawn = new UnityEvent();
+    public UnityEvent OnHit   = new UnityEvent();
 
     private void Awake()
     {
@@ -19,7 +23,7 @@ public class LaserProjectile : MonoBehaviour
         this.laserProjectileData = laserProjectileData;
 
         spawnPosition = transform.position; 
-
+        OnSpawn?.Invoke();
         direction.y = 0;
         if (direction.sqrMagnitude < 0.00001f)
         {
@@ -47,6 +51,7 @@ public class LaserProjectile : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         Debug.Log("Collided " + collision.name);
+        OnHit?.Invoke();
 
         var damagable = collision.GetComponent<Damagable>();
         if (damagable != null)

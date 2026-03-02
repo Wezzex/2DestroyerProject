@@ -13,6 +13,8 @@ public class GameOverAction : ActionStack.Action
     public override void OnBegin(bool bFirstTime)
     {
         gameManager.SetState(GameManager.State.GameOver);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public override bool IsDone() => false;

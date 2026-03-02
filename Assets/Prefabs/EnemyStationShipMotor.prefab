@@ -46,6 +46,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AimTurret
   rotationSpeed: 150
+--- !u!1 &1363623935346962393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1093069195321855175}
+  - component: {fileID: 4038546732692046244}
+  m_Layer: 6
+  m_Name: ImpactFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1093069195321855175
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363623935346962393}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4010480725342714763}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4038546732692046244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363623935346962393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0567d194b50cf9c4db8734964f2086c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectGeneratorRandomPositionUtil
+  objectPrefab: {fileID: 1121192042590650, guid: 73e2ed443a24ac5469979f4254db8389, type: 3}
+  radius: 1
 --- !u!1 &1864428871629769865
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +150,7 @@ MonoBehaviour:
   - {fileID: 2375797409337767607}
   - {fileID: 9182255478871298534}
   - {fileID: 3175935565067725910}
-  turretData: {fileID: 11400000, guid: 31f9cc395e582ae40adb177163965585, type: 2}
+  turretData: {fileID: 11400000, guid: 0e493992c177a734faa31e8c37de82a9, type: 2}
   bCanShoot: 1
   projectilePoolCount: 100
 --- !u!114 &4805998832472963956
@@ -212,15 +258,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba49a7a63c143c4a817ab6caff7cb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIDetector
-  viewRadius: 15
+  viewRadius: 100
   detectionCheckDelay: 0.1
   target: {fileID: 0}
   playerLayerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1024
   visibilityLayer:
     serializedVersion: 2
-    m_Bits: 1920
+    m_Bits: 3840
   <TargetVisible>k__BackingField: 0
 --- !u!1 &3386447307442957033
 GameObject:
@@ -344,7 +390,9 @@ GameObject:
   - component: {fileID: 5906165121629512770}
   - component: {fileID: 6925278992122360705}
   - component: {fileID: 1040202683866979009}
-  m_Layer: 10
+  - component: {fileID: 1529956210659461498}
+  - component: {fileID: 2706793107455552218}
+  m_Layer: 11
   m_Name: EnemyStationShipMotor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,6 +412,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1093069195321855175}
   - {fileID: 4680505465132376050}
   - {fileID: 8519217953280976580}
   - {fileID: 4337927813597595243}
@@ -416,10 +465,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.78
-  m_Height: 10.12
+  m_Radius: 0.89
+  m_Height: 10.72
   m_Direction: 2
-  m_Center: {x: 0, y: -0.4, z: 0.36}
+  m_Center: {x: 0, y: -0.4, z: 0}
 --- !u!114 &5906165121629512770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,7 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipMover
   rb: {fileID: 0}
-  shipMovementData: {fileID: 11400000, guid: 649b5a86f9fcab34b8d070f17dd82dec, type: 2}
+  shipMovementData: {fileID: 11400000, guid: d6f6e7882dee15449805c27a78ef0b35, type: 2}
   currentSpeed: 0
 --- !u!114 &1040202683866979009
 MonoBehaviour:
@@ -480,6 +529,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4038546732692046244}
+        m_TargetAssemblyTypeName: ObjectGeneratorRandomPositionUtil, Assembly-CSharp
+        m_MethodName: CreateObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnHealthChange:
     m_PersistentCalls:
       m_Calls: []
@@ -489,6 +550,48 @@ MonoBehaviour:
   OnHeal:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &1529956210659461498
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283625353866652593}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.32, y: 1, z: 1.51}
+  m_Center: {x: 0, y: 0, z: -0.55}
+--- !u!65 &2706793107455552218
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283625353866652593}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.98, y: 0.7, z: 4.58}
+  m_Center: {x: 0, y: -1.44, z: 4.01}
 --- !u!1 &5181334644262056132
 GameObject:
   m_ObjectHideFlags: 0

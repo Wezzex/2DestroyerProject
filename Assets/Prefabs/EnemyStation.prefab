@@ -100,14 +100,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 224927436505051576}
     m_Modifications:
-    - target: {fileID: 1411377622541884866, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
-      propertyPath: viewRadius
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1911865989535077856, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
-      propertyPath: turretData
-      value: 
-      objectReference: {fileID: 11400000, guid: 0e493992c177a734faa31e8c37de82a9, type: 2}
     - target: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.8160915
@@ -152,14 +144,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyStationShipMotor
       objectReference: {fileID: 0}
-    - target: {fileID: 4283625353866652593, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6925278992122360705, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
-      propertyPath: shipMovementData
-      value: 
-      objectReference: {fileID: 11400000, guid: d6f6e7882dee15449805c27a78ef0b35, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

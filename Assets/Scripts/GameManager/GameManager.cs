@@ -134,11 +134,16 @@ public class GameManager : MonoBehaviour
         if (!bIsPaused)
         {
             bIsPaused = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             ActionStack.Main.PushAction(new PauseAction(this));
 
         }
         else
-        { 
+        {
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     
     }
@@ -151,7 +156,6 @@ public class GameManager : MonoBehaviour
 
             bIsPaused = true;
             stateBeforePausing = CurrentState;
-
             Time.timeScale = 0f;
             SetState(State.Paused);
             OnGamePaused?.Invoke(this, EventArgs.Empty);
