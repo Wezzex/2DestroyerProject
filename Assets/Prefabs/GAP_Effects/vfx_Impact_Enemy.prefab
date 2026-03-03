@@ -4905,6 +4905,7 @@ GameObject:
   - component: {fileID: 5521277632010768499}
   - component: {fileID: 6280281539998945384}
   - component: {fileID: 8763340833693183750}
+  - component: {fileID: 8294106099428460525}
   m_Layer: 0
   m_Name: vfx_Impact_Enemy
   m_TagString: Untagged
@@ -4940,7 +4941,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 5
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -9791,6 +9792,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8294106099428460525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3077343761403282166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d688369d5d751b94fb8e2286f55b61e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyIfDisabled
 --- !u!1 &3987749403610019982
 GameObject:
   m_ObjectHideFlags: 0

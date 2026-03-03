@@ -4905,6 +4905,7 @@ GameObject:
   - component: {fileID: 7541750129371384559}
   - component: {fileID: -6140058637718067864}
   - component: {fileID: -3089404240273355523}
+  - component: {fileID: 172199033569818536}
   m_Layer: 0
   m_Name: vfx_MuzzleFlash_Player
   m_TagString: Untagged
@@ -4939,7 +4940,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -9732,6 +9733,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &172199033569818536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8078720523478869859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d688369d5d751b94fb8e2286f55b61e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyIfDisabled
 --- !u!1 &9149764867787356328
 GameObject:
   m_ObjectHideFlags: 0
