@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadc1d13d747f2f48bd04bd119f58b7f, type: 3}
   m_Name: EnemyDestroyerTurretData
   m_EditorClassIdentifier: Assembly-CSharp::TurretData
-  laserProjectilePrefab: {fileID: 6777504909542678953, guid: bc6672d359fb0544198f0ba4232d4e7c, type: 3}
-  reloadDelay: 5
-  laserProjectileData: {fileID: 11400000, guid: 270e09c3cadb1c94c8b81915ff6c9df8, type: 2}
+  laserProjectilePrefab: {fileID: 6777504909542678953, guid: 4e7d2abde3d6ec349bd95e3929a0bd5e, type: 3}
+  reloadDelay: 2
+  fireSequence: 0.2
+  laserProjectileData: {fileID: 11400000, guid: 49256f5547e12a948a7c83b5a9c8581b, type: 2}
