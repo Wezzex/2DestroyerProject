@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7290951477751711643}
   - component: {fileID: 8699528418766581086}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ImpactFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7797845821275276848}
   - component: {fileID: 7341988625834878075}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SpawnFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -8,7 +8,7 @@ public class ShipController : MonoBehaviour
     public AimTurret[] aimTurrets;
     [SerializeField] private TurretCannon[] turrets;
     private float turretAimValue;
-    [SerializeField]private bool bIsShooting;
+    [SerializeField] private bool bIsShooting;
 
     private void Awake()
     {
