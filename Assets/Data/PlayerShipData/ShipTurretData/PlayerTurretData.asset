@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerTurretData
   m_EditorClassIdentifier: Assembly-CSharp::TurretData
   laserProjectilePrefab: {fileID: 6777504909542678953, guid: 6db6075b10b67024caaabc485f691e90, type: 3}
-  reloadDelay: 1
+  reloadDelay: 2
   fireSequence: 0.1
+  fieringVolly: 3
   laserProjectileData: {fileID: 11400000, guid: 96fc8ef5218dacc4f87adcf25638f110, type: 2}

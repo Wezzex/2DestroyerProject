@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5738252387932374805}
   m_Layer: 0
   m_Name: TurretBase (3)
-  m_TagString: TurretBase
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,7 +105,7 @@ MonoBehaviour:
   - {fileID: 9182255478871298534}
   - {fileID: 3175935565067725910}
   turretData: {fileID: 11400000, guid: 31f9cc395e582ae40adb177163965585, type: 2}
-  turretCannon: {fileID: 0}
+  shipController: {fileID: 5906165121629512770}
   bCanShoot: 1
   projectilePoolCount: 100
 --- !u!114 &4805998832472963956
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 1189785656312430464}
   m_Layer: 0
   m_Name: TurretBase (4)
-  m_TagString: TurretBase
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 5427867319726515056}
   m_Layer: 0
   m_Name: TurretBase (5)
-  m_TagString: TurretBase
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 8167151732000133325}
   m_Layer: 0
   m_Name: TurretAim
-  m_TagString: LaserSpawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 6807603250871649817}
   m_Layer: 0
   m_Name: TurretAim
-  m_TagString: LaserSpawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4afd76d8ca497c498be23ee796d4676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damagable
-  maxHealth: 100
+  maxHealth: 500
   health: 0
   OnDead:
     m_PersistentCalls:
@@ -445,7 +445,7 @@ GameObject:
   - component: {fileID: 9182255478871298534}
   m_Layer: 0
   m_Name: TurretAim
-  m_TagString: LaserSpawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 5903490362519344654}
   m_Layer: 0
   m_Name: TurretBase
-  m_TagString: TurretBase
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 3175935565067725910}
   m_Layer: 0
   m_Name: TurretAim
-  m_TagString: LaserSpawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 2375797409337767607}
   m_Layer: 0
   m_Name: TurretAim
-  m_TagString: LaserSpawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 8262224925326182688}
   m_Layer: 0
   m_Name: TurretBase (1)
-  m_TagString: TurretBase
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -630,7 +630,7 @@ GameObject:
   - component: {fileID: 277361769591418753}
   m_Layer: 0
   m_Name: TurretAim
-  m_TagString: LaserSpawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -662,7 +662,7 @@ GameObject:
   - component: {fileID: 3643784028175269705}
   m_Layer: 0
   m_Name: TurretBase (2)
-  m_TagString: TurretBase
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

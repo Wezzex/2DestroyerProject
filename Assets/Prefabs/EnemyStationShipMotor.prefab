@@ -151,6 +151,7 @@ MonoBehaviour:
   - {fileID: 9182255478871298534}
   - {fileID: 3175935565067725910}
   turretData: {fileID: 11400000, guid: 0e493992c177a734faa31e8c37de82a9, type: 2}
+  shipController: {fileID: 5906165121629512770}
   bCanShoot: 1
   projectilePoolCount: 100
 --- !u!114 &4805998832472963956
@@ -512,7 +513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4afd76d8ca497c498be23ee796d4676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damagable
-  maxHealth: 100
+  maxHealth: 200
   health: 0
   OnDead:
     m_PersistentCalls:

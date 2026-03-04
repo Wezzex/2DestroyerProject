@@ -11,7 +11,7 @@ public class TurretCannon : MonoBehaviour
 
     [SerializeField] private List<Transform> laserSpawnPoint = new List<Transform>();
     [SerializeField] private TurretData turretData;
-    [SerializeField] private TurretCannon turretCannon;
+    [SerializeField] private ShipController shipController;
 
     [SerializeField] private bool bCanShoot = true;
     private Collider[] shipColliders;
@@ -52,7 +52,19 @@ public class TurretCannon : MonoBehaviour
         {
             bCanShoot = false;
             currentReloadDelay = turretData.reloadDelay;
+            
+                StartCoroutine(Firing());
 
+        }
+        StopCoroutine(Firing());
+        yield return null;
+    }
+
+    private IEnumerator Firing()
+    {
+
+        for (int f = 0; f < turretData.fieringVolly; f++)
+        {
             for (int i = 0; i < laserSpawnPoint.Count; i++)
             {
                 Transform spawnPoints = laserSpawnPoint[i];
@@ -68,15 +80,17 @@ public class TurretCannon : MonoBehaviour
                 }
 
                 yield return new WaitForSeconds(turretData.fireSequence);
+
             }
 
         }
-                yield return null;
+        yield return new WaitForSeconds(turretData.reloadDelay);
+        yield return null;
     }
 
     public void Shoot()
     {
-        if (isActiveAndEnabled)
+        if (isActiveAndEnabled || shipController.bIsShooting)
         {
             StartCoroutine(FiringSequence());
         }

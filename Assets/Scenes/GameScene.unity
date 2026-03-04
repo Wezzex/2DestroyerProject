@@ -1097,22 +1097,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 588180447}
     m_Modifications:
-    - target: {fileID: 5599582538507433, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2031095005814700200, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 3386447307442957033, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 3821223660739127255, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 4010480725342714763, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1153,41 +1137,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4120272642727101683, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 4283625353866652593, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
       propertyPath: m_Name
       value: ShipMotor
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181334644262056132, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 5242718918299154830, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 6994718051109661114, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310313614354672985, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 7757718070276167457, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 8274001620117736421, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 9209696859452438010, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
