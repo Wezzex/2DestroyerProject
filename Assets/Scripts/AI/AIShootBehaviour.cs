@@ -32,8 +32,6 @@ public class AIShootBehaviour : AIBehavior
         Vector3 turretForward = turret.forward;
         turretForward.y = 0.0f;
 
-        if (direction.sqrMagnitude < 0.0001f) return true;
-
         float angle = Vector3.Angle(turretForward, direction);
         return angle < fieldOfVisionForShooting * 0.5f;
     }

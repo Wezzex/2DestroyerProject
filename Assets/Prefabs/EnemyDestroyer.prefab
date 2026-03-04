@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2959141123539012081}
   - component: {fileID: 5056591302709625043}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: EnemyPath
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6775507922375670512}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Point_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8560074305498107366}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Point_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8063125160109661167}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Point_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

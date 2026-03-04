@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9175093391007466843}
   - component: {fileID: 5738252387932374805}
   m_Layer: 0
-  m_Name: TurretBase_01 (3)
+  m_Name: TurretBase (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,6 +105,7 @@ MonoBehaviour:
   - {fileID: 9182255478871298534}
   - {fileID: 3175935565067725910}
   turretData: {fileID: 11400000, guid: 31f9cc395e582ae40adb177163965585, type: 2}
+  shipController: {fileID: 5906165121629512770}
   bCanShoot: 1
   projectilePoolCount: 100
 --- !u!114 &4805998832472963956
@@ -133,7 +134,7 @@ GameObject:
   - component: {fileID: 5428186769650559300}
   - component: {fileID: 1189785656312430464}
   m_Layer: 0
-  m_Name: TurretBase_01 (4)
+  m_Name: TurretBase (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,7 +180,7 @@ GameObject:
   - component: {fileID: 6498535170766133452}
   - component: {fileID: 5427867319726515056}
   m_Layer: 0
-  m_Name: TurretBase_01 (5)
+  m_Name: TurretBase (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -310,7 +311,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4680505465132376050}
   - {fileID: 8519217953280976580}
   - {fileID: 4020915178062209692}
   m_Father: {fileID: 0}
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4afd76d8ca497c498be23ee796d4676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damagable
-  maxHealth: 100
+  maxHealth: 500
   health: 0
   OnDead:
     m_PersistentCalls:
@@ -476,7 +476,7 @@ GameObject:
   - component: {fileID: 7412826114741236669}
   - component: {fileID: 5903490362519344654}
   m_Layer: 0
-  m_Name: TurretBase_01
+  m_Name: TurretBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 262478984333644381}
   - component: {fileID: 8262224925326182688}
   m_Layer: 0
-  m_Name: TurretBase_01 (1)
+  m_Name: TurretBase (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -661,7 +661,7 @@ GameObject:
   - component: {fileID: 4617429331214948984}
   - component: {fileID: 3643784028175269705}
   m_Layer: 0
-  m_Name: TurretBase_01 (2)
+  m_Name: TurretBase (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -696,88 +696,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AimTurret
   rotationSpeed: 150
---- !u!1001 &5151774451167148057
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4010480725342714763}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 28.694143
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 42.775436
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 42.775436
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.321
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071067
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: e38c69cf7f535ce40bfa2eb56a43d044, type: 2}
-    - target: {fileID: 919132149155446097, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_Name
-      value: D2Destroyer31
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
---- !u!4 &4680505465132376050 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b2c07fd19c06f0849a85b42956deb8dc, type: 3}
-  m_PrefabInstance: {fileID: 5151774451167148057}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8528891825546838260
 PrefabInstance:
   m_ObjectHideFlags: 0

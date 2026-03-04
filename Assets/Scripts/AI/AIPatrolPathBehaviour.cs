@@ -69,6 +69,7 @@ public class AIPatrolPathBehaviour : AIBehavior
         float thrust = Mathf.Abs(angle) < 15f ? 1f : 0.5f;
 
         shipController.HandleMoveShip(new Vector2(turn, thrust));
+        shipController.SetShootingState(false);
 
     }
 
