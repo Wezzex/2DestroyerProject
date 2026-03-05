@@ -5,10 +5,13 @@ public class ShipController : MonoBehaviour
     [SerializeField] private ShipMover shipMover;
 
     [Header("Turret Settings")]
-    public AimTurret[] aimTurrets;
     [SerializeField] private TurretCannon[] turrets;
+    public AimTurret[] aimTurrets;
     private float turretAimValue;
     public bool bIsShooting;
+
+    public IWeapon weapon;
+    public IDamagable target;
 
     private void Awake()
     {

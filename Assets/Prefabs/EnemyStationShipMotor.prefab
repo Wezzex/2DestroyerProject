@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0567d194b50cf9c4db8734964f2086c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectGeneratorRandomPositionUtil
-  objectPrefab: {fileID: 1121192042590650, guid: 73e2ed443a24ac5469979f4254db8389, type: 3}
+  objectPrefab: {fileID: 100012, guid: 974e67002d0df3d4796a656ba98661eb, type: 3}
   radius: 1
 --- !u!1 &1864428871629769865
 GameObject:

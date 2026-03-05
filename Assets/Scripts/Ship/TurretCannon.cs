@@ -90,7 +90,7 @@ public class TurretCannon : MonoBehaviour
 
     public void Shoot()
     {
-        if (isActiveAndEnabled || shipController.bIsShooting)
+        if (isActiveAndEnabled)
         {
             StartCoroutine(FiringSequence());
         }
@@ -99,6 +99,4 @@ public class TurretCannon : MonoBehaviour
             StopCoroutine(FiringSequence());
         }
     }
-
-
 }              

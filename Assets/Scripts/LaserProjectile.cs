@@ -13,6 +13,9 @@ public class LaserProjectile : MonoBehaviour
     public UnityEvent OnSpawn = new UnityEvent();
     public UnityEvent OnHit   = new UnityEvent();
 
+    public IDamagable Idamageble;
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -50,8 +53,8 @@ public class LaserProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("Collided " + collision.name);
-        OnHit?.Invoke();
+        collision.GetComponent<IDamagable>();
+        Idamageble.TakeDamage(laserProjectileData.damage);
 
         var damagable = collision.GetComponent<Damagable>();
         if (damagable != null)
