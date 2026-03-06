@@ -5,6 +5,7 @@ public class DefaultEnemyAI : MonoBehaviour
 
     [SerializeField] private AIBehavior shootBehaviour, patrolBehaviour;
 
+    [SerializeField] private EnemyManager enemyManager;
     [SerializeField] private ShipController shipController;
     [SerializeField] private AIDetector aIDetector;
 
@@ -16,6 +17,8 @@ public class DefaultEnemyAI : MonoBehaviour
 
     private void Update()
     {
+        if(enemyManager.IsDead) return;
+
         if (aIDetector.TargetVisible)
         {
             shootBehaviour.PerformAction(shipController, aIDetector);

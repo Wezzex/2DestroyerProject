@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 748770158659853977}
   - component: {fileID: 5906165121629512770}
   - component: {fileID: 6925278992122360705}
-  - component: {fileID: 1040202683866979009}
+  - component: {fileID: 4874761896263892382}
   m_Layer: 10
   m_Name: ShipMotor
   m_TagString: Untagged
@@ -361,10 +361,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 4.09
+  m_Radius: 0.4
+  m_Height: 5
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0.72}
+  m_Center: {x: 0, y: -0.15, z: -0.31}
 --- !u!114 &5906165121629512770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,8 +378,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipController
   shipMover: {fileID: 0}
-  aimTurrets: []
   turrets: []
+  aimTurrets: []
   bIsShooting: 0
 --- !u!114 &6925278992122360705
 MonoBehaviour:
@@ -396,7 +396,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   shipMovementData: {fileID: 11400000, guid: 649b5a86f9fcab34b8d070f17dd82dec, type: 2}
   currentSpeed: 0
---- !u!114 &1040202683866979009
+--- !u!114 &4874761896263892382
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -405,35 +405,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4283625353866652593}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4afd76d8ca497c498be23ee796d4676, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e626c9fd47c9084cb5d4c316e179548, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Damagable
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  shipController: {fileID: 5906165121629512770}
+  health: 100
   maxHealth: 500
-  health: 0
-  OnDead:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4283625353866652593}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnHealthChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHit:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHeal:
-    m_PersistentCalls:
-      m_Calls: []
+  bIsDead: 0
+  explotionPrefab: {fileID: 1121192042590650, guid: 73e2ed443a24ac5469979f4254db8389, type: 3}
 --- !u!1 &5181334644262056132
 GameObject:
   m_ObjectHideFlags: 0

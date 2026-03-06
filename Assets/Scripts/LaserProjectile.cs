@@ -2,13 +2,15 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class LaserProjectile : MonoBehaviour
+public class LaserProjectile : MonoBehaviour, IWeapon
 {
     [SerializeField] private LaserProjectileData laserProjectileData;
 
     private Vector3 spawnPosition;
     private float distanceMoved = 0;
     private Rigidbody rb;
+
+    [SerializeField] private GameObject impactPrefab;
 
     public UnityEvent OnSpawn = new UnityEvent();
     public UnityEvent OnHit   = new UnityEvent();
@@ -27,11 +29,13 @@ public class LaserProjectile : MonoBehaviour
 
         spawnPosition = transform.position; 
         OnSpawn?.Invoke();
+
         direction.y = 0;
         if (direction.sqrMagnitude < 0.00001f)
         {
             direction = transform.forward;
         }
+
         direction.Normalize();
         rb.linearVelocity = direction * this.laserProjectileData.speed;
     }
@@ -45,22 +49,34 @@ public class LaserProjectile : MonoBehaviour
         }
     }
 
+    void CreateExplotion()
+    {
+        Vector3 explotionSpawnPosition = transform.position;
+        GameObject explotion = Instantiate(impactPrefab, explotionSpawnPosition, Quaternion.identity);
+
+    }
+
     private void DisableObject()
     {
         rb.linearVelocity = Vector3.zero;
+
+
         gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        collision.GetComponent<IDamagable>();
-        Idamageble.TakeDamage(laserProjectileData.damage);
-
-        var damagable = collision.GetComponent<Damagable>();
-        if (damagable != null)
+        // IDamagable iDamagable = collision.TryGetComponent<IDamagable>();
+        if (collision.TryGetComponent(out IDamagable iDamagable))
         {
-            damagable.Hit(laserProjectileData.damage);
+            iDamagable.TakeDamage(laserProjectileData.damage);
+            CreateExplotion();
+            DisableObject();
         }
-        DisableObject();
+    }
+
+    public void Fire(IDamagable target)
+    {
+        target.TakeDamage(laserProjectileData.damage);
     }
 }

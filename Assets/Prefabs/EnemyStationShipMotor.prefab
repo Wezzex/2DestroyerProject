@@ -390,9 +390,9 @@ GameObject:
   - component: {fileID: 748770158659853977}
   - component: {fileID: 5906165121629512770}
   - component: {fileID: 6925278992122360705}
-  - component: {fileID: 1040202683866979009}
   - component: {fileID: 1529956210659461498}
   - component: {fileID: 2706793107455552218}
+  - component: {fileID: 7271183974115760161}
   m_Layer: 11
   m_Name: EnemyStationShipMotor
   m_TagString: Untagged
@@ -483,8 +483,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipController
   shipMover: {fileID: 0}
-  aimTurrets: []
   turrets: []
+  aimTurrets: []
   bIsShooting: 0
 --- !u!114 &6925278992122360705
 MonoBehaviour:
@@ -501,56 +501,6 @@ MonoBehaviour:
   rb: {fileID: 0}
   shipMovementData: {fileID: 11400000, guid: d6f6e7882dee15449805c27a78ef0b35, type: 2}
   currentSpeed: 0
---- !u!114 &1040202683866979009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4283625353866652593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4afd76d8ca497c498be23ee796d4676, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Damagable
-  maxHealth: 200
-  health: 0
-  OnDead:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4283625353866652593}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4038546732692046244}
-        m_TargetAssemblyTypeName: ObjectGeneratorRandomPositionUtil, Assembly-CSharp
-        m_MethodName: CreateObject
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnHealthChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHit:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHeal:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &1529956210659461498
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -593,6 +543,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.98, y: 0.7, z: 4.58}
   m_Center: {x: 0, y: -1.44, z: 4.01}
+--- !u!114 &7271183974115760161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283625353866652593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6747de9ebf67eb343ab3cb7473073562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
+  shipController: {fileID: 0}
+  health: 0
+  maxHealth: 200
+  bIsDead: 0
+  explotionPrefab: {fileID: 100012, guid: 974e67002d0df3d4796a656ba98661eb, type: 3}
 --- !u!1 &5181334644262056132
 GameObject:
   m_ObjectHideFlags: 0

@@ -407,6 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaserProjectile
   laserProjectileData: {fileID: 0}
+  impactPrefab: {fileID: 3077343761403282166, guid: d6dea1d2a239f984d9d159420252abf1, type: 3}
   OnSpawn:
     m_PersistentCalls:
       m_Calls:

@@ -26,11 +26,11 @@ public class EnemySpawner : MonoBehaviour
 
     private readonly List<Transform> stations = new List<Transform>();
     private readonly List<GameObject> aliveShips = new List<GameObject>();
+    private GameObject[] stationsAlive;
 
-    private int aliveStationsCount = 0;
+    public int aliveStationsCount = 0;
     private int maxShips;
     private float nextMaxIncreaseTimer;
-
     private void Start()
     {
         maxShips = maxShipStart;
@@ -68,6 +68,8 @@ public class EnemySpawner : MonoBehaviour
         {
             TrySpawnShipNearStation(stations[i]);
         }
+        
+        stationsAlive = GameObject.FindGameObjectsWithTag("EnemyStations");
     }
 
     private IEnumerator SpawnLoop()
@@ -112,9 +114,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnStationDestroyed(GameObject station)
     {
-        aliveStationsCount--;
 
-        if (aliveStationsCount <= 0)
+        if (stations.Count <= 0)
         {
             GameManager.Instance.RequestGameOver(GameManager.GameOverReason.AllStationsDestroyed);
         }

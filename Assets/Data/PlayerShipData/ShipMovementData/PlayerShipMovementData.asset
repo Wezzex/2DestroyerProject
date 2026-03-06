@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerShipMovementData
   m_EditorClassIdentifier: Assembly-CSharp::ShipMovementData
   maxSpeed: 10
-  rotationSpeed: 10
+  rotationSpeed: 50
   acceleration: 1
   deacceleration: 1
