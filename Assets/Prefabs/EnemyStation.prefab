@@ -50,7 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DefaultEnemyAI
   shootBehaviour: {fileID: 8540342513146087837}
   patrolBehaviour: {fileID: 1045424834537086580}
-  enemyManager: {fileID: 1717240308502818149}
+  enemyManager: {fileID: 0}
+  stationManager: {fileID: 5403378958733885598}
   shipController: {fileID: 2506915477870301446}
   aIDetector: {fileID: 6965533442451662982}
 --- !u!114 &8540342513146087837
@@ -150,17 +151,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
---- !u!114 &1717240308502818149 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7271183974115760161, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
-  m_PrefabInstance: {fileID: 8303709426689520964}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6747de9ebf67eb343ab3cb7473073562, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
 --- !u!114 &2506915477870301446 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5906165121629512770, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
@@ -177,6 +167,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4010480725342714763, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
   m_PrefabInstance: {fileID: 8303709426689520964}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5403378958733885598 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4161355958758634970, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}
+  m_PrefabInstance: {fileID: 8303709426689520964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6500a80010b37043a28d6296b535e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StationManager
 --- !u!114 &6965533442451662982 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1411377622541884866, guid: 0476a4fd9f5f0f443b9ae4146720bce6, type: 3}

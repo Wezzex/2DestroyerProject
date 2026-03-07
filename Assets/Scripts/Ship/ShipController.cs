@@ -38,10 +38,11 @@ public class ShipController : MonoBehaviour
 
     public void HandleTurretMovement(Vector2 aimVector)
     {
-        foreach (var aimTurret in aimTurrets)
-        {
-            aimTurret.Aim(aimVector);
-        }
+        
+            foreach (var aimTurret in aimTurrets)
+            {
+                aimTurret.Aim(aimVector);
+            }
     }
 
     public void SetShootingState(bool bShooting)

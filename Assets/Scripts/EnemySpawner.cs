@@ -57,10 +57,10 @@ public class EnemySpawner : MonoBehaviour
 
             aliveStationsCount++;
 
-            Damagable damagable = station.GetComponentInChildren<Damagable>();
-            if (damagable != null)
+            StationManager stationManager = station.GetComponent<StationManager>();
+            if (stationManager != null)
             {
-                damagable.OnDead.AddListener(() => OnStationDestroyed(station));
+                stationManager.OnStationDestroyed.AddListener(() => OnStationDestroyed(station));
             }
         }
 
@@ -69,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
             TrySpawnShipNearStation(stations[i]);
         }
         
-        stationsAlive = GameObject.FindGameObjectsWithTag("EnemyStations");
+        
     }
 
     private IEnumerator SpawnLoop()
@@ -114,6 +114,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnStationDestroyed(GameObject station)
     {
+
+        Debug.Log("Station Destroyed");
+        aliveStationsCount--;
 
         if (stations.Count <= 0)
         {
