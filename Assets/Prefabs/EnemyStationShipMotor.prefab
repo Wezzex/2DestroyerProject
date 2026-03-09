@@ -555,12 +555,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6500a80010b37043a28d6296b535e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StationManager
-  shipController: {fileID: 0}
-  spawner: {fileID: 0}
   health: 0
   maxHealth: 100
   bIsDead: 0
-  explotionPrefab: {fileID: 0}
+  shipController: {fileID: 0}
+  spawner: {fileID: 0}
+  explotionPrefab: {fileID: 100012, guid: 974e67002d0df3d4796a656ba98661eb, type: 3}
   OnStationDestroyed:
     m_PersistentCalls:
       m_Calls: []

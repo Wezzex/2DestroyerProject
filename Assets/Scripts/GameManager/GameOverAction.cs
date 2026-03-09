@@ -14,6 +14,7 @@ public class GameOverAction : ActionStack.Action
     {
         gameManager.SetState(GameManager.State.GameOver);
         Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0f;
         Cursor.visible = true;
     }
 

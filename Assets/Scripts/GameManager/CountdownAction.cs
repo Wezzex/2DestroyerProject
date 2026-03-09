@@ -17,6 +17,8 @@ public class CountdownAction : ActionStack.Action
     {
         bPushedNext = false;
         gameManager.SetState(GameManager.State.CountdownToStart);
+
+        Time.timeScale = 0f;
         gameManager.SetCountdown(timer);
     }
 

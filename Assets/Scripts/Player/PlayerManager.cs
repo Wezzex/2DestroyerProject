@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class PlayerManager : UnitManager
@@ -6,16 +5,25 @@ public class PlayerManager : UnitManager
     [Header("References")]
     [SerializeField] private ShipController shipController;
 
-    [Header("Health Settings")]
-    [SerializeField] private int health;
 
-    [SerializeField] private GameObject explotionPrefab;
-    public bool IsDead => bIsDead;
+    public GameObject explotionPrefab;
+
 
     private void Awake()
     {
         shipController = GetComponent<ShipController>();
     }
+    public override void OnDestroyedBegin()
+    {
+
+    }
+
+    public override void OnDestroyedEnd()
+    {
+
+        GameManager.Instance.RequestGameOver(GameManager.GameOverReason.PlayerDied);
+    }
+
     public override void CreateDeathExplotion()
     {
         Vector3 explotionSpawnPosition = this.transform.position;

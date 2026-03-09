@@ -43,8 +43,6 @@ public class GameManager : MonoBehaviour
     public GameOverReason Reason { get; private set; } = GameOverReason.None;
     public bool bGameOverRequested { get; set; }
 
-    [SerializeField] private Damagable playerDamagable;
-
 
 
     private bool bIsPaused;
@@ -65,10 +63,6 @@ public class GameManager : MonoBehaviour
     {
         ActionStack.Main.PushAction(new WaitToStartAction(this, waitingToStartTime));
 
-        if (playerDamagable != null)
-        {
-            playerDamagable.OnDead.AddListener(OnPlayerDied);
-        }
     }
 
     private void OnEnable()

@@ -9,7 +9,8 @@ public abstract class UnitManager : MonoBehaviour, IDamagable
     [SerializeField] protected int maxHealth = 100;
     [SerializeField] protected bool bIsDead = false;
 
-    [SerializeField] private GameObject explotionPrefab;
+
+    public bool IsDead => bIsDead;
 
     public int Health
     {
@@ -36,19 +37,17 @@ public abstract class UnitManager : MonoBehaviour, IDamagable
 
     public virtual void CreateDeathExplotion()
     {
-        Vector3 explotionSpawnPosition = this.transform.position;
-        GameObject explotion = Instantiate(explotionPrefab, explotionSpawnPosition, Quaternion.identity);
 
     }
 
-    protected virtual void OnDeathStarted()
+    public virtual void OnDestroyedBegin()
     {
-        
+
     }
 
-    protected virtual void OnDeathFinished()
-    {
-
+    public virtual void OnDestroyedEnd()
+    { 
+    
     }
     protected virtual IEnumerator DeathCoroutine()
     {
@@ -61,12 +60,12 @@ public abstract class UnitManager : MonoBehaviour, IDamagable
 
         CreateDeathExplotion();
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
 
         // Notify GameManager, Spawner
+        OnDestroyedEnd();
 
         // Destroy or Disable
-        GameManager.Instance.RequestGameOver(GameManager.GameOverReason.PlayerDied);
         gameObject.SetActive(false);
 
 

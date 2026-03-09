@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DefaultEnemyAI
   shootBehaviour: {fileID: 7121999059456374768}
   patrolBehaviour: {fileID: 3356239547269132005}
-  enemyManager: {fileID: 1121105342099411677}
+  unitManager: {fileID: 1121105342099411677}
   shipController: {fileID: 936457469284712994}
   aIDetector: {fileID: 2394788137967623158}
 --- !u!114 &7121999059456374768

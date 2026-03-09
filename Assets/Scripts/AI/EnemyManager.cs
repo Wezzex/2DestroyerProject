@@ -1,9 +1,4 @@
-using NUnit.Framework;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class EnemyManager : UnitManager
 {
@@ -12,16 +7,24 @@ public class EnemyManager : UnitManager
     [SerializeField] private ShipController shipController;
     [SerializeField] private EnemySpawner spawner;
 
-    [Header("Health Settings")]
-    [SerializeField] private int health;
 
-    [SerializeField] private GameObject explotionPrefab;
-    public bool IsDead => bIsDead;
+
+    public GameObject explotionPrefab;
 
     private void Awake()
     {
         shipController = GetComponent<ShipController>();
         spawner = GetComponent<EnemySpawner>();
+    }
+    public override void OnDestroyedBegin()
+    {
+
+    }
+
+    public override void OnDestroyedEnd()
+    {
+
+        
     }
 
     public override void CreateDeathExplotion()

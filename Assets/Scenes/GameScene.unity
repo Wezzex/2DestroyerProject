@@ -219,6 +219,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5270886029621429021, guid: d5e28e16e9fd70542a806cdd73d6491b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320766457886050472, guid: d5e28e16e9fd70542a806cdd73d6491b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9164463270591620565, guid: d5e28e16e9fd70542a806cdd73d6491b, type: 3}
       propertyPath: m_fontColor.b
       value: 0
@@ -1078,7 +1086,6 @@ MonoBehaviour:
   waitingToStartTime: 1
   countDownTime: 1
   gamePlayingTimeMax: 3
-  playerDamagable: {fileID: 0}
 --- !u!1001 &1260678759685794380
 PrefabInstance:
   m_ObjectHideFlags: 0

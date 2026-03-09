@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner Instance { get; private set; }
+
     [Header("Reference")]
     [SerializeField] private Transform player;
     [SerializeField] private GameObject enemyStationPrefab;
@@ -31,6 +33,17 @@ public class EnemySpawner : MonoBehaviour
     public int aliveStationsCount = 0;
     private int maxShips;
     private float nextMaxIncreaseTimer;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
     private void Start()
     {
         maxShips = maxShipStart;
@@ -56,12 +69,6 @@ public class EnemySpawner : MonoBehaviour
             stations.Add(station.transform);
 
             aliveStationsCount++;
-
-            StationManager stationManager = station.GetComponent<StationManager>();
-            if (stationManager != null)
-            {
-                stationManager.OnStationDestroyed.AddListener(() => OnStationDestroyed(station));
-            }
         }
 
         for (int i = 0; i < stations.Count; i++)
@@ -112,13 +119,13 @@ public class EnemySpawner : MonoBehaviour
         stations.RemoveAll(s => s == null);
     }
 
-    private void OnStationDestroyed(GameObject station)
+    public void OnStationDestroyed(GameObject station)
     {
 
         Debug.Log("Station Destroyed");
         aliveStationsCount--;
 
-        if (stations.Count <= 0)
+        if (aliveStationsCount <= 0)
         {
             GameManager.Instance.RequestGameOver(GameManager.GameOverReason.AllStationsDestroyed);
         }

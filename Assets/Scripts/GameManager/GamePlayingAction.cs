@@ -16,6 +16,7 @@ public class GamePlayingAction : ActionStack.Action
         bPushedNext = false;
         gameManager.SetState(GameManager.State.GamePlaying);
 
+        Time.timeScale = 1f;
         gameManager.bGameOverRequested = false;
     }
 

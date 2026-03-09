@@ -29,6 +29,7 @@ public class GameOverUI : MonoBehaviour
     {
 
         GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
+
         UpdateVisibility();
     }
 

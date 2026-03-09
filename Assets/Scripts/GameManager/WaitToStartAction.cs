@@ -18,6 +18,7 @@ public class WaitToStartAction : ActionStack.Action
         bPushedNext = false;
         gameManager.SetState(GameManager.State.WaitingToStart);
         Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1f;
         Cursor.visible = false;
     }
 
