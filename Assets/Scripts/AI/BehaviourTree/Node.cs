@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Linq;
 using System.Text;
 
-public class Node : MonoBehaviour
+public class Node 
 {
     public enum Status { Success, Failure, Running}
 
