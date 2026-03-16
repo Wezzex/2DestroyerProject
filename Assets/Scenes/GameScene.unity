@@ -1084,7 +1084,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   waitingToStartTime: 1
-  countDownTime: 1
   gamePlayingTimeMax: 3
 --- !u!1001 &1260678759685794380
 PrefabInstance:

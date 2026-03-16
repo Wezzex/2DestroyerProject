@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     [Header("Timers")]
 
     [SerializeField] private float waitingToStartTime = 1.0f;
-    [SerializeField] private float countDownTime = 1.0f;
     [SerializeField] private float gamePlayingTimeMax = 300.0f;
 
 
