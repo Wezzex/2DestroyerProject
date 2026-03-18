@@ -1,13 +1,10 @@
 using UnityEngine;
-
 public class EnemyManager : UnitManager
 {
 
     [Header("References")]
     [SerializeField] private ShipController shipController;
     [SerializeField] private EnemySpawner spawner;
-
-
 
     public GameObject explotionPrefab;
 
@@ -24,7 +21,7 @@ public class EnemyManager : UnitManager
     public override void OnDestroyedEnd()
     {
 
-        
+
     }
 
     public override void CreateDeathExplotion()
@@ -33,6 +30,5 @@ public class EnemyManager : UnitManager
         GameObject explotion = Instantiate(explotionPrefab, explotionSpawnPosition, Quaternion.identity);
 
     }
-
 
 }

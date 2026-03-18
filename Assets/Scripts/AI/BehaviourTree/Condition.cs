@@ -10,6 +10,6 @@ public class Condition : IStrategy
         this.predicate = predicate;
     }
 
-    public Node.Status Process() => predicate() ? Node.Status.Success : Node.Status.Running;
+    public Node.Status Process() => predicate() ? Node.Status.Success : Node.Status.Failure;
 
 }

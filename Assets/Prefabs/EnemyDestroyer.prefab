@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIPatrolPathBehaviour
   patrolPath: {fileID: 5056591302709625043}
-  arriveDistance: 1
+  arriveDistance: 0.1
   waitTime: 0.5
   isWaiting: 0
   currentPatrolTarget: {x: 0, y: 0, z: 0}
