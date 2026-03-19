@@ -23,6 +23,6 @@ public class Sequence : Node
 
         }
         Reset();
-        return Status.Running;
+        return Status.Success;
     }
 }

@@ -8,7 +8,7 @@ public class PrioritySelector : Node
     List<Node> sortedChildren;
     List<Node> SortedChildren => sortedChildren ??= SortChildren();
 
-    private List<Node> SortChildren() => children.OrderByDescending(child => child.priority).ToList();
+    protected virtual List<Node> SortChildren() => children.OrderByDescending(child => child.priority).ToList();
 
     public PrioritySelector(string name) : base(name) { }
 
@@ -20,7 +20,7 @@ public class PrioritySelector : Node
 
     public override Status Process()
     {
-        foreach (var child in sortedChildren)
+        foreach (var child in SortedChildren)
         {
             switch (child.Process())
             {

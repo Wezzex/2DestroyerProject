@@ -11,42 +11,47 @@ public class DefaultEnemyAI : MonoBehaviour
 
     BehaviourTree behaviourTree;
 
+    bool bInRange;
+
+
     private void Awake()
     {
         aIDetector = GetComponentInChildren<AIDetector>();
         shipController = GetComponentInChildren<ShipController>();
         unitManager = GetComponentInChildren<UnitManager>();
 
+
         behaviourTree = new BehaviourTree("DestroyerBehaviourTree");
-
-
+    }
+    private void Start()
+    {
         BuildTree();
     }
-
     private void BuildTree()
     {
         //Builds Tree Root witch is a Selector
-        Selector root = new Selector("Root");
+        PrioritySelector root = new PrioritySelector("Root");
+        behaviourTree.AddChild(root);
 
         Sequence attackSequence = new Sequence("AttackSequence");
-        attackSequence.AddChild(new Leaf("Target Visible?",new Condition(() => aIDetector.TargetVisible)));
-        attackSequence.AddChild(new Leaf("Shoot Target?",new ActionStrategy(() => shootBehaviour.PerformAction(shipController, aIDetector))));
+        attackSequence.AddChild(new Leaf("Target Visible?", new Condition(() => aIDetector.TargetVisible)));
+        attackSequence.AddChild(new Leaf("Shoot Target?", new ActionStrategy(() => shootBehaviour.PerformAction(shipController, aIDetector))));
+        root.AddChild(attackSequence);
 
         Sequence patrol = new Sequence("PatrolSequence");
-
         patrol.AddChild(new Leaf("Patrol", new ActionStrategy(() => patrolBehaviour.PerformAction(shipController, aIDetector))));
-
-        root.AddChild(attackSequence);
         root.AddChild(patrol);
 
-        behaviourTree.AddChild(root);
+        
+
+
+        Utility.LogInfo("Tree Built");
 
     }
 
     private void Update()
     {
         if(unitManager.IsDead) return;
-
         behaviourTree.Process();
     }
 }
