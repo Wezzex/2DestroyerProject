@@ -6,22 +6,30 @@ public class Sequence : Node
 
     public override Status Process()
     {
-        if (currentChild < children.Count)
+
+        while (currentChild < children.Count)
         {
+            var status = children[currentChild].Process();
+
+
             switch (children[currentChild].Process())
             {
-                case Status.Running:;
+                case Status.Running:
+                    ;
                     return Status.Running;
 
                 case Status.Failure:
                     Reset();
                     return Status.Failure;
-                default:
+
+                case Status.Success:
                     currentChild++;
-                    return currentChild == children.Count ? Status.Success : Status.Running;
+                    continue;
+                    
             }
 
         }
+            
         Reset();
         return Status.Success;
     }
