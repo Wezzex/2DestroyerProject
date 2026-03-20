@@ -139,6 +139,7 @@ MonoBehaviour:
   unitManager: {fileID: 1121105342099411677}
   shipController: {fileID: 936457469284712994}
   aIDetector: {fileID: 2394788137967623158}
+  bInRange: 0
 --- !u!114 &7121999059456374768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e758139c58baf4f91a34ee4f70fe66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIShootBehaviour
-  fieldOfVisionForShooting: 60
+  fieldOfVisionForShooting: 360
 --- !u!114 &6892130215675707481
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1015,13 +1015,13 @@ MonoBehaviour:
   enemyStationPrefab: {fileID: 8145967524789791514, guid: b5e7dd8ceffc7074d835d5b43eb7f1a3, type: 3}
   enemyShipsPrefabs:
   - {fileID: 4205049684065844129, guid: 7bcaa9b2bcc12de45900cba452b6094a, type: 3}
-  stationCount: 3
-  stationRadiusMin: 50
-  stationRadiusMax: 100
-  shipSpawnRadius: 8
-  spawnInterval: 5
-  maxShipStart: 3
-  maxShipIncreasAmount: 1
+  stationCount: 10
+  stationRadiusMin: 75
+  stationRadiusMax: 125
+  shipSpawnRadius: 50
+  spawnInterval: 1
+  maxShipStart: 10
+  maxShipIncreasAmount: 2
   maxShipIncreasOverTime: 30
   aliveStationsCount: 0
 --- !u!4 &1878264337
