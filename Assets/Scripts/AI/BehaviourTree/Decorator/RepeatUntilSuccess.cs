@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RepeatUntilSuccess : Node
 {
-    public RepeatUntilSuccess(string name) : base(name) { }
+    public RepeatUntilSuccess(string name, int priority = 0) : base(name, priority) { }
 
     public override Status Process()
     {

@@ -15,7 +15,6 @@ public class Sequence : Node
             switch (children[currentChild].Process())
             {
                 case Status.Running:
-                    ;
                     return Status.Running;
 
                 case Status.Failure:
@@ -24,7 +23,7 @@ public class Sequence : Node
 
                 case Status.Success:
                     currentChild++;
-                    continue;
+                    return currentChild == children.Count ? Status.Success : Status.Running;
                     
             }
 

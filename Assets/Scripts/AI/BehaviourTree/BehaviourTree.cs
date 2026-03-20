@@ -16,6 +16,7 @@ public class BehaviourTree : Node
             currentChild++;
         }
 
+            currentChild = 0;
             return Status.Success;
     }
 
