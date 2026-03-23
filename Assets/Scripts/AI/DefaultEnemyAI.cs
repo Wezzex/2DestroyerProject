@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DefaultEnemyAI : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class DefaultEnemyAI : MonoBehaviour
     [SerializeField] private AIDetector aIDetector;
 
     BehaviourTree behaviourTree;
-
+    NavMeshAgent agent;
     public  bool bInRange;
 
 
@@ -19,6 +20,7 @@ public class DefaultEnemyAI : MonoBehaviour
         aIDetector = GetComponentInChildren<AIDetector>();
         shipController = GetComponentInChildren<ShipController>();
         unitManager = GetComponentInChildren<UnitManager>();
+        agent = GetComponent<NavMeshAgent>();
 
 
         behaviourTree = new BehaviourTree("DestroyerBehaviourTree");
