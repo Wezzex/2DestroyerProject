@@ -17,9 +17,6 @@ public class DefaultEnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        aIDetector = GetComponentInChildren<AIDetector>();
-        shipController = GetComponentInChildren<ShipController>();
-        unitManager = GetComponentInChildren<UnitManager>();
         agent = GetComponent<NavMeshAgent>();
 
 
@@ -27,6 +24,11 @@ public class DefaultEnemyAI : MonoBehaviour
     }
     private void Start()
     {
+
+        aIDetector = GetComponentInChildren<AIDetector>();
+        shipController = GetComponentInChildren<ShipController>();
+        unitManager = GetComponentInChildren<UnitManager>();
+
         BuildTree();
     }
     private void BuildTree()
