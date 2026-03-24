@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PatrolPath : MonoBehaviour
 {
+    [SerializeField] private GameObject patrolPointPrefab;
     [SerializeField] private List<Transform> patrolPoints = new List<Transform>();
 
     public int Length { get => patrolPoints.Count; }
