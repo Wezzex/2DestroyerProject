@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ShipMover : MonoBehaviour
 {
@@ -34,6 +35,5 @@ public class ShipMover : MonoBehaviour
         rb.linearVelocity = transform.forward * currentSpeed;
 
         rb.MoveRotation(transform.rotation * Quaternion.Euler(0, movementVector.x * shipMovementData.rotationSpeed * Time.fixedDeltaTime, 0));
-
     }
 }

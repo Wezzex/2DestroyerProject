@@ -11,14 +11,11 @@ public class DefaultEnemyAI : MonoBehaviour
     [SerializeField] private AIDetector aIDetector;
 
     BehaviourTree behaviourTree;
-    NavMeshAgent agent;
     public  bool bInRange;
 
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-
 
         behaviourTree = new BehaviourTree("DestroyerBehaviourTree");
     }

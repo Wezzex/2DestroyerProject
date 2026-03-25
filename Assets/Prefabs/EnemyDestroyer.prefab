@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 7121999059456374768}
   - component: {fileID: 6892130215675707481}
   - component: {fileID: 3356239547269132005}
+  - component: {fileID: 1476094385522307072}
   - component: {fileID: 1828397670358981170}
   m_Layer: 0
   m_Name: EnemyDestroyer
@@ -184,6 +185,19 @@ MonoBehaviour:
   waitTime: 0.5
   isWaiting: 0
   currentPatrolTarget: {x: 0, y: 0, z: 0}
+--- !u!114 &1476094385522307072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4205049684065844129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04641e2d4c9f50a4daf16b427cf1ff95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NavAgentSync
+  agent: {fileID: 1828397670358981170}
 --- !u!195 &1828397670358981170
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -14,12 +14,10 @@ public class AIPatrolPathBehaviour : AIBehavior
 
     [SerializeField] private Vector3 currentPatrolTarget;
 
-    private void Awake()
+    private void Start()
     {
-        if (patrolPath == null)
-        {
-            patrolPath = GetComponentInChildren<PatrolPath>();
-        }
+
+        patrolPath = GetComponentInChildren<PatrolPath>();
     }
 
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
