@@ -244,6 +244,8 @@ GameObject:
   - component: {fileID: 404714172945329820}
   - component: {fileID: 8398263934836736483}
   - component: {fileID: 5946697265750848701}
+  - component: {fileID: 389336976780461385}
+  - component: {fileID: 1027709502145165215}
   m_Layer: 11
   m_Name: EnemyDestroyerShipMotor
   m_TagString: Untagged
@@ -388,6 +390,41 @@ MonoBehaviour:
   shipController: {fileID: 5906165121629512770}
   spawner: {fileID: 0}
   explotionPrefab: {fileID: 100010, guid: 08eaa035e54502d47a55b3aee5cc0ae8, type: 3}
+--- !u!114 &389336976780461385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283625353866652593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04641e2d4c9f50a4daf16b427cf1ff95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NavAgentSync
+  agent: {fileID: 1027709502145165215}
+--- !u!195 &1027709502145165215
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283625353866652593}
+  m_Enabled: 1
+  m_AgentTypeID: -334000983
+  m_Radius: 2
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.4
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 2
 --- !u!1 &5181334644262056132
 GameObject:
   m_ObjectHideFlags: 0

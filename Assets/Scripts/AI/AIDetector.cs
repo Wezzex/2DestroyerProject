@@ -82,13 +82,15 @@ public class AIDetector : MonoBehaviour
 
     IEnumerator DetectionCoroutine()
     {
-        yield return new WaitForSeconds(detectionCheckDelay);
-        DetectTarget();
-        StartCoroutine(DetectionCoroutine());
+        while (true)
+        {
+            DetectTarget();
+            yield return new WaitForSeconds(detectionCheckDelay);
+        }
     }
 
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, viewRadius);
