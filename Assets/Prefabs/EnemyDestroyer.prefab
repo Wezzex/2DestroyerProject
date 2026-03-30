@@ -121,6 +121,7 @@ Transform:
   m_Children:
   - {fileID: 2959141123539012081}
   - {fileID: 7683149765703835115}
+  - {fileID: 716056577112480971}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9152716537326163584
@@ -179,6 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIPatrolPathBehaviour
   patrolPath: {fileID: 5056591302709625043}
+  patrolArea: {fileID: 2305542091503090373}
   arriveDistance: 0.1
   waitTime: 0.5
   isWaiting: 0
@@ -214,6 +216,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2959141123539012081}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7458112154539121723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 716056577112480971}
+  - component: {fileID: 2305542091503090373}
+  m_Layer: 0
+  m_Name: PatrolArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &716056577112480971
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458112154539121723}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4087428884730742445}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2305542091503090373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458112154539121723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29242313942844b4aa53c35505300414, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PatrolArea
+  PatrolPointPrefab: {fileID: 3041029867548270438, guid: ad722c80de8be5a45800c3e8d6efa507, type: 3}
+  PatrolAncor: {fileID: 7683149765703835115}
+  parentObject: {fileID: 716056577112480971}
+  PatrolPoints: []
+  currentTargetIndex: 0
+  radiusMin: 50
+  radiusMax: 75
+  pointSize: 1
 --- !u!1001 &6641975857901931684
 PrefabInstance:
   m_ObjectHideFlags: 0

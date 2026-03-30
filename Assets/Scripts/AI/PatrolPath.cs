@@ -43,7 +43,7 @@ public class PatrolPath : MonoBehaviour
         return new PathPoint { Index = newIndex, Position = patrolPoints[newIndex].position };
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         if (patrolPoints.Count == 0)
         {
@@ -71,5 +71,5 @@ public class PatrolPath : MonoBehaviour
                 Gizmos.DrawLine(patrolPoints[i].position, patrolPoints[0].position);
             }
         }
-    }
+    }*/
 }

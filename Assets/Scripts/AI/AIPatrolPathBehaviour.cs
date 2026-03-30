@@ -4,6 +4,7 @@ using UnityEngine;
 public class AIPatrolPathBehaviour : AIBehavior
 {
     [SerializeField] private PatrolPath patrolPath;
+    [SerializeField] private PatrolArea patrolArea;
     [SerializeField, Range(0.1f, 1f)] private float arriveDistance = 1;
 
     [SerializeField] private float waitTime = 0.5f;
