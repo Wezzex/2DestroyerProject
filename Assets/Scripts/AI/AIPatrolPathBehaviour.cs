@@ -3,45 +3,37 @@ using UnityEngine;
 
 public class AIPatrolPathBehaviour : AIBehavior
 {
-    [SerializeField] private PatrolPath patrolPath;
     [SerializeField] private PatrolArea patrolArea;
     [SerializeField, Range(0.1f, 1f)] private float arriveDistance = 1;
 
     [SerializeField] private float waitTime = 0.5f;
     [SerializeField] private bool isWaiting = false;
 
-    bool isInitialized = false;
-    private int currentIndex = -1;
-
     [SerializeField] private Vector3 currentPatrolTarget;
+    private Vector3 shipCurrentPosition;
 
     private void Start()
     {
-
-        patrolPath = GetComponentInChildren<PatrolPath>();
         patrolArea = GetComponentInChildren<PatrolArea>();
+
+        currentPatrolTarget = patrolArea.GetCurrentTargetPosition();
     }
 
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
     {
-        if (patrolPath == null) return;
-        if (patrolPath.Length < 2) return;
+        if (patrolArea == null) return; 
         if (isWaiting) return;
 
-        if (!isInitialized)
-        {
-            var currentPathPoint = patrolPath.GetClosestPathPoint(shipController.transform.position);
-            currentIndex = currentPathPoint.Index;
-            currentPatrolTarget = currentPathPoint.Position;
-            isInitialized = true;
-        }
-
         Vector3 shipPosition = shipController.transform.position;
-        Vector3 targetPosition = currentPatrolTarget;
-        shipPosition.y = 0f;
-        targetPosition.y = 0f;
+        shipCurrentPosition = shipPosition;
+        Vector3 patrolTargetPosition = patrolArea.GetCurrentTargetPosition(); 
 
-        if (Vector3.Distance(shipPosition, targetPosition) <= arriveDistance)
+        currentPatrolTarget = patrolTargetPosition;
+
+        shipPosition.y = 0f;
+        patrolTargetPosition.y = 0f;
+
+        if (Vector3.Distance(shipPosition, patrolTargetPosition) <= arriveDistance)
         {
             isWaiting = true;
             StartCoroutine(WaitCoroutine());
@@ -77,9 +69,16 @@ public class AIPatrolPathBehaviour : AIBehavior
     IEnumerator WaitCoroutine()
     {
         yield return new WaitForSeconds(waitTime);
-        var nextPathPoint = patrolPath.GetNextPathPoint(currentIndex);
-        currentPatrolTarget = nextPathPoint.Position;
-        currentIndex = nextPathPoint.Index;
+        patrolArea.OnReachedPoint();
+        var nextPathPoint = patrolArea.GetCurrentTargetPosition();
+        currentPatrolTarget = nextPathPoint;
         isWaiting = false;
+    }
+
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(shipCurrentPosition, currentPatrolTarget);
     }
 }

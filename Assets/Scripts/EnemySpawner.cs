@@ -16,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int stationCount = 3;
     [SerializeField] private float stationRadiusMin = 400;
     [SerializeField] private float stationRadiusMax = 700;
+    [SerializeField] private float stationSpawnDistance = 75;
 
 
     [Header("Reference")]
@@ -64,9 +65,22 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < stationCount; i++)
         {
             Vector3 spawnPosition = GetRandomPointInRange(player.position, stationRadiusMin, stationRadiusMax);
-            GameObject station = Instantiate(enemyStationPrefab, spawnPosition, Quaternion.identity);
+           
 
-            stations.Add(station.transform);
+            if (stations.Count > 0)
+            {
+                
+                    Vector3 newSpawnPosition = TryValidStationSpawn();
+
+                    GameObject station = Instantiate(enemyStationPrefab, newSpawnPosition, Quaternion.identity);
+                    stations.Add(station.transform);
+                
+            }
+            else
+            {
+                GameObject station = Instantiate(enemyStationPrefab, spawnPosition, Quaternion.identity);
+                stations.Add(station.transform);
+            }
 
             aliveStationsCount++;
         }
@@ -77,6 +91,27 @@ public class EnemySpawner : MonoBehaviour
         }
         
         
+    }
+
+    private Vector3 TryValidStationSpawn()
+    {
+        Vector3 candidat = GetRandomPointInRange(player.position, stationRadiusMin, stationRadiusMax);
+        int spawnTry = 5;
+
+        for (int i = 0; i < spawnTry; i++)
+        {
+            candidat = GetRandomPointInRange(player.position, stationRadiusMin, stationRadiusMax);
+            foreach (var station in stations)
+            {
+                if (Vector3.Distance(station.transform.position, candidat) < stationSpawnDistance)
+                {
+                    continue;
+                }
+            }
+            return candidat;
+        }
+
+        return candidat;
     }
 
     private IEnumerator SpawnLoop()
@@ -144,6 +179,16 @@ public class EnemySpawner : MonoBehaviour
         spawnPosition.y = station.position.y;
 
         GameObject ship = Instantiate(enemyShipPrefab, spawnPosition, Quaternion.identity);
+
+        PatrolArea patrolArea = ship.GetComponentInChildren<PatrolArea>();
+        if (patrolArea != null)
+        {
+
+
+            patrolArea.InitilizeSpawnPoints();
+            patrolArea.SetPatrolAncor(station.transform.position);
+        }
+
         aliveShips.Add(ship);
     }
 

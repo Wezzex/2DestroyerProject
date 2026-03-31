@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874779ea3ee597a4596cac671a473a58, type: 3}
   m_Name: EnemyShipMovementData
   m_EditorClassIdentifier: Assembly-CSharp::ShipMovementData
-  maxSpeed: 1
-  rotationSpeed: 5
+  maxSpeed: 2
+  rotationSpeed: 30
   acceleration: 0.1
-  deacceleration: 1
+  deacceleration: 0.5

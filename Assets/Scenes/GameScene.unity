@@ -1370,9 +1370,10 @@ MonoBehaviour:
   enemyStationPrefab: {fileID: 8145967524789791514, guid: b5e7dd8ceffc7074d835d5b43eb7f1a3, type: 3}
   enemyShipsPrefabs:
   - {fileID: 4205049684065844129, guid: 7bcaa9b2bcc12de45900cba452b6094a, type: 3}
-  stationCount: 3
-  stationRadiusMin: 50
-  stationRadiusMax: 75
+  stationCount: 5
+  stationRadiusMin: 100
+  stationRadiusMax: 200
+  stationSpawnDistance: 75
   shipSpawnRadius: 25
   spawnInterval: 30
   maxShipStart: 3
@@ -1546,7 +1547,7 @@ Transform:
   m_GameObject: {fileID: 2057837784}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -97, y: 0, z: -45.9}
+  m_LocalPosition: {x: -373, y: 0, z: -382}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
