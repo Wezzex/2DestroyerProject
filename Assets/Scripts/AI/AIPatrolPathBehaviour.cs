@@ -19,6 +19,7 @@ public class AIPatrolPathBehaviour : AIBehavior
     {
 
         patrolPath = GetComponentInChildren<PatrolPath>();
+        patrolArea = GetComponentInChildren<PatrolArea>();
     }
 
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
@@ -82,4 +83,3 @@ public class AIPatrolPathBehaviour : AIBehavior
         isWaiting = false;
     }
 }
-
