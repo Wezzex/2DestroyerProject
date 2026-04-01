@@ -393,6 +393,8 @@ GameObject:
   - component: {fileID: 1529956210659461498}
   - component: {fileID: 2706793107455552218}
   - component: {fileID: 4161355958758634970}
+  - component: {fileID: 6043452385339803873}
+  - component: {fileID: 8536035440471294777}
   m_Layer: 11
   m_Name: EnemyStationShipMotor
   m_TagString: EnemyStations
@@ -561,9 +563,39 @@ MonoBehaviour:
   shipController: {fileID: 0}
   spawner: {fileID: 0}
   explotionPrefab: {fileID: 100012, guid: 974e67002d0df3d4796a656ba98661eb, type: 3}
-  OnStationDestroyed:
-    m_PersistentCalls:
-      m_Calls: []
+--- !u!208 &6043452385339803873
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283625353866652593}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 1.5, z: 7}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.25, z: 0.7}
+  m_TimeToStationary: 0.5
+--- !u!114 &8536035440471294777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283625353866652593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifierVolume
+  m_SerializedVersion: 0
+  m_Size: {x: 4, y: 3, z: 14}
+  m_Center: {x: 0, y: -0.25, z: 0.7}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &5181334644262056132
 GameObject:
   m_ObjectHideFlags: 0

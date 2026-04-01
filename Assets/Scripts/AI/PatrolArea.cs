@@ -35,8 +35,6 @@ public class PatrolArea : MonoBehaviour
 
 
         currentTargetIndex = 0;
-
-        TeleportPatrolPoint(currentTargetIndex);
     }
 
 

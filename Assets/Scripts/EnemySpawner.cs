@@ -183,10 +183,8 @@ public class EnemySpawner : MonoBehaviour
         PatrolArea patrolArea = ship.GetComponentInChildren<PatrolArea>();
         if (patrolArea != null)
         {
-
-
-            patrolArea.InitilizeSpawnPoints();
             patrolArea.SetPatrolAncor(station.transform.position);
+            patrolArea.InitilizeSpawnPoints();
         }
 
         aliveShips.Add(ship);
