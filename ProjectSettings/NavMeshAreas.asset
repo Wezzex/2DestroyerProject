@@ -11,10 +11,10 @@ NavMeshProjectSettings:
     cost: 1
   - name: Jump
     cost: 2
-  - name: 
-    cost: 1
-  - name: 
-    cost: 1
+  - name: Avoidable
+    cost: 5
+  - name: Obsticle
+    cost: 10
   - name: 
     cost: 1
   - name: 
