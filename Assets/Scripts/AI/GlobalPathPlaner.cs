@@ -7,8 +7,8 @@ using UnityEngine.AI;
 public class GlobalPathPlaner : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform shipTransform; // set to ship root (or leave null to use this.transform)
-    [SerializeField] private NavMeshAgent agent;      // optional (used for radius/areaMask)
+    [SerializeField] private Transform shipTransform; 
+    [SerializeField] private NavMeshAgent agent;      
 
     [Header("Replan")]
     [SerializeField] private float replanInterval = 0.5f;
@@ -37,6 +37,8 @@ public class GlobalPathPlaner : MonoBehaviour
     public IReadOnlyList<Vector3> PathPoints => pathPoints;
     public bool HasPath => pathPoints != null && pathPoints.Length >= 2;
 
+    public int PathVersion { get; private set; }
+
     private void Awake()
     {
         navPath = new NavMeshPath();
@@ -44,16 +46,11 @@ public class GlobalPathPlaner : MonoBehaviour
         if (shipTransform == null)
             shipTransform = transform;
 
-        // If you don't use NavMeshAgent for movement, you can still keep one for radius/areaMask.
         if (agent == null)
             agent = GetComponent<NavMeshAgent>();
     }
 
     private float Now() => useUnscaledTime ? Time.unscaledTime : Time.time;
-
-    /// <summary>
-    /// Sets the target and triggers replanning on the next Update.
-    /// </summary>
     public void SetDestination(Vector3 position)
     {
         hasGoal = true;
@@ -86,7 +83,6 @@ public class GlobalPathPlaner : MonoBehaviour
         Vector3 start = shipTransform.position;
         Vector3 end = goal;
 
-        // 2.5D: keep y consistent for planning (optional, depends on your navmesh height)
         end.y = start.y;
 
         int mask = (agent != null) ? agent.areaMask : NavMesh.AllAreas;
@@ -98,17 +94,16 @@ public class GlobalPathPlaner : MonoBehaviour
             return;
         }
 
-        // Build curves from corners
         Vector3[] corners = navPath.corners;
         BezierCurve[] curves = BuildCurvesFromCorners(corners);
 
-        // Sample curves into points
         Vector3[] sampled = GetPathLocations(curves);
 
-        // Post process (optional)
         sampled = PostProcessPath(curves, sampled);
 
         pathPoints = sampled;
+
+        PathVersion++;
     }
 
     private BezierCurve[] BuildCurvesFromCorners(Vector3[] corners)
@@ -154,7 +149,6 @@ public class GlobalPathPlaner : MonoBehaviour
             points.AddRange(segments);
         }
 
-        // Ensure last endpoint is included
         points.Add(curves[curves.Length - 1].EndPosition);
 
         return points.ToArray();
@@ -165,14 +159,11 @@ public class GlobalPathPlaner : MonoBehaviour
         if (path == null || path.Length < 2)
             return path ?? Array.Empty<Vector3>();
 
-        // Optional oversmoothing removal
         path = RemoveOverSmoothing(curves, path);
 
-        // Optional too-close point removal
         if (removeTooClosePoints)
             path = RemoveTooClosePoints(path);
 
-        // Optional sample to NavMesh
         if (sampleToNavMesh)
             path = SamplePathPositions(path);
 
@@ -226,8 +217,6 @@ public class GlobalPathPlaner : MonoBehaviour
         if (curves == null || curves.Length == 0) return path;
         if (path.Length <= 2) return path;
 
-        // This method assumes the path was built from curves in order.
-        // We'll compare each curve direction vs each sampled segment direction.
         int index = 1;
         int lastIndex = 0;
 

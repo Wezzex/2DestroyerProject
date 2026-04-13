@@ -93,9 +93,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIPatrolPathBehaviour
   patrolArea: {fileID: 2305542091503090373}
+  followPlannedPath: {fileID: 0}
   planer: {fileID: 3975059967889128687}
   arriveDistance: 1
-  waitTime: 0.5
+  waitTime: 0.1
   isWaiting: 0
   currentPatrolTarget: {x: 0, y: 0, z: 0}
 --- !u!1 &7458112154539121723
@@ -203,6 +204,18 @@ PrefabInstance:
     - target: {fileID: 4283625353866652593, guid: bb950c2c414d134438f67357083b1758, type: 3}
       propertyPath: m_Name
       value: EnemyShipMotor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647711416053750415, guid: bb950c2c414d134438f67357083b1758, type: 3}
+      propertyPath: replanInterval
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647711416053750415, guid: bb950c2c414d134438f67357083b1758, type: 3}
+      propertyPath: smoothingFactor
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647711416053750415, guid: bb950c2c414d134438f67357083b1758, type: 3}
+      propertyPath: useUnscaledTime
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

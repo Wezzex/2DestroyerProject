@@ -4,6 +4,7 @@ using UnityEngine;
 public class AIPatrolPathBehaviour : AIBehavior
 {
     [SerializeField] private PatrolArea patrolArea;
+    [SerializeField] private FollowPlannedPath followPlannedPath;
     [SerializeField] private GlobalPathPlaner planer;
     [SerializeField, Range(0.1f, 1f)] private float arriveDistance = 1;
 
@@ -23,6 +24,11 @@ public class AIPatrolPathBehaviour : AIBehavior
         {
             planer = GetComponentInChildren<GlobalPathPlaner>();
         }
+
+        if (followPlannedPath == null)
+        {
+            followPlannedPath = GetComponentInChildren<FollowPlannedPath>();
+        }
     }
 
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
@@ -31,47 +37,19 @@ public class AIPatrolPathBehaviour : AIBehavior
         if (isWaiting) return;
 
         Vector3 goal = patrolArea.GetCurrentTargetPosition();
-
         planer.SetDestination(goal);
 
         Vector3 shipPosition = shipController.transform.position;
-        shipCurrentPosition = shipPosition;
-        Vector3 patrolTargetPosition = patrolArea.GetCurrentTargetPosition(); 
-
-        currentPatrolTarget = patrolTargetPosition;
-
         shipPosition.y = 0f;
-        goal.y = 0f;
-        patrolTargetPosition.y = 0f;
 
-        if (Vector3.Distance(shipPosition, patrolTargetPosition) <= arriveDistance)
+        goal.y = 0f;
+
+        if (Vector3.Distance(shipPosition, goal) <= arriveDistance)
         {
             isWaiting = true;
-            StartCoroutine(WaitCoroutine());
-            shipController.HandleMoveShip(Vector2.zero);
-            return;
+            StartCoroutine(WaitAndSwapPoint());
         }
 
-        Vector3 toTarget = (currentPatrolTarget - shipController.transform.position);
-        toTarget.y = 0f;
-
-        if (toTarget.sqrMagnitude < 0.0001f)
-        {
-            shipController.HandleMoveShip(Vector2.zero);
-            return;
-        }
-        toTarget.Normalize();
-
-        Vector3 forwardDirection = shipController.transform.forward;
-        forwardDirection.y = 0f;
-        forwardDirection.Normalize();
-
-        float angle = Vector3.SignedAngle(forwardDirection, toTarget, Vector3.up);
-
-        float turn = Mathf.Clamp(angle / 45f, -1f, 1f);
-        float thrust = Mathf.Abs(angle) < 15f ? 1f : 0.5f;
-
-        shipController.HandleMoveShip(new Vector2(turn, thrust));
         shipController.SetShootingState(false);
 
     }
@@ -81,6 +59,7 @@ public class AIPatrolPathBehaviour : AIBehavior
     {
         yield return new WaitForSeconds(waitTime);
         patrolArea.OnReachedPoint();
+        followPlannedPath.ResetFollower();
         var nextPathPoint = patrolArea.GetCurrentTargetPosition();
         currentPatrolTarget = nextPathPoint;
         isWaiting = false;
@@ -95,7 +74,7 @@ public class AIPatrolPathBehaviour : AIBehavior
 
         Vector3 newGoal = patrolArea.GetCurrentTargetPosition();
         planer.SetDestination(newGoal);
-
+        followPlannedPath.ResetFollower();
         isWaiting = false;
     }
 

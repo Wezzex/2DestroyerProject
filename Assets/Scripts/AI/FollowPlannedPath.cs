@@ -14,6 +14,8 @@ public class FollowPlannedPath : MonoBehaviour
     [SerializeField] private float alignThreshold = 15f;
     [SerializeField] private float reducedThrust = 0.5f;
 
+    [SerializeField] int lastPathVersion = -1;
+
     private int pathIndex;
 
     private void Awake()
@@ -29,6 +31,12 @@ public class FollowPlannedPath : MonoBehaviour
         {
             shipMover.Move(Vector2.zero);
             return;
+        }
+
+        if (planner.PathVersion != lastPathVersion)
+        {
+            lastPathVersion = planner.PathVersion;
+            pathIndex = 0;
         }
 
         var points = planner.PathPoints;
@@ -50,6 +58,29 @@ public class FollowPlannedPath : MonoBehaviour
         Vector3 target = points[targetIndex]; target.y = 0f;
 
         Vector3 toTarget = target - shipPos;
+
+        bool closeEnough = toTarget.sqrMagnitude <= arriveDistance * arriveDistance;
+
+        Vector3 forwardFlat = transform.forward;
+        forwardFlat.y = 0f;
+
+        if (forwardFlat.sqrMagnitude > 0.00001f)
+        {
+            forwardFlat.Normalize();
+        }
+
+        bool passedWaypoint = false;
+        if (toTarget.sqrMagnitude > 0.00001f && forwardFlat.sqrMagnitude > 0.00001f)
+        {
+            toTarget.Normalize();
+            passedWaypoint = Vector3.Dot(forwardFlat, toTarget) < 0.0f;
+        }
+
+        if (closeEnough || passedWaypoint)
+        {
+            pathIndex = Mathf.Min(pathIndex + 1, points.Count - 1);
+        }
+
         if (toTarget.sqrMagnitude < 0.0001f)
         {
             shipMover.Move(Vector2.zero);

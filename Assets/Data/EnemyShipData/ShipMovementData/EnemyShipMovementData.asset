@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: EnemyShipMovementData
   m_EditorClassIdentifier: Assembly-CSharp::ShipMovementData
   maxSpeed: 2
-  rotationSpeed: 30
-  acceleration: 0.1
-  deacceleration: 0.5
+  rotationSpeed: 10
+  acceleration: 1
+  deacceleration: 1

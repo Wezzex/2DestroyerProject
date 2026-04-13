@@ -21,6 +21,13 @@ public class ShipMover : MonoBehaviour
 
     public void Move(Vector2 movementVector)
     {
+
+        if (float.IsNaN(movementVector.x) || float.IsNaN(movementVector.y) ||
+        float.IsInfinity(movementVector.x) || float.IsInfinity(movementVector.y))
+        {
+            movementVector = Vector2.zero;
+        }
+
         this.movementVector = movementVector;
     }
 
