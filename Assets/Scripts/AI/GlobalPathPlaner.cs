@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Splines;
@@ -13,7 +15,11 @@ public class GlobalPathPlaner : MonoBehaviour
     public NavMeshAgent agent;
     public NavMeshPath path;
 
-    [SerializeField] private float SmoothingLength;
+    [SerializeField] private float SmoothingLength = 1;
+    [SerializeField] private int SmoothingSections = 10;
+    [SerializeField, Range (0, 1)] private float SmoothingFactor = 0.5f;
+
+    private Vector3 InfinityVector = new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
 
     private void Start()
     {
@@ -38,35 +44,7 @@ public class GlobalPathPlaner : MonoBehaviour
 
     }
 
-    public void SetDestination(Vector3 position)
-    {
-        NavMesh.CalculatePath(startTransform.position, endTransform.position, NavMesh.AllAreas, path);
-        if (Points.Length > 2)
-        {
-            BezierCurve[] bezierCurves = new BezierCurve[Points.Length - 1];
-        }
-    }
-
-    private void SmoothCurve(BezierCurve[] curves, Vector3[] corners)
-    {
-        for (int i = 0; i < curves.Length; i++)
-        {
-            if (curves[i] == null)
-            {
-                curves[i] = new BezierCurve();
-            }
-
-            Vector3 position = corners[i];
-            Vector3 lastPosition = i == 0 ? corners[i] : corners[i - 1];
-            Vector3 nextPosition = corners[i + 1];
-
-            Vector3 lastDirection = (position - lastPosition).normalized;
-            Vector3 nextDirection = (nextPosition - position).normalized;
-
-            Vector3 startTangent = (lastDirection + nextDirection) * SmoothingLength;
-            Vector3 endTangent = (nextDirection + lastDirection) * -1 * SmoothingLength;
-        }
-    }
+    
 
     private void Update()
     {
