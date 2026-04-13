@@ -4,6 +4,7 @@ using UnityEngine;
 public class AIPatrolPathBehaviour : AIBehavior
 {
     [SerializeField] private PatrolArea patrolArea;
+    [SerializeField] private GlobalPathPlaner planer;
     [SerializeField, Range(0.1f, 1f)] private float arriveDistance = 1;
 
     [SerializeField] private float waitTime = 0.5f;
@@ -17,12 +18,21 @@ public class AIPatrolPathBehaviour : AIBehavior
         patrolArea = GetComponentInChildren<PatrolArea>();
 
         currentPatrolTarget = patrolArea.GetCurrentTargetPosition();
+
+        if (planer == null)
+        {
+            planer = GetComponentInChildren<GlobalPathPlaner>();
+        }
     }
 
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
     {
         if (patrolArea == null) return; 
         if (isWaiting) return;
+
+        Vector3 goal = patrolArea.GetCurrentTargetPosition();
+
+        planer.SetDestination(goal);
 
         Vector3 shipPosition = shipController.transform.position;
         shipCurrentPosition = shipPosition;
@@ -31,6 +41,7 @@ public class AIPatrolPathBehaviour : AIBehavior
         currentPatrolTarget = patrolTargetPosition;
 
         shipPosition.y = 0f;
+        goal.y = 0f;
         patrolTargetPosition.y = 0f;
 
         if (Vector3.Distance(shipPosition, patrolTargetPosition) <= arriveDistance)
@@ -60,7 +71,7 @@ public class AIPatrolPathBehaviour : AIBehavior
         float turn = Mathf.Clamp(angle / 45f, -1f, 1f);
         float thrust = Mathf.Abs(angle) < 15f ? 1f : 0.5f;
 
-        shipController.HandleMoveShip(new Vector2(turn, thrust));
+        //shipController.HandleMoveShip(new Vector2(turn, thrust));
         shipController.SetShootingState(false);
 
     }
@@ -75,6 +86,18 @@ public class AIPatrolPathBehaviour : AIBehavior
         isWaiting = false;
     }
 
+
+    IEnumerator WaitAndSwapPoint()
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        patrolArea.OnReachedPoint();
+
+        Vector3 newGoal = patrolArea.GetCurrentTargetPosition();
+        planer.SetDestination(newGoal);
+
+        isWaiting = false;
+    }
 
     private void OnDrawGizmosSelected()
     {

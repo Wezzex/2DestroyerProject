@@ -1,213 +1,275 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Splines;
 
 public class GlobalPathPlaner : MonoBehaviour
 {
-    private Transform startTransform;
-    private Transform endTransform;
-    private Transform entetyTransform;
+    [Header("References")]
+    [SerializeField] private Transform shipTransform; // set to ship root (or leave null to use this.transform)
+    [SerializeField] private NavMeshAgent agent;      // optional (used for radius/areaMask)
 
-    private Transform[] Points;
-    private float pathLength;
-
-    public NavMeshAgent agent;
-    public NavMeshPath path;
-
-    [SerializeField] private float SmoothingLength = 1;
-    [SerializeField] private int SmoothingSections = 10;
-    [SerializeField, Range (0, 1)] private float SmoothingFactor = 0.5f;
-    [SerializeField] bool bUsesBezierSmoothing = false;
-
-    [SerializeField] private int areaMask = NavMesh.AllAreas;
-
+    [Header("Replan")]
     [SerializeField] private float replanInterval = 0.5f;
     [SerializeField] private float goalReplanDistance = 2f;
+    [SerializeField] private bool useUnscaledTime = false;
 
-    private Vector3 InfinityVector = new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
+    [Header("Smoothing")]
+    [SerializeField] private float smoothingLength = 1f;
+    [SerializeField] private int smoothingSections = 10;
+    [SerializeField, Range(0, 1)] private float smoothingFactor = 0.5f;
 
-    private void Start()
+    [Header("Post Processing")]
+    [SerializeField] private bool sampleToNavMesh = false;
+    [SerializeField] private bool removeTooClosePoints = true;
+
+    private readonly Vector3 InfinityVector = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
+
+    private NavMeshPath navPath;
+    private Vector3 goal;
+    private bool hasGoal;
+
+    private float nextReplanTime;
+    private Vector3 lastGoal;
+
+    private Vector3[] pathPoints = Array.Empty<Vector3>();
+    public IReadOnlyList<Vector3> PathPoints => pathPoints;
+    public bool HasPath => pathPoints != null && pathPoints.Length >= 2;
+
+    private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        path = new NavMeshPath();
+        navPath = new NavMeshPath();
+
+        if (shipTransform == null)
+            shipTransform = transform;
+
+        // If you don't use NavMeshAgent for movement, you can still keep one for radius/areaMask.
+        if (agent == null)
+            agent = GetComponent<NavMeshAgent>();
     }
 
-    private float PathLength(NavMeshPath path)
+    private float Now() => useUnscaledTime ? Time.unscaledTime : Time.time;
+
+    /// <summary>
+    /// Sets the target and triggers replanning on the next Update.
+    /// </summary>
+    public void SetDestination(Vector3 position)
     {
-        if (path.corners.Length < 2)
-        {
-            return 0;
-        }
-
-        float lengthSoFar = 0.0f;
-        for (int i = 0; i < path.corners.Length; i++)
-        {
-            lengthSoFar += Vector3.Distance(path.corners[i - 1], path.corners[i]);
-        }
-
-        return lengthSoFar;
-
+        hasGoal = true;
+        goal = position;
     }
 
-public void SetDestination(Vector3 position)
+    public void ClearDestination()
     {
-        NavMesh.CalculatePath(startTransform.position, endTransform.position, NavMesh.AllAreas, path);
-        if (Points.Length > 2)
-        {
-            BezierCurve[] bezierCurves = new BezierCurve[Points.Length - 1];
-        }
+        hasGoal = false;
+        pathPoints = Array.Empty<Vector3>();
     }
 
-    private void SmoothCurve(BezierCurve[] Curves, Vector3[] corners)
+    private void Update()
     {
-        for (int i = 0; i < Curves.Length; i++)
+        if (!hasGoal) return;
+
+        bool timeToReplan = Now() >= nextReplanTime;
+        bool goalMoved = Vector3.Distance(goal, lastGoal) >= goalReplanDistance;
+
+        if (timeToReplan || goalMoved || !HasPath)
         {
-            if (Curves[i] == null)
-            {
-                Curves[i] = new BezierCurve();
-            }
-
-            Vector3 position = corners[i];
-            Vector3 lastPosition = i == 0 ? corners[i] : corners[i - 1];
-            Vector3 nextPosition = corners[i + 1];
-
-            Vector3 lastDirection = (position - lastPosition).normalized;
-            Vector3 nextDirection = (nextPosition - position).normalized;
-
-            Vector3 startTangent = (lastDirection + nextDirection) * SmoothingLength;
-            Vector3 endTangent = (nextDirection + lastDirection) * -1 * SmoothingLength;
-
-            Curves[i].Points[0] = position;
-            Curves[i].Points[1] = position + startTangent;
-            Curves[i].Points[2] = nextPosition + endTangent;
-            Curves[i].Points[3] = nextPosition;
-
-
-        }
-
-        {
-            Vector3 nextDirection = (Curves[1].EndPosition - Curves[1].StartPosition.normalized);
-            Vector3 lastDirection = (Curves[0].EndPosition - Curves[0].StartPosition.normalized);
-
-            Curves[0].Points[2] = Curves[0].Points[3] + (nextDirection + lastDirection) * -1 * SmoothingLength;
+            Replan();
+            nextReplanTime = Now() + replanInterval;
+            lastGoal = goal;
         }
     }
 
-    private Vector3[] GetPathLocations(BezierCurve[] Curves)
+    private void Replan()
     {
-        Vector3[] pathLocations = new Vector3[Curves.Length * SmoothingSections];
+        Vector3 start = shipTransform.position;
+        Vector3 end = goal;
 
-        int index = 0;
-        for (int i = 0; i < Curves.Length; i++)
+        // 2.5D: keep y consistent for planning (optional, depends on your navmesh height)
+        end.y = start.y;
+
+        int mask = (agent != null) ? agent.areaMask : NavMesh.AllAreas;
+
+        bool ok = NavMesh.CalculatePath(start, end, mask, navPath);
+        if (!ok || navPath.corners == null || navPath.corners.Length < 2)
         {
-            Vector3[] segments = Curves[i].GetSegments(SmoothingSections);
-            for (int j = 0; j < segments.Length; j++)
-            {
-                pathLocations[index] = segments[j];
-                index++;
-            }
+            pathPoints = Array.Empty<Vector3>();
+            return;
         }
 
-        pathLocations = PostProcessPath(Curves, pathLocations);
-        return pathLocations;
+        // Build curves from corners
+        Vector3[] corners = navPath.corners;
+        BezierCurve[] curves = BuildCurvesFromCorners(corners);
+
+        // Sample curves into points
+        Vector3[] sampled = GetPathLocations(curves);
+
+        // Post process (optional)
+        sampled = PostProcessPath(curves, sampled);
+
+        pathPoints = sampled;
     }
 
-    private Vector3[] PostProcessPath(BezierCurve[] Curves, Vector3[] Path)
+    private BezierCurve[] BuildCurvesFromCorners(Vector3[] corners)
     {
-        Vector3[] path = RemoveOverSmoothing(Curves, Path);
+        int segmentCount = corners.Length - 1;
+        var curves = new BezierCurve[segmentCount];
 
-        path = RemoveTooClosePoints(path);
-        path = SamplePathPositions(path);
+        for (int i = 0; i < segmentCount; i++)
+        {
+            curves[i] = new BezierCurve();
+
+            Vector3 p0 = corners[i];
+            Vector3 p3 = corners[i + 1];
+
+            Vector3 prev = (i == 0) ? p0 : corners[i - 1];
+            Vector3 next = (i + 2 < corners.Length) ? corners[i + 2] : p3;
+
+            Vector3 inDir = (p3 - prev).normalized;
+            Vector3 outDir = (next - p0).normalized;
+
+            Vector3 p1 = p0 + inDir * smoothingLength;
+            Vector3 p2 = p3 - outDir * smoothingLength;
+
+            curves[i].Points[0] = p0;
+            curves[i].Points[1] = p1;
+            curves[i].Points[2] = p2;
+            curves[i].Points[3] = p3;
+        }
+
+        return curves;
+    }
+
+    private Vector3[] GetPathLocations(BezierCurve[] curves)
+    {
+        if (curves == null || curves.Length == 0)
+            return Array.Empty<Vector3>();
+
+        var points = new List<Vector3>(curves.Length * smoothingSections + 1);
+
+        for (int i = 0; i < curves.Length; i++)
+        {
+            Vector3[] segments = curves[i].GetSegments(smoothingSections);
+            points.AddRange(segments);
+        }
+
+        // Ensure last endpoint is included
+        points.Add(curves[curves.Length - 1].EndPosition);
+
+        return points.ToArray();
+    }
+
+    private Vector3[] PostProcessPath(BezierCurve[] curves, Vector3[] path)
+    {
+        if (path == null || path.Length < 2)
+            return path ?? Array.Empty<Vector3>();
+
+        // Optional oversmoothing removal
+        path = RemoveOverSmoothing(curves, path);
+
+        // Optional too-close point removal
+        if (removeTooClosePoints)
+            path = RemoveTooClosePoints(path);
+
+        // Optional sample to NavMesh
+        if (sampleToNavMesh)
+            path = SamplePathPositions(path);
 
         return path;
     }
-    private Vector3[] RemoveTooClosePoints(Vector3[] Path)
+
+    private Vector3[] RemoveTooClosePoints(Vector3[] path)
     {
-        if (Path.Length <= 2)
-        {
-            return Path;
-        }
+        if (path.Length <= 2) return path;
+
+        float minDist = (agent != null) ? agent.radius : 1f;
 
         int lastIndex = 0;
-        int index = 1;
-        for (int i = 0; i < Path.Length; i++)
+        for (int index = 1; index < path.Length; index++)
         {
-            if (Vector3.Distance(Path[index], Path[lastIndex]) < agent.radius)
+            if (Vector3.Distance(path[index], path[lastIndex]) < minDist)
             {
-                Path[index] = InfinityVector;
+                path[index] = InfinityVector;
             }
             else
             {
                 lastIndex = index;
             }
-            index++;
         }
-        return Path.Except(new Vector3[] { InfinityVector }).ToArray();
+
+        return path.Where(p => p != InfinityVector).ToArray();
     }
 
-    private Vector3[] SamplePathPositions(Vector3[] Path)
+    private Vector3[] SamplePathPositions(Vector3[] path)
     {
-        for (int i = 0; Path.Length > 0; i++)
+        float sampleRadius = (agent != null) ? agent.radius * 1.5f : 2f;
+        int mask = (agent != null) ? agent.areaMask : NavMesh.AllAreas;
+
+        for (int i = 0; i < path.Length; i++)
         {
-            if (NavMesh.SamplePosition(Path[i], out NavMeshHit hit, agent.radius * 1.5f, agent.areaMask))
+            if (NavMesh.SamplePosition(path[i], out NavMeshHit hit, sampleRadius, mask))
             {
-                Path[i] = hit.position;
+                path[i] = hit.position;
             }
             else
             {
-                Debug.LogWarning($"No NavMesh point close to {Path[i]}. Check smoothing settings!");
-                Path[i] = InfinityVector;
+                path[i] = InfinityVector;
             }
         }
 
-        return Path.Except(new Vector3[] { InfinityVector }).ToArray();
+        return path.Where(p => p != InfinityVector).ToArray();
     }
 
-
-    private Vector3[] RemoveOverSmoothing(BezierCurve[] Curves, Vector3[] Path)
+    private Vector3[] RemoveOverSmoothing(BezierCurve[] curves, Vector3[] path)
     {
-        if (Path.Length <= 2)
-        {
-            return Path;
-        }
+        if (curves == null || curves.Length == 0) return path;
+        if (path.Length <= 2) return path;
 
+        // This method assumes the path was built from curves in order.
+        // We'll compare each curve direction vs each sampled segment direction.
         int index = 1;
         int lastIndex = 0;
-        for (int i = 0; index < Curves.Length; index++)
-        {
-            Vector3 targetDirection = (Curves[i].EndPosition - Curves[i].StartPosition).normalized;
 
-            for (int j = 0; j < SmoothingSections; j++)
+        for (int i = 0; i < curves.Length && index < path.Length; i++)
+        {
+            Vector3 targetDir = (curves[i].EndPosition - curves[i].StartPosition).normalized;
+
+            for (int j = 0; j < smoothingSections && index < path.Length; j++)
             {
-                Vector3 segmentDirection = (Path[index] - Path[lastIndex]).normalized;
-                float dot = Vector3.Dot(targetDirection, segmentDirection);
-                Debug.Log($"Target Direction: {targetDirection}. Segment Direction: {segmentDirection} = Dot: {dot} with index:{index} and lastIndex:{lastIndex}");
-                if (dot <= SmoothingFactor)
+                Vector3 segDir = (path[index] - path[lastIndex]);
+                if (segDir.sqrMagnitude > 0.000001f)
+                    segDir.Normalize();
+
+                float dot = Vector3.Dot(targetDir, segDir);
+
+                if (dot <= smoothingFactor)
                 {
-                    Path[index] = InfinityVector;
+                    path[index] = InfinityVector;
                 }
                 else
                 {
                     lastIndex = index;
                 }
+
                 index++;
             }
-            index++;
         }
 
-        Path[Path.Length - 1] = Curves[Curves.Length - 1].EndPosition;
-        Vector3[] TrimmedPath = Path.Except(new Vector3[] { InfinityVector }).ToArray();
+        // Force end point to the last curve end
+        path[path.Length - 1] = curves[curves.Length - 1].EndPosition;
 
-        Debug.Log($"Original Smoothed Path: {Path.Length}. Trimmed Path: {TrimmedPath.Length}");
-
-        return TrimmedPath;
-
+        return path.Where(p => p != InfinityVector).ToArray();
     }
 
-    private void Update()
+    private void OnDrawGizmosSelected()
     {
-        
+        if (pathPoints == null || pathPoints.Length < 2) return;
+
+        Gizmos.color = Color.cyan;
+        for (int i = 1; i < pathPoints.Length; i++)
+        {
+            Gizmos.DrawLine(pathPoints[i - 1], pathPoints[i]);
+        }
     }
 }

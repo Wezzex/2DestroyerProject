@@ -246,6 +246,8 @@ GameObject:
   - component: {fileID: 5946697265750848701}
   - component: {fileID: 389336976780461385}
   - component: {fileID: 1027709502145165215}
+  - component: {fileID: 7647711416053750415}
+  - component: {fileID: 803943887549097430}
   m_Layer: 11
   m_Name: EnemyDestroyerShipMotor
   m_TagString: Untagged
@@ -425,6 +427,47 @@ NavMeshAgent:
   m_BaseOffset: 0.4
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
+--- !u!114 &7647711416053750415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283625353866652593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059bf9c8488d8c24ca4e8ae74d53c955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlobalPathPlaner
+  shipTransform: {fileID: 4010480725342714763}
+  agent: {fileID: 1027709502145165215}
+  replanInterval: 0.5
+  goalReplanDistance: 2
+  useUnscaledTime: 0
+  smoothingLength: 1
+  smoothingSections: 10
+  smoothingFactor: 0.5
+  sampleToNavMesh: 0
+  removeTooClosePoints: 1
+--- !u!114 &803943887549097430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283625353866652593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef38fdd9956cb24aaed1e721e2d0afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FollowPlannedPath
+  planner: {fileID: 7647711416053750415}
+  shipMover: {fileID: 6925278992122360705}
+  arriveDistance: 3
+  lookAheadPoints: 3
+  fullTurnAngle: 45
+  alignThreshold: 15
+  reducedThrust: 0.5
 --- !u!1 &5181334644262056132
 GameObject:
   m_ObjectHideFlags: 0
