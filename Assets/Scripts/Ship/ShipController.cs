@@ -17,7 +17,7 @@ public class ShipController : MonoBehaviour
     {
         if (shipMover == null)
         {
-            shipMover = GetComponent<ShipMover>();
+            shipMover = GetComponentInChildren<ShipMover>();
         }
 
         if (aimTurrets == null || aimTurrets.Length == 0)

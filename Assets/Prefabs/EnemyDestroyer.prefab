@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIPatrolPathBehaviour
   patrolArea: {fileID: 2305542091503090373}
-  followPlannedPath: {fileID: 0}
+  followPlannedPath: {fileID: 6206013395209585590}
   planer: {fileID: 3975059967889128687}
   arriveDistance: 1
   waitTime: 0.1
@@ -266,6 +266,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059bf9c8488d8c24ca4e8ae74d53c955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlobalPathPlaner
+--- !u!114 &6206013395209585590 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 803943887549097430, guid: bb950c2c414d134438f67357083b1758, type: 3}
+  m_PrefabInstance: {fileID: 6703642102695028320}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef38fdd9956cb24aaed1e721e2d0afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FollowPlannedPath
 --- !u!4 &7683149765703835115 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4010480725342714763, guid: bb950c2c414d134438f67357083b1758, type: 3}

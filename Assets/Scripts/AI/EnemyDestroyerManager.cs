@@ -1,5 +1,5 @@
 using UnityEngine;
-public class EnemyManager : UnitManager
+public class EnemyDestroyerManager : UnitManager
 {
 
     [Header("References")]

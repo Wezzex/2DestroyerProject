@@ -23,8 +23,8 @@ public class DefaultEnemyAI : MonoBehaviour
     {
 
         aIDetector = GetComponentInChildren<AIDetector>();
-        shipController = GetComponentInChildren<ShipController>();
-        unitManager = GetComponentInChildren<UnitManager>();
+        shipController = GetComponent<ShipController>();
+        unitManager = GetComponent<UnitManager>();
 
         BuildTree();
     }
