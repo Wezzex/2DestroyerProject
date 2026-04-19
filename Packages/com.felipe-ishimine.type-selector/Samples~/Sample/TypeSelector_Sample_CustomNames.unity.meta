@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ef3772ae3dfffb847947647753ba7dab
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 309964
+  packageName: '"Type Selector" & "Show Editor"'
+  packageVersion: 1.0.1
+  assetPath: Packages/com.felipe-ishimine.type-selector/Samples~/Sample/TypeSelector_Sample_CustomNames.unity
+  uploadId: 776901

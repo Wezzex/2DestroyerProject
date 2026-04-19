@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,8 +24,8 @@ public class DefaultEnemyAI : MonoBehaviour
     {
 
         aIDetector = GetComponentInChildren<AIDetector>();
-        shipController = GetComponent<ShipController>();
-        unitManager = GetComponent<UnitManager>();
+        shipController = GetComponentInChildren<ShipController>();
+        unitManager = GetComponentInChildren<UnitManager>();
 
         BuildTree();
     }
@@ -44,7 +45,6 @@ public class DefaultEnemyAI : MonoBehaviour
         root.AddChild(patrol);
 
         Utility.LogInfo("Tree Built");
-
 
     }
 

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8e79cebe0d30dbe4593fe36feadd9e26
+PackageManifestImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 309964
+  packageName: '"Type Selector" & "Show Editor"'
+  packageVersion: 1.0.1
+  assetPath: Packages/com.felipe-ishimine.type-selector/package.json
+  uploadId: 776901

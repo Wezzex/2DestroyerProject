@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: de4ac92554ff473a9194ff4b0a346969
+timeCreated: 1738677695
+AssetOrigin:
+  serializedVersion: 1
+  productId: 309964
+  packageName: '"Type Selector" & "Show Editor"'
+  packageVersion: 1.0.1
+  assetPath: Packages/com.felipe-ishimine.type-selector/Scripts/Editor/QuickAdvancedDropdown.cs
+  uploadId: 776901

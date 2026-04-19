@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: aa3707d075374d2e838885ab5edee369
+timeCreated: 1738677790
+AssetOrigin:
+  serializedVersion: 1
+  productId: 309964
+  packageName: '"Type Selector" & "Show Editor"'
+  packageVersion: 1.0.1
+  assetPath: Packages/com.felipe-ishimine.type-selector/Scripts/TypeSelectorNameAttribute.cs
+  uploadId: 776901

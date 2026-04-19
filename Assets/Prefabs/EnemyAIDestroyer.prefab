@@ -855,9 +855,10 @@ GameObject:
   - component: {fileID: 3939695809665059791}
   - component: {fileID: 4667717909535961513}
   - component: {fileID: 1658400302252655445}
-  - component: {fileID: 3968059111684348943}
   - component: {fileID: 1043052546017466886}
   - component: {fileID: 6331012635172997626}
+  - component: {fileID: 2239779341316244749}
+  - component: {fileID: 6255422106083246354}
   m_Layer: 0
   m_Name: EnemyAIDestroyer
   m_TagString: Untagged
@@ -931,24 +932,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5976c3c054063449a5f591a590c611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestroyUtil
---- !u!114 &3968059111684348943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8312358026214592434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fb117d1990b534408c3999507cfd6f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DefaultEnemyAI
-  shootBehaviour: {fileID: 1043052546017466886}
-  patrolBehaviour: {fileID: 6331012635172997626}
-  unitManager: {fileID: 3939695809665059791}
-  shipController: {fileID: 4667717909535961513}
-  aIDetector: {fileID: 2997940716200736302}
-  bInRange: 0
 --- !u!114 &1043052546017466886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -981,3 +964,34 @@ MonoBehaviour:
   waitTime: 0.5
   isWaiting: 0
   currentPatrolTarget: {x: 0, y: 0, z: 0}
+--- !u!114 &2239779341316244749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312358026214592434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9fdd48a43b3cc44b4a29e8beb33cd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIContext
+  shipController: {fileID: 4667717909535961513}
+  detector: {fileID: 2997940716200736302}
+  unitManager: {fileID: 3939695809665059791}
+  AIPatrolPathBehaviour: {fileID: 6331012635172997626}
+  AIShootBehaviour: {fileID: 1043052546017466886}
+--- !u!114 &6255422106083246354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312358026214592434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a775946387ec5b643931704a91541697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAIRunner
+  behaviourTreeData: {fileID: 11400000, guid: 83bcab00c5084c746bfebbf3d6ba7778, type: 2}
+  context: {fileID: 2239779341316244749}

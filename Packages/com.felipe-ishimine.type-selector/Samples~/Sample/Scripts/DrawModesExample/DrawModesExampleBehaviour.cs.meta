@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: a7a1eb1c76075154592756f860c14dcc
+timeCreated: 1738684324
+AssetOrigin:
+  serializedVersion: 1
+  productId: 309964
+  packageName: '"Type Selector" & "Show Editor"'
+  packageVersion: 1.0.1
+  assetPath: Packages/com.felipe-ishimine.type-selector/Samples~/Sample/Scripts/DrawModesExample/DrawModesExampleBehaviour.cs
+  uploadId: 776901

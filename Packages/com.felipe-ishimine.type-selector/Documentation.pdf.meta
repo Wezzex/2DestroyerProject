@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b6303c6cca70913418a26f4597179376
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 309964
+  packageName: '"Type Selector" & "Show Editor"'
+  packageVersion: 1.0.1
+  assetPath: Packages/com.felipe-ishimine.type-selector/Documentation.pdf
+  uploadId: 776901

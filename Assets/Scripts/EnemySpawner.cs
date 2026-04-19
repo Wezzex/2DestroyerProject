@@ -95,12 +95,12 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector3 TryValidStationSpawn()
     {
-        Vector3 candidat = GetRandomPointInRange(player.position, stationRadiusMin, stationRadiusMax);
-        int spawnTry = 5;
+        Vector3 candidat = GetStationCandidateSpawn();
+        int spawnTries = 5;
 
-        for (int i = 0; i < spawnTry; i++)
+        for (int i = 0; i < spawnTries; i++)
         {
-            candidat = GetRandomPointInRange(player.position, stationRadiusMin, stationRadiusMax);
+            candidat = GetStationCandidateSpawn();
             foreach (var station in stations)
             {
                 if (Vector3.Distance(station.transform.position, candidat) < stationSpawnDistance)
@@ -112,6 +112,11 @@ public class EnemySpawner : MonoBehaviour
         }
 
         return candidat;
+    }
+
+    private Vector3 GetStationCandidateSpawn()
+    {
+        return GetRandomPointInRange(player.position, stationRadiusMin, stationRadiusMax);
     }
 
     private IEnumerator SpawnLoop()

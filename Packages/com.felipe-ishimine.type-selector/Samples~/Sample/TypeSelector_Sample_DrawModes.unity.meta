@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0264053452e07304a9f87b71c29ef3c9
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 309964
+  packageName: '"Type Selector" & "Show Editor"'
+  packageVersion: 1.0.1
+  assetPath: Packages/com.felipe-ishimine.type-selector/Samples~/Sample/TypeSelector_Sample_DrawModes.unity
+  uploadId: 776901

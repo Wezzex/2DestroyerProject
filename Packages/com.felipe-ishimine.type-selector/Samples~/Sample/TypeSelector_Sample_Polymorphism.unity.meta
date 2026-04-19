@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 46fa19dd24263da41aa08e034f30beb2
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 309964
+  packageName: '"Type Selector" & "Show Editor"'
+  packageVersion: 1.0.1
+  assetPath: Packages/com.felipe-ishimine.type-selector/Samples~/Sample/TypeSelector_Sample_Polymorphism.unity
+  uploadId: 776901
