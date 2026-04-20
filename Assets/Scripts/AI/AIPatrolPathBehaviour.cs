@@ -13,6 +13,7 @@ public class AIPatrolPathBehaviour : AIBehavior
 
     [SerializeField] private Vector3 currentPatrolTarget;
     [SerializeField] private Vector3 shipCurrentPosition;
+    [SerializeField] private Transform shipCPosition;
 
     public override string Name => "Patrol";
 
@@ -40,7 +41,7 @@ public class AIPatrolPathBehaviour : AIBehavior
         if (patrolArea == null) return;
         if (isWaiting) return;
 
-        Vector3 shipPosition = shipController.transform.position;
+        Vector3 shipPosition = shipCPosition.transform.position;
         shipPosition.y = 0f;
 
         currentPatrolTarget.y = 0f;
@@ -49,6 +50,7 @@ public class AIPatrolPathBehaviour : AIBehavior
         {
             isWaiting = true;
             StartCoroutine(WaitAndSwapPoint());
+            Debug.LogWarning("Arrived");
         }
 
         shipController.SetShootingState(false);

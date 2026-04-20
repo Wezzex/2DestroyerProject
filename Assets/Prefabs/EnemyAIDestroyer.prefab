@@ -975,10 +975,12 @@ MonoBehaviour:
   patrolArea: {fileID: 7878243362200287346}
   followPlannedPath: {fileID: 5781356173136096508}
   planer: {fileID: 5438078125261289468}
-  arriveDistance: 1
+  arriveDistance: 10
   waitTime: 0.5
   isWaiting: 0
   currentPatrolTarget: {x: 0, y: 0, z: 0}
+  shipCurrentPosition: {x: 0, y: 0, z: 0}
+  shipCPosition: {fileID: 2386911194236695002}
 --- !u!114 &2239779341316244749
 MonoBehaviour:
   m_ObjectHideFlags: 0
