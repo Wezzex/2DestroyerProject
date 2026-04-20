@@ -11,29 +11,36 @@ public class AIContext : MonoBehaviour
     [SerializeField] private UnitManager unitManager;
 
     [Header("Behaviour components")]
-    [SerializeField] private AIPatrolPathBehaviour patrolPathBehaviour;
-    [SerializeField] private AIShootBehaviour shootBehaviour;
+    [SerializeField] private AIBehavior patrolBehaviour, shootBehaviour;
 
     private Dictionary<string, Func<bool>> conditions;
     private Dictionary<string, Action> actions;
 
+    private Dictionary<string, AIBehavior> behaviours;
+    public ShipController ShipController => shipController;
+    public AIDetector Detector => detector;
+
+    public UnitManager UnitManager => unitManager;
+
     private void Awake()
     {
-        if (shipController == null)         shipController = GetComponent<ShipController>();
-        if (detector == null)               detector = GetComponentInChildren<AIDetector>();
-        if (unitManager == null)            unitManager = GetComponent<UnitManager>();
-
-
-        if (patrolPathBehaviour == null)  patrolPathBehaviour = GetComponent<AIPatrolPathBehaviour>();
-        if (shootBehaviour == null)       shootBehaviour = GetComponent<AIShootBehaviour>();
 
     }
 
     private void Start()
     {
-        
+
+
+        if (shipController == null) shipController = GetComponent<ShipController>();
+        if (detector == null) detector = GetComponentInChildren<AIDetector>();
+        if (unitManager == null) unitManager = GetComponent<UnitManager>();
+
+
+        if (patrolBehaviour == null) patrolBehaviour = GetComponent<AIPatrolPathBehaviour>();
+        if (shootBehaviour == null) shootBehaviour = GetComponent<AIShootBehaviour>();
 
         BuildDictionaryMap();
+
     }
 
     private void BuildDictionaryMap()
@@ -61,9 +68,9 @@ public class AIContext : MonoBehaviour
             {
                 "Patrol", () =>
                 {
-                    if(patrolPathBehaviour != null && shipController != null && detector != null)
+                    if(patrolBehaviour != null && shipController != null && detector != null)
                     {
-                        patrolPathBehaviour.PerformAction(shipController, detector);
+                        patrolBehaviour.PerformAction(shipController, detector);
                     }
                 }
             },
@@ -74,16 +81,25 @@ public class AIContext : MonoBehaviour
                 }
             },
         };
+
+        behaviours = new Dictionary<string, AIBehavior>();
+
+        var behavioursList = GetComponents<AIBehavior>();
+        foreach (var behaviour in behavioursList)
+        {
+            behaviours.Add(behaviour.Name, behaviour);
+        }
+    }
+
+    public AIBehavior FindBehaviour(string name)
+    {
+        behaviours.TryGetValue(name, out var behaviour);
+        return behaviour;
     }
 
     public bool TargetVisible()
     {
-        if (detector.TargetVisible)
-        {
-            return true;
-        }
-
-        return false;
+        return detector != null && detector.TargetVisible;
     }
 
     public void ShootAction()
@@ -93,7 +109,7 @@ public class AIContext : MonoBehaviour
 
     public void PatrolAction()
     {
-        patrolPathBehaviour.PerformAction(shipController, detector);
+        patrolBehaviour.PerformAction(shipController, detector);
     }
 
     public Func<bool> GetCondition(string id)

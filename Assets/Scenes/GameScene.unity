@@ -2041,9 +2041,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   player: {fileID: 588180447}
-  enemyStationPrefab: {fileID: 8145967524789791514, guid: b5e7dd8ceffc7074d835d5b43eb7f1a3, type: 3}
+  enemyStationPrefab: {fileID: 8312358026214592434, guid: c1d7ad56add07f34585343e02c8ffd1c, type: 3}
   enemyShipsPrefabs:
-  - {fileID: 4205049684065844129, guid: 7bcaa9b2bcc12de45900cba452b6094a, type: 3}
+  - {fileID: 8312358026214592434, guid: ec164bfa38dc2664cba7877546376f35, type: 3}
   stationCount: 5
   stationRadiusMin: 100
   stationRadiusMax: 200

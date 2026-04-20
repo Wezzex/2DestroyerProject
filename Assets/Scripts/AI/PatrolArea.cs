@@ -19,6 +19,8 @@ public class PatrolArea : MonoBehaviour
 
     [SerializeField] private float pointSize = 0.3f;
 
+    public bool bIsInitilized = false;
+
     public void InitilizeSpawnPoints()
     {
         
@@ -35,12 +37,18 @@ public class PatrolArea : MonoBehaviour
 
 
         currentTargetIndex = 0;
+
+        bIsInitilized = true;
     }
 
 
     public Vector3 GetCurrentTargetPosition()
     {
-        return PatrolPoints[currentTargetIndex].transform.position;
+        if (!bIsInitilized)
+        {
+            return GetRandomPointInRange(transform.position, radiusMin, radiusMax);
+        }
+            return PatrolPoints[currentTargetIndex].transform.position;
     }
 
     public void OnReachedPoint()
@@ -52,6 +60,8 @@ public class PatrolArea : MonoBehaviour
         currentTargetIndex = newTargetIndex;
 
         TeleportPatrolPoint(reachedPoint);
+
+        Debug.LogWarning("OnReachedPoint");
 
     }
 
@@ -92,7 +102,6 @@ public class PatrolArea : MonoBehaviour
 
             return candidate;
         }
-
         return candidate;
     }
 
@@ -116,8 +125,6 @@ public class PatrolArea : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-
-        
 
         if (PatrolPoints == null || PatrolPoints.Length == 0)
         {

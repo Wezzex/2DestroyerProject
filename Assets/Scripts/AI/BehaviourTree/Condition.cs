@@ -6,12 +6,7 @@ public class Condition : IStrategy
     readonly Func<bool> predicate;
     private Func<bool> value;
 
-    public Condition(Func<bool> value)
-    {
-        this.value = value;
-    }
-
-    public Condition(string v, Func<bool> predicate)
+    public Condition(Func<bool> predicate)
     {
         this.predicate = predicate;
     }

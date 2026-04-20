@@ -7,6 +7,8 @@ public class AIPatrolStaticBehaviour : AIBehavior
     [SerializeField] private Vector2 randomDirection = Vector2.zero;
     [SerializeField] private float currentPatrolDelay;
 
+    public override string Name => "Patrol";
+
     private void Awake()
     {
         randomDirection = Random.insideUnitCircle;

@@ -4,6 +4,9 @@ using UnityEngine;
 public class AIShootBehaviour : AIBehavior
 {
     [SerializeField] private float fieldOfVisionForShooting = 60;
+
+    public override string Name => "Shoot";
+
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
     {
         Vector3 direction = aIDetector.Target.position - shipController.aimTurrets[0].transform.position;

@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee1e37265f6ec444aaccda16de87758, type: 3}
+  m_Name: BehaviourTreeDataStation
+  m_EditorClassIdentifier: Assembly-CSharp::BehaviourTreeData
+  rootChildren:
+  - node:
+      rid: 3174895243643322443
+  references:
+    version: 2
+    RefIds:
+    - rid: 3174895243643322443
+      type: {class: SelectorData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Root
+        type: 2
+        children:
+        - node:
+            rid: 3174895243643322445
+        - node:
+            rid: 3174895243643322446
+    - rid: 3174895243643322445
+      type: {class: SequenceData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Attack
+        type: 1
+        children:
+        - node:
+            rid: 3174895243643322447
+        - node:
+            rid: 3174895261683286087
+    - rid: 3174895243643322446
+      type: {class: SequenceData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Patrol
+        type: 1
+        children:
+        - node:
+            rid: 3174895243643322448
+    - rid: 3174895243643322447
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: TargetVisible
+        type: 0
+        strategyType: 0
+        strategyTarget: 1
+        strategyName: TargetVisible
+    - rid: 3174895243643322448
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Patrol
+        type: 0
+        strategyType: 1
+        strategyTarget: 0
+        strategyName: Patrol
+    - rid: 3174895261683286087
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Shoot
+        type: 0
+        strategyType: 1
+        strategyTarget: 0
+        strategyName: Shoot

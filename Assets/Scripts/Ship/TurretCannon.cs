@@ -26,7 +26,7 @@ public class TurretCannon : MonoBehaviour
         shipColliders = GetComponentsInParent<Collider>();
         projectilePool = GetComponent<ObjectPool>();
        
-        
+        shipController = GetComponentInParent<ShipController>();
     }
 
     private void Start()

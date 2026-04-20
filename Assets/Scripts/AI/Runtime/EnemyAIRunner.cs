@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,17 +18,23 @@ public class EnemyAIRunner : MonoBehaviour
         }
 
         behaviourTree = new BehaviourTree(gameObject.name + ("_BT"));
-    }
 
-    private void Start()
-    {
+
+
         if (behaviourTreeData == null)
         {
             Debug.LogError($"[EnemyRunner.Start]: BehaviourTree for {behaviourTree.name} is missing");
             return;
         }
 
+    }
+
+    private void Start()
+    {
+
         BuildTree();
+
+
     }
 
     private void Update()
@@ -44,11 +51,11 @@ public class EnemyAIRunner : MonoBehaviour
         {
             case StrategyType.Condition:
 
-                var foundCondition = FindCondition(leafData.strategyName);
+                var foundCondition = FindCondition(leafData.strategyTarget, leafData.strategyName);
                 if (foundCondition == null)
                 {
                     Debug.LogError("[EnemyAIRunner.CreateStrategy()]: Condition not Found");
-                    return null;
+                    new Condition(() => false);
                 }
 
                 return new Condition(foundCondition);
@@ -72,12 +79,77 @@ public class EnemyAIRunner : MonoBehaviour
 
     private Action FindAction(string strategyName)
     {
-        return context != null ? context.GetAction(strategyName) : null;
+
+        var s = context.FindBehaviour(strategyName);
+
+        if(s == null) return null;
+
+        return new Action(() => s.PerformAction(context.ShipController, context.Detector));
+
+       // return context != null ? context.GetAction(strategyName) : null;
     }
 
-    private Func<bool> FindCondition(string strategyName)
+    private Func<bool> FindCondition(StrategyTarget strategyTarget, string strategyName)
     {
-        return context != null ? context.GetCondition(strategyName) : null;
+        object o = null;
+
+        switch (strategyTarget)
+        {
+            case StrategyTarget.Self:
+                o = this;
+                break;
+            case StrategyTarget.Detector:
+                o = context.Detector;
+                break;
+            case StrategyTarget.UnitManager:
+                o = context.UnitManager;
+                break;
+            default:
+                break;
+        }
+
+        if (o == null)
+        {
+            Debug.LogError($"Strategy target invalid! {strategyTarget}");
+            return null;
+        }
+
+        var type = o.GetType();
+
+        var m = type.GetMethod(strategyName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public,
+            null, Array.Empty<Type>(), null
+            );
+        if (m == null)
+        {
+          var p = type.GetProperty(strategyName);
+            if (p != null)
+            {
+                return ()=> (bool)p.GetValue(o, null);
+            }
+        }
+
+        if (m == null)
+        {
+            Debug.LogError($"GetMethod(strategyName) not found! {strategyName}");
+            return null;
+        }
+        if(m.ReturnType != typeof(bool))
+        {
+            Debug.LogError($"GetMethod(strategyName): {strategyName} does not return bool!");
+            return null;
+        }
+        var objectParm = Expression.Parameter(typeof(object), "object");
+        Func<bool> condition = Expression.Lambda<Func<bool>>(Expression.Call( 
+            Expression.Convert(objectParm, type), m
+            ),objectParm).Compile();
+        if (condition == null)
+        {
+            Debug.Log("condition is null" + condition);
+        }
+
+        return condition;
+
+        // return context != null ? context.GetCondition(strategyName) : null;
     }
 
     private Node CreateNode(NodeData nodeData)
@@ -141,15 +213,22 @@ public class EnemyAIRunner : MonoBehaviour
 
         behaviourTree.children.Clear();
 
-        foreach (var nodeEntry in behaviourTreeData.rootChildren)
+        if (behaviourTreeData.rootChildren == null)
         {
-            var node = CreateNode(nodeEntry.node);
-            if (node != null)
-            {
-                behaviourTree.AddChild(node);
-            }
+            Debug.LogError($"[EnemyAIRunner.BuildTree()]: rootChildren is null, signed on {name} ");
+            return;
         }
 
-        Debug.Log("<color =#00ff00ff>"+ $"[EnemyAIRunner.BuildTree]: Built Tree from {behaviourTreeData.name} for {name}</c>" + "</color>");
+        foreach (var nodeEntry in behaviourTreeData.rootChildren)
+            {
+                var node = CreateNode(nodeEntry.node);
+                if (node != null)
+                {
+                    behaviourTree.AddChild(node);
+                }
+            }
+
+            Debug.Log("<color =#00ff00ff>" + $"[EnemyAIRunner.BuildTree]: Built Tree from {behaviourTreeData.name} for {name}</c>" + "</color>");
+        
     }
 }

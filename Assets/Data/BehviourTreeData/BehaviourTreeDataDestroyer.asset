@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ee1e37265f6ec444aaccda16de87758, type: 3}
-  m_Name: BehaviourTreeDataTest
+  m_Name: BehaviourTreeDataDestroyer
   m_EditorClassIdentifier: Assembly-CSharp::BehaviourTreeData
   rootChildren:
   - node:
@@ -37,7 +37,7 @@ MonoBehaviour:
         - node:
             rid: 3174895243643322447
         - node:
-            rid: 3174895243643322447
+            rid: 3174895261683286087
     - rid: 3174895243643322446
       type: {class: SequenceData, ns: , asm: Assembly-CSharp}
       data:
@@ -49,9 +49,10 @@ MonoBehaviour:
     - rid: 3174895243643322447
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
-        name: TargetVisible
+        name: ShootingRange
         type: 0
         strategyType: 0
+        strategyTarget: 1
         strategyName: TargetVisible
     - rid: 3174895243643322448
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
@@ -59,4 +60,13 @@ MonoBehaviour:
         name: Patrol
         type: 0
         strategyType: 1
+        strategyTarget: 0
         strategyName: Patrol
+    - rid: 3174895261683286087
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Shoot
+        type: 0
+        strategyType: 1
+        strategyTarget: 0
+        strategyName: Shoot
