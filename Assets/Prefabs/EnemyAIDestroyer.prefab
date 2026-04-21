@@ -704,11 +704,11 @@ MonoBehaviour:
   shipTransform: {fileID: 2386911194236695002}
   PatrolPoints: []
   currentTargetIndex: 0
-  radiusMin: 100
-  radiusMax: 100
-  minSpawnDistance: 25
-  minSpawnSeperation: 25
-  pointSize: 0.3
+  radiusMin: 75
+  radiusMax: 75
+  minSpawnDistance: 75
+  minSpawnSeperation: 75
+  pointSize: 1
   bIsInitilized: 0
 --- !u!1 &6847827302416148415
 GameObject:

@@ -17,10 +17,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float stationRadiusMin = 400;
     [SerializeField] private float stationRadiusMax = 700;
     [SerializeField] private float stationSpawnDistance = 75;
+    Vector3 worldOrigin = new Vector3(0, 0, 0);
 
 
     [Header("Reference")]
-    [SerializeField] private float shipSpawnRadius = 8f;
+    [SerializeField] private float shipMaxSpawnRadius = 50f;
+    [SerializeField] private float shipMinSpawnRadius = 75f;
     [SerializeField] private float spawnInterval = 5f;
     [SerializeField] private int maxShipStart = 3;
     [SerializeField] private int maxShipIncreasAmount = 1;
@@ -64,7 +66,7 @@ public class EnemySpawner : MonoBehaviour
 
         for (int i = 0; i < stationCount; i++)
         {
-            Vector3 spawnPosition = GetRandomPointInRange(player.position, stationRadiusMin, stationRadiusMax);
+            Vector3 spawnPosition = GetRandomPointInRange(worldOrigin, stationRadiusMin, stationRadiusMax);
            
 
             if (stations.Count > 0)
@@ -116,7 +118,7 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector3 GetStationCandidateSpawn()
     {
-        return GetRandomPointInRange(player.position, stationRadiusMin, stationRadiusMax);
+        return GetRandomPointInRange(worldOrigin, stationRadiusMin, stationRadiusMax);
     }
 
     private IEnumerator SpawnLoop()
@@ -179,8 +181,7 @@ public class EnemySpawner : MonoBehaviour
 
         GameObject enemyShipPrefab = enemyShipsPrefabs[UnityEngine.Random.Range(0, enemyShipsPrefabs.Length)];
 
-        Vector2 offset = UnityEngine.Random.insideUnitCircle * shipSpawnRadius;
-        Vector3 spawnPosition = station.position + new Vector3(offset.x, 0f, offset.y);
+        Vector3 spawnPosition = TryShipSpawnCandidate(station);
         spawnPosition.y = station.position.y;
 
         GameObject ship = Instantiate(enemyShipPrefab, spawnPosition, Quaternion.identity);
@@ -193,6 +194,15 @@ public class EnemySpawner : MonoBehaviour
         }
 
         aliveShips.Add(ship);
+    }
+
+    private Vector3 TryShipSpawnCandidate(Transform station)
+    {
+        
+        Vector3 candidate = GetRandomPointInRange(station.transform.position, shipMinSpawnRadius, shipMaxSpawnRadius);
+
+        return candidate;
+
     }
 
     private static Vector3 GetRandomPointInRange(Vector3 center, float minRadius, float maxRadius)
