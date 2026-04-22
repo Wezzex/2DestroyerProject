@@ -36,7 +36,7 @@ public class AIContext : MonoBehaviour
         if (unitManager == null) unitManager = GetComponent<UnitManager>();
 
 
-        if (patrolBehaviour == null) patrolBehaviour = GetComponent<AIPatrolPathBehaviour>();
+        if (patrolBehaviour == null) patrolBehaviour = GetComponent<AIPatrolBehaviour>();
         if (shootBehaviour == null) shootBehaviour = GetComponent<AIShootBehaviour>();
 
         BuildDictionaryMap();
@@ -46,41 +46,41 @@ public class AIContext : MonoBehaviour
     private void BuildDictionaryMap()
     {
 
-        conditions = new Dictionary<string, Func<bool>>()
-        {
-            { "TargetVisible", ()=> detector != null && detector.TargetVisible},
-            { "HasTarget", ()=> detector != null && detector.Target != null},
-            { "IsAlive", ()=> unitManager != null && !unitManager.IsDead}
-        };
+        //conditions = new Dictionary<string, Func<bool>>()
+        //{
+        //    { "TargetVisible", ()=> detector != null && detector.TargetVisible},
+        //    { "HasTarget", ()=> detector != null && detector.Target != null},
+        //    { "IsAlive", ()=> unitManager != null && !unitManager.IsDead}
+        //};
 
-        actions = new Dictionary<string, Action>()
-        {
-            //ShootAction
-            { "Shoot", () =>
-                {
-                    if(shootBehaviour != null && shipController != null && detector != null)
-                    {
-                        shootBehaviour.PerformAction(shipController, detector);
-                    }
-                }
-            },
-            //PatrolAction
-            {
-                "Patrol", () =>
-                {
-                    if(patrolBehaviour != null && shipController != null && detector != null)
-                    {
-                        patrolBehaviour.PerformAction(shipController, detector);
-                    }
-                }
-            },
-            //StopShootingAction
-            { "StopShooting", () =>
-                {
-                    if(shipController != null) shipController.SetShootingState(false);
-                }
-            },
-        };
+        //actions = new Dictionary<string, Action>()
+        //{
+        //    //ShootAction
+        //    { "Shoot", () =>
+        //        {
+        //            if(shootBehaviour != null && shipController != null && detector != null)
+        //            {
+        //                shootBehaviour.PerformAction(shipController, detector);
+        //            }
+        //        }
+        //    },
+        //    //PatrolAction
+        //    {
+        //        "Patrol", () =>
+        //        {
+        //            if(patrolBehaviour != null && shipController != null && detector != null)
+        //            {
+        //                patrolBehaviour.PerformAction(shipController, detector);
+        //            }
+        //        }
+        //    },
+        //    //StopShootingAction
+        //    { "StopShooting", () =>
+        //        {
+        //            if(shipController != null) shipController.SetShootingState(false);
+        //        }
+        //    },
+        //};
 
         behaviours = new Dictionary<string, AIBehavior>();
 

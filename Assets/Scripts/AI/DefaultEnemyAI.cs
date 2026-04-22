@@ -2,23 +2,23 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DefaultEnemyAI : MonoBehaviour
+public abstract class DefaultEnemyAI : MonoBehaviour
 {
+    [Header("Refrence")]
+    [SerializeField] protected AIBehavior shootBehaviour, patrolBehaviour;
 
-    [SerializeField] private AIBehavior shootBehaviour, patrolBehaviour;
+    
+    [SerializeField] protected UnitManager unitManager;
+    [SerializeField] protected ShipController shipController;
+    [SerializeField] protected AIDetector aIDetector;
 
-    [SerializeField] private UnitManager unitManager;
-    [SerializeField] private ShipController shipController;
-    [SerializeField] private AIDetector aIDetector;
-
-    BehaviourTree behaviourTree;
-    public  bool bInRange;
+                     protected BehaviourTree behaviourTree;
 
 
     private void Awake()
     {
 
-        behaviourTree = new BehaviourTree("DestroyerBehaviourTree");
+        
     }
     private void Start()
     {
@@ -29,43 +29,21 @@ public class DefaultEnemyAI : MonoBehaviour
 
         BuildTree();
     }
-    private void BuildTree()
+    public virtual void BuildTree()
     {
-        //Builds Tree Root witch is a Selector
-        PrioritySelector root = new PrioritySelector("Root");
-        behaviourTree.AddChild(root);
-
-        Sequence attackSequence = new Sequence("AttackSequence", 100);
-        attackSequence.AddChild(new Leaf("Target Visible?", new Condition(() => TargetInRange())));
-        attackSequence.AddChild(new Leaf("Shoot Target?", new ActionStrategy(() => shootBehaviour.PerformAction(shipController, aIDetector))));
-        root.AddChild(attackSequence);
-
-        Sequence patrol = new Sequence("PatrolSequence", 50);
-        patrol.AddChild(new Leaf("Patrol", new ActionStrategy(() => patrolBehaviour.PerformAction(shipController, aIDetector))));
-        root.AddChild(patrol);
-
-        Utility.LogInfo("Tree Built");
+        
 
     }
 
-    bool TargetInRange()
-    {
-        if (aIDetector.TargetVisible)
-        {
-            bInRange = true;
-            return true;
-
-        }
-        bInRange = false;
-        return false;
-
-    }
+    
 
     private void Update()
     {
-        if(unitManager.IsDead) return;
-
-        TargetInRange();
+        if (unitManager.IsDead)
+        {
+            Debug.Log("Unit is Dead");
+            return;
+        }
         behaviourTree.Process();
     }
 }

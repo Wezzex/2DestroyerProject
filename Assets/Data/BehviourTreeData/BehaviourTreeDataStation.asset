@@ -52,15 +52,15 @@ MonoBehaviour:
         name: TargetVisible
         type: 0
         strategyType: 0
-        strategyTarget: 1
-        strategyName: TargetVisible
+        condition: TargetVisible
+        strategyName: AIDetector
     - rid: 3174895243643322448
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
         name: Patrol
         type: 0
         strategyType: 1
-        strategyTarget: 0
+        condition: 
         strategyName: Patrol
     - rid: 3174895261683286087
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
@@ -68,5 +68,5 @@ MonoBehaviour:
         name: Shoot
         type: 0
         strategyType: 1
-        strategyTarget: 0
+        condition: 
         strategyName: Shoot

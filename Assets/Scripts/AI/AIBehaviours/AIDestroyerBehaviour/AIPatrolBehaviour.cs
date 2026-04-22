@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class AIPatrolPathBehaviour : AIBehavior
+public class AIPatrolBehaviour : AIBehavior
 {
     [SerializeField] private PatrolArea patrolArea;
     [SerializeField] private FollowPlannedPath followPlannedPath;
@@ -30,19 +30,26 @@ public class AIPatrolPathBehaviour : AIBehavior
         {
             followPlannedPath = GetComponentInChildren<FollowPlannedPath>();
         }
-
-        if (!patrolArea.bIsInitilized) return;
-        currentPatrolTarget = patrolArea.GetCurrentTargetPosition();
-        planer.SetDestination(currentPatrolTarget);
     }
 
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
     {
+        Debug.Log("PerformAction is called");
         if (patrolArea == null) return;
         if (isWaiting) return;
 
+        
+
         Vector3 shipPosition = shipCPosition.transform.position;
         shipPosition.y = 0f;
+
+        if (!patrolArea.bIsInitilized)
+        {
+            Debug.LogError("PatrolArea has not Initilized yet");
+            return;
+        }
+        currentPatrolTarget = patrolArea.GetCurrentTargetPosition();
+        planer.SetDestination(currentPatrolTarget);
 
         currentPatrolTarget.y = 0f;
 

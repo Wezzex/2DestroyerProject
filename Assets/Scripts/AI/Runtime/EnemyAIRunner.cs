@@ -51,7 +51,7 @@ public class EnemyAIRunner : MonoBehaviour
         {
             case StrategyType.Condition:
 
-                var foundCondition = FindCondition(leafData.strategyTarget, leafData.strategyName);
+                var foundCondition = FindCondition(leafData.strategyName, leafData.condition);
                 if (foundCondition == null)
                 {
                     Debug.LogError("[EnemyAIRunner.CreateStrategy()]: Condition not Found");
@@ -89,39 +89,48 @@ public class EnemyAIRunner : MonoBehaviour
        // return context != null ? context.GetAction(strategyName) : null;
     }
 
-    private Func<bool> FindCondition(StrategyTarget strategyTarget, string strategyName)
+    private Func<bool> FindCondition(string strategyName, string condition)
     {
         object o = null;
 
-        switch (strategyTarget)
+        if (strategyName.Equals("Self"))
         {
-            case StrategyTarget.Self:
-                o = this;
-                break;
-            case StrategyTarget.Detector:
-                o = context.Detector;
-                break;
-            case StrategyTarget.UnitManager:
-                o = context.UnitManager;
-                break;
-            default:
-                break;
+            o = this;
         }
+        else
+        {
+            o = GetComponent(strategyName);
+            if (o == null)
+            {
+                foreach (var t in gameObject.GetComponentsInChildren<Transform>())
+                {
+                    var sn = t.gameObject.GetComponent(strategyName);
+
+                    if (sn != null)
+                    {
+                        o = sn;
+                        break;
+                    }
+                }
+            }
+        }
+
+
 
         if (o == null)
         {
-            Debug.LogError($"Strategy target invalid! {strategyTarget}");
+            Debug.LogError($"strategyName invalid! {strategyName}");
             return null;
         }
 
         var type = o.GetType();
 
-        var m = type.GetMethod(strategyName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public,
+        var m = type.GetMethod(condition, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public,
             null, Array.Empty<Type>(), null
             );
         if (m == null)
         {
-          var p = type.GetProperty(strategyName);
+          var p = type.GetProperty(condition);
             if (p != null)
             {
                 return ()=> (bool)p.GetValue(o, null);
@@ -130,24 +139,24 @@ public class EnemyAIRunner : MonoBehaviour
 
         if (m == null)
         {
-            Debug.LogError($"GetMethod(strategyName) not found! {strategyName}");
+            Debug.LogError($"GetMethod(condition) not found! {condition}");
             return null;
         }
         if(m.ReturnType != typeof(bool))
         {
-            Debug.LogError($"GetMethod(strategyName): {strategyName} does not return bool!");
+            Debug.LogError($"GetMethod(condition): {condition} does not return bool!");
             return null;
         }
         var objectParm = Expression.Parameter(typeof(object), "object");
-        Func<bool> condition = Expression.Lambda<Func<bool>>(Expression.Call( 
+        Func<bool> func = Expression.Lambda<Func<bool>>(Expression.Call( 
             Expression.Convert(objectParm, type), m
             ),objectParm).Compile();
-        if (condition == null)
+        if (func == null)
         {
-            Debug.Log("condition is null" + condition);
+            Debug.Log("condition is null" + func);
         }
 
-        return condition;
+        return func;
 
         // return context != null ? context.GetCondition(strategyName) : null;
     }

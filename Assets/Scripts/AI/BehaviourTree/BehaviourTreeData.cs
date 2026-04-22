@@ -56,23 +56,19 @@ public class SelectorData : NodeData
     }
 }
 
-public enum StrategyTarget
-{
-    Self,
-    Detector,
-    UnitManager
-}
+
 
 [Serializable]
 public class LeafData : NodeData
 {
     public StrategyType strategyType;
-    public StrategyTarget strategyTarget;
+    public string condition;
     public string strategyName;
 
     public LeafData()
     {
         type = NodeType.Leaf;
+        strategyName = "Self";
     }
 }
 
