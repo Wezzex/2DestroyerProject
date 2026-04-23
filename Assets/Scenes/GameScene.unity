@@ -2288,6 +2288,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 588180447}
     m_Modifications:
+    - target: {fileID: 1911865989535077856, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
+      propertyPath: laserSpawnPoint.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911865989535077856, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
+      propertyPath: 'laserSpawnPoint.Array.data[6]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4010480725342714763, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2337,7 +2345,9 @@ PrefabInstance:
       value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 9007286117265670734, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
+    - {fileID: 5343718850519015819, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd2110fa46f8fc54b89e580399d1f85d, type: 3}
