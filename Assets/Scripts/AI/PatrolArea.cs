@@ -6,11 +6,10 @@ using Unity.VisualScripting;
 
 public class PatrolArea : MonoBehaviour
 {
-    [SerializeField] private GameObject PatrolPointPrefab;
     [SerializeField] private Transform patrolAncor;
     [SerializeField] private Transform shipTransform;
 
-    [SerializeField] private GameObject[] PatrolPoints;
+                     private Vector3[] PatrolPoints;
     [SerializeField] private int currentTargetIndex;
 
     [SerializeField] float radiusMin, radiusMax;
@@ -24,13 +23,10 @@ public class PatrolArea : MonoBehaviour
     public void InitilizeSpawnPoints()
     {
         
-        PatrolPoints = new GameObject[2];
+        PatrolPoints = new Vector3[2];
 
-        GameObject pointA = Instantiate(PatrolPointPrefab, GenerateRandomPatrolPoint(), Quaternion.identity);
-        GameObject pointB = Instantiate(PatrolPointPrefab, GenerateRandomPatrolPoint(), Quaternion.identity);
-
-        pointA.transform.parent = this.transform;
-        pointB.transform.parent = this.transform;
+        Vector3 pointA = GenerateRandomPatrolPoint();
+        Vector3 pointB = GenerateRandomPatrolPoint();
 
         PatrolPoints[0] = pointA;
         PatrolPoints[1] = pointB;
@@ -48,7 +44,7 @@ public class PatrolArea : MonoBehaviour
         {
             return GetRandomPointInRange(transform.position, radiusMin, radiusMax);
         }
-            return PatrolPoints[currentTargetIndex].transform.position;
+            return PatrolPoints[currentTargetIndex];
     }
 
     public void OnReachedPoint()
@@ -76,15 +72,15 @@ public class PatrolArea : MonoBehaviour
 
     private Vector3 RandomPointAroundAncor()
     {
-        return GetRandomPointInRange(patrolAncor.transform.position, radiusMin, radiusMax);
+        return GetRandomPointInRange(patrolAncor.position, radiusMin, radiusMax);
     }
 
     private void TeleportPatrolPoint(int index)
     {
 
-        Vector3 newPointPosition = TryGenerateValidSpawn(shipTransform.transform.position, PatrolPoints[1 - index].transform.position);
+        Vector3 newPointPosition = TryGenerateValidSpawn(shipTransform.transform.position, PatrolPoints[1 - index]);
 
-        PatrolPoints[index].transform.position = newPointPosition;
+        PatrolPoints[index] = newPointPosition;
     }
 
     private Vector3 TryGenerateValidSpawn(Vector3 shipPosition, Vector3 otherPointPosition)
@@ -105,9 +101,9 @@ public class PatrolArea : MonoBehaviour
         return candidate;
     }
 
-    public void SetPatrolAncor(Vector3 ancor)
+    public void SetPatrolAncor(Transform ancor)
     {
-         patrolAncor.transform.position = ancor;
+         patrolAncor = ancor;
     }
 
     private static Vector3 GetRandomPointInRange(Vector3 center, float minRadius, float maxRadius)
@@ -144,7 +140,7 @@ public class PatrolArea : MonoBehaviour
 
             if(PatrolPoints[i] == null) continue;
 
-            Gizmos.DrawSphere(PatrolPoints[i].transform.position, pointSize);
+            Gizmos.DrawSphere(PatrolPoints[i], pointSize);
         }
     }
 

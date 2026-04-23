@@ -9,6 +9,9 @@ public class AIShootBehaviour : AIBehavior
 
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
     {
+
+        Debug.Log("Shoot Action is called");
+
         Vector3 direction = aIDetector.Target.position - shipController.aimTurrets[0].transform.position;
         direction.y = 0.0f;
 

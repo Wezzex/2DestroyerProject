@@ -48,38 +48,11 @@ public class AIContext : MonoBehaviour
 
         //conditions = new Dictionary<string, Func<bool>>()
         //{
-        //    { "TargetVisible", ()=> detector != null && detector.TargetVisible},
-        //    { "HasTarget", ()=> detector != null && detector.Target != null},
-        //    { "IsAlive", ()=> unitManager != null && !unitManager.IsDead}
-        //};
+        //    { "CanDetectTarget", ()=> CanDetectTarget()},
+        //    { "CanFireAtTarget", ()=> CanFireAtTarget()},
+        //    { "ShouldHoldPosition()", ()=> ShouldHoldPosition()},
 
-        //actions = new Dictionary<string, Action>()
-        //{
-        //    //ShootAction
-        //    { "Shoot", () =>
-        //        {
-        //            if(shootBehaviour != null && shipController != null && detector != null)
-        //            {
-        //                shootBehaviour.PerformAction(shipController, detector);
-        //            }
-        //        }
-        //    },
-        //    //PatrolAction
-        //    {
-        //        "Patrol", () =>
-        //        {
-        //            if(patrolBehaviour != null && shipController != null && detector != null)
-        //            {
-        //                patrolBehaviour.PerformAction(shipController, detector);
-        //            }
-        //        }
-        //    },
-        //    //StopShootingAction
-        //    { "StopShooting", () =>
-        //        {
-        //            if(shipController != null) shipController.SetShootingState(false);
-        //        }
-        //    },
+        //    { "IsAlive", ()=> IsAlive()}
         //};
 
         behaviours = new Dictionary<string, AIBehavior>();
@@ -91,13 +64,23 @@ public class AIContext : MonoBehaviour
         }
     }
 
+    private bool ShouldHoldPosition()
+    {
+        throw new NotImplementedException();
+    }
+
+    private bool CanFireAtTarget()
+    {
+        throw new NotImplementedException();
+    }
+
     public AIBehavior FindBehaviour(string name)
     {
         behaviours.TryGetValue(name, out var behaviour);
         return behaviour;
     }
 
-    public bool TargetVisible()
+    public bool CanDetectTarget()
     {
         return detector != null && detector.TargetVisible;
     }

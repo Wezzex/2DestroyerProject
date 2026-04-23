@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 472430090276667290}
   - component: {fileID: 5438078125261289468}
   - component: {fileID: 5781356173136096508}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Motor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,14 +173,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059bf9c8488d8c24ca4e8ae74d53c955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlobalPathPlaner
-  shipTransform: {fileID: 931345596167716337}
+  shipTransform: {fileID: 2386911194236695002}
   agent: {fileID: 472430090276667290}
   replanInterval: 0.5
-  goalReplanDistance: 2
+  goalReplanDistance: 10
   useUnscaledTime: 0
-  smoothingLength: 1
+  smoothingLength: 2
   smoothingSections: 10
-  smoothingFactor: 0.5
+  smoothingFactor: 0.768
   sampleToNavMesh: 0
   removeTooClosePoints: 1
 --- !u!114 &5781356173136096508
@@ -252,10 +252,10 @@ MonoBehaviour:
   target: {fileID: 0}
   playerLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   visibilityLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 3840
   <TargetVisible>k__BackingField: 0
 --- !u!1 &1867037231569666386
 GameObject:
@@ -699,15 +699,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29242313942844b4aa53c35505300414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PatrolArea
-  PatrolPointPrefab: {fileID: 3041029867548270438, guid: ad722c80de8be5a45800c3e8d6efa507, type: 3}
-  patrolAncor: {fileID: 3731496477989459787, guid: ad722c80de8be5a45800c3e8d6efa507, type: 3}
+  patrolAncor: {fileID: 0}
   shipTransform: {fileID: 2386911194236695002}
-  PatrolPoints: []
   currentTargetIndex: 0
   radiusMin: 75
   radiusMax: 75
-  minSpawnDistance: 75
-  minSpawnSeperation: 75
+  minSpawnDistance: 100
+  minSpawnSeperation: 100
   pointSize: 1
   bIsInitilized: 0
 --- !u!1 &6847827302416148415

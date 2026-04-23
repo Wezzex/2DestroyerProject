@@ -82,11 +82,19 @@ public class EnemyAIRunner : MonoBehaviour
 
         var s = context.FindBehaviour(strategyName);
 
-        if(s == null) return null;
+        if (s == null)
+        {
+            Debug.LogError($"Could not find behaviour: {strategyName}");
+            return null;
+        };
+
+        if (context.ShipController == null || context.Detector == null)
+        {
+            Debug.LogError($"ShipController: {context.ShipController}, Detctor: {context.Detector}");
+            return null;
+        }
 
         return new Action(() => s.PerformAction(context.ShipController, context.Detector));
-
-       // return context != null ? context.GetAction(strategyName) : null;
     }
 
     private Func<bool> FindCondition(string strategyName, string condition)
@@ -102,9 +110,9 @@ public class EnemyAIRunner : MonoBehaviour
             o = GetComponent(strategyName);
             if (o == null)
             {
-                foreach (var t in gameObject.GetComponentsInChildren<Transform>())
+                foreach (var childTransform in gameObject.GetComponentsInChildren<Transform>())
                 {
-                    var sn = t.gameObject.GetComponent(strategyName);
+                    var sn = childTransform.gameObject.GetComponent(strategyName);
 
                     if (sn != null)
                     {
@@ -130,10 +138,14 @@ public class EnemyAIRunner : MonoBehaviour
             );
         if (m == null)
         {
-          var p = type.GetProperty(condition);
+            var p = type.GetProperty(condition);
             if (p != null)
             {
-                return ()=> (bool)p.GetValue(o, null);
+                return () =>
+                {
+                    var value = p.GetValue(o, null);
+                    return (bool)value;
+                };
             }
         }
 
@@ -142,21 +154,29 @@ public class EnemyAIRunner : MonoBehaviour
             Debug.LogError($"GetMethod(condition) not found! {condition}");
             return null;
         }
-        if(m.ReturnType != typeof(bool))
+        if (m.ReturnType != typeof(bool))
         {
             Debug.LogError($"GetMethod(condition): {condition} does not return bool!");
             return null;
         }
-        var objectParm = Expression.Parameter(typeof(object), "object");
-        Func<bool> func = Expression.Lambda<Func<bool>>(Expression.Call( 
-            Expression.Convert(objectParm, type), m
-            ),objectParm).Compile();
-        if (func == null)
-        {
-            Debug.Log("condition is null" + func);
-        }
 
-        return func;
+
+        return () =>
+        {
+            return (bool)m.Invoke(o, null);
+        };
+
+
+        //var objectParm = Expression.Parameter(typeof(object), "object");
+        //Func<bool> func = Expression.Lambda<Func<bool>>(Expression.Call( 
+        //    Expression.Convert(objectParm, type), m
+        //    ),objectParm).Compile();
+        //if (func == null)
+        //{
+        //    Debug.Log("condition is null" + func);
+        //}
+
+        //return func;
 
         // return context != null ? context.GetCondition(strategyName) : null;
     }

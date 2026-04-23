@@ -45,6 +45,7 @@ public class AIDetector : MonoBehaviour
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit, Mathf.Min(viewRadius, distance), visibilityLayer))
         {
+            Debug.DrawLine(transform.position, hit.point, Color.red);
             return (playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0;
         }
         return false;

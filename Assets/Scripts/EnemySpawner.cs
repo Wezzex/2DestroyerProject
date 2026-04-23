@@ -21,8 +21,8 @@ public class EnemySpawner : MonoBehaviour
 
 
     [Header("Reference")]
-    [SerializeField] private float shipMaxSpawnRadius = 50f;
-    [SerializeField] private float shipMinSpawnRadius = 75f;
+    [SerializeField] private float shipMaxSpawnRadius = 75f;
+    [SerializeField] private float shipMinSpawnRadius = 50f;
     [SerializeField] private float spawnInterval = 5f;
     [SerializeField] private int maxShipStart = 3;
     [SerializeField] private int maxShipIncreasAmount = 1;
@@ -72,7 +72,7 @@ public class EnemySpawner : MonoBehaviour
             if (stations.Count > 0)
             {
                 
-                    Vector3 newSpawnPosition = TryValidStationSpawn();
+                    Vector3 newSpawnPosition = TryGetValidStationSpawnFurthest();
 
                     GameObject station = Instantiate(enemyStationPrefab, newSpawnPosition, Quaternion.identity);
                     stations.Add(station.transform);
@@ -98,22 +98,66 @@ public class EnemySpawner : MonoBehaviour
     private Vector3 TryValidStationSpawn()
     {
         Vector3 candidat = GetStationCandidateSpawn();
-        int spawnTries = 5;
+        int spawnTries = 50;
+        bool validSpawn = true;
 
         for (int i = 0; i < spawnTries; i++)
         {
             candidat = GetStationCandidateSpawn();
+            validSpawn = true;
             foreach (var station in stations)
             {
                 if (Vector3.Distance(station.transform.position, candidat) < stationSpawnDistance)
                 {
-                    continue;
+                    validSpawn = false;
+                    break;
                 }
             }
-            return candidat;
+            if(validSpawn)
+                return candidat;
+            
         }
 
+        Debug.LogWarning($"Could not find Valid spawn for station: {stations[0]} after: {spawnTries} Tries.");
         return candidat;
+    }
+
+    private Vector3 TryGetValidStationSpawnFurthest()
+    {
+        Vector3 bestCandidate = GetStationCandidateSpawn();
+        float bestMinDistance = float.NegativeInfinity;
+
+        int spawnTries = 50;
+
+        for (int i = 0; i < spawnTries; i++)
+        {
+            Vector3 candidate = GetStationCandidateSpawn();
+            float minDistanceToAnyStation = float.PositiveInfinity;
+
+            foreach (var station in stations)
+            {
+                float distance = Vector3.Distance(candidate, station.position);
+
+                if (distance < minDistanceToAnyStation)
+                {
+                    minDistanceToAnyStation = distance;
+                }
+            }
+            if (minDistanceToAnyStation >= stationSpawnDistance)
+            {
+                return candidate;
+            }
+
+            if (minDistanceToAnyStation > bestMinDistance)
+            {
+                bestMinDistance = minDistanceToAnyStation;
+                bestCandidate = candidate;
+            }
+
+        }
+        Debug.LogWarning($"No candidate met stationSpawnDistance={stationSpawnDistance}. Using best fallback minDist={bestMinDistance}");
+        return bestCandidate;
+
     }
 
     private Vector3 GetStationCandidateSpawn()
@@ -186,10 +230,20 @@ public class EnemySpawner : MonoBehaviour
 
         GameObject ship = Instantiate(enemyShipPrefab, spawnPosition, Quaternion.identity);
 
+        Transform defenders = station.Find("Defenders");
+        if (defenders == null)
+        {
+            var go = new GameObject("Defenders");
+            defenders = go.transform;
+            defenders.SetParent(station, true);
+        }
+
+        ship.transform.SetParent(defenders, true);
+
         PatrolArea patrolArea = ship.GetComponentInChildren<PatrolArea>();
         if (patrolArea != null)
         {
-            patrolArea.SetPatrolAncor(station.transform.position);
+            patrolArea.SetPatrolAncor(station);
             patrolArea.InitilizeSpawnPoints();
         }
 

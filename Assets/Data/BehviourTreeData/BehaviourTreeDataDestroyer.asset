@@ -49,7 +49,7 @@ MonoBehaviour:
     - rid: 3174895243643322447
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
-        name: TargetVisible
+        name: CanDetectTarget
         type: 0
         strategyType: 0
         condition: TargetVisible
