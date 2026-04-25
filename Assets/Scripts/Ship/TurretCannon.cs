@@ -40,13 +40,9 @@ public class TurretCannon : MonoBehaviour
 
     private IEnumerator FiringSequence()
     {
-        if (bCanShoot)
+        if (CanShoot() == true)
         {
-            bCanShoot = false;
-            currentReloadDelay = turretData.reloadDelay;
-
             StartCoroutine(Firing());
-
         }
         StopCoroutine(Firing());
         yield return null;
@@ -55,6 +51,7 @@ public class TurretCannon : MonoBehaviour
     private IEnumerator Firing()
     {
         bCanShoot = false;
+
         for (int f = 0; f < turretData.fieringVolly; f++)
         {
             foreach (var laserSpawn in laserSpawnPoint)

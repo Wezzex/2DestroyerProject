@@ -10,7 +10,7 @@ public class EnemyDestroyerManager : UnitManager
 
     private void Awake()
     {
-        shipController = GetComponent<ShipController>();
+        shipController = GetComponentInParent<ShipController>();
         spawner = GetComponent<EnemySpawner>();
     }
     public override void OnDestroyedBegin()

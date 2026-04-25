@@ -33,7 +33,7 @@ public class AIContext : MonoBehaviour
 
         if (shipController == null) shipController = GetComponent<ShipController>();
         if (detector == null) detector = GetComponentInChildren<AIDetector>();
-        if (unitManager == null) unitManager = GetComponent<UnitManager>();
+        if (unitManager == null) unitManager = GetComponentInChildren<UnitManager>();
 
 
         if (patrolBehaviour == null) patrolBehaviour = GetComponent<AIPatrolBehaviour>();

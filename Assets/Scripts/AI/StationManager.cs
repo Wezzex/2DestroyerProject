@@ -14,7 +14,7 @@ public class StationManager : UnitManager
 
     private void Awake()
     {
-        shipController = GetComponent<ShipController>();
+        shipController = GetComponentInParent<ShipController>();
         spawner = GetComponent<EnemySpawner>();
     }
 
