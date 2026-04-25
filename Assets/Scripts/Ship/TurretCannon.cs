@@ -25,7 +25,7 @@ public class TurretCannon : MonoBehaviour
         shipColliders = GetComponentsInChildren<Collider>();
         shipColliders = GetComponentsInParent<Collider>();
         projectilePool = GetComponent<ObjectPool>();
-       
+
         shipController = GetComponentInParent<ShipController>();
     }
 
@@ -36,14 +36,6 @@ public class TurretCannon : MonoBehaviour
 
     private void Update()
     {
-        if (bCanShoot == false)
-        {
-            currentReloadDelay -= Time.deltaTime;
-            if (currentReloadDelay <= 0)
-            {
-                bCanShoot = true;
-            }
-        }
     }
 
     private IEnumerator FiringSequence()
@@ -52,8 +44,8 @@ public class TurretCannon : MonoBehaviour
         {
             bCanShoot = false;
             currentReloadDelay = turretData.reloadDelay;
-            
-                StartCoroutine(Firing());
+
+            StartCoroutine(Firing());
 
         }
         StopCoroutine(Firing());
@@ -62,12 +54,12 @@ public class TurretCannon : MonoBehaviour
 
     private IEnumerator Firing()
     {
-
+        bCanShoot = false;
         for (int f = 0; f < turretData.fieringVolly; f++)
         {
-            for (int i = 0; i < laserSpawnPoint.Count; i++)
+            foreach (var laserSpawn in laserSpawnPoint)
             {
-                Transform spawnPoints = laserSpawnPoint[i];
+                Transform spawnPoints = laserSpawn;
 
                 GameObject laserProjectile = projectilePool.CreateObject();
                 laserProjectile.transform.position = spawnPoints.position;
@@ -82,21 +74,38 @@ public class TurretCannon : MonoBehaviour
                 yield return new WaitForSeconds(turretData.fireSequence);
 
             }
-
         }
-        yield return new WaitForSeconds(turretData.reloadDelay);
-        yield return null;
+
+        yield return new WaitForSeconds(currentReloadDelay);
+        bCanShoot = true;
+    }
+
+
+    private bool CanShoot()
+    {
+        if (bCanShoot)
+        {
+            return true;
+        }
+
+
+        return bCanShoot;
     }
 
     public void Shoot()
     {
-        if (isActiveAndEnabled)
-        {
-            StartCoroutine(FiringSequence());
-        }
-        else
-        {
-            StopCoroutine(FiringSequence());
-        }
+        if (!CanShoot()) return;
+        
+
+            if (isActiveAndEnabled)
+            {
+                StartCoroutine(FiringSequence());
+            }
+            else
+            {
+                StopCoroutine(FiringSequence());
+            }
+
     }
+    
 }              
