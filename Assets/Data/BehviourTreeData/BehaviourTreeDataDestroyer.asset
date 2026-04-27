@@ -14,47 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BehaviourTreeData
   rootChildren:
   - node:
-      rid: 3174895243643322443
+      rid: 3174895423377375314
+  - node:
+      rid: 3174895423377375321
+  - node:
+      rid: 3174895423377375322
+  - node:
+      rid: 3174895423377375319
   references:
     version: 2
     RefIds:
-    - rid: 3174895243643322443
+    - rid: 3174895423377375314
       type: {class: SelectorData, ns: , asm: Assembly-CSharp}
       data:
-        name: Root
+        name: HoldPosition
         type: 2
         children:
         - node:
-            rid: 3174895243643322445
+            rid: 3174895423377375331
         - node:
-            rid: 3174895243643322446
-    - rid: 3174895243643322445
-      type: {class: SequenceData, ns: , asm: Assembly-CSharp}
-      data:
-        name: Attack
-        type: 1
-        children:
+            rid: 3174895423377375333
         - node:
-            rid: 3174895243643322447
-        - node:
-            rid: 3174895261683286087
-    - rid: 3174895243643322446
+            rid: 3174895423377375335
+    - rid: 3174895423377375319
       type: {class: SequenceData, ns: , asm: Assembly-CSharp}
       data:
         name: Patrol
         type: 1
         children:
         - node:
-            rid: 3174895243643322448
-    - rid: 3174895243643322447
-      type: {class: LeafData, ns: , asm: Assembly-CSharp}
-      data:
-        name: CanDetectTarget
-        type: 0
-        strategyType: 0
-        condition: TargetVisible
-        strategyName: AIDetector
-    - rid: 3174895243643322448
+            rid: 3174895423377375320
+    - rid: 3174895423377375320
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
         name: Patrol
@@ -62,10 +52,78 @@ MonoBehaviour:
         strategyType: 1
         condition: 
         strategyName: Patrol
-    - rid: 3174895261683286087
+    - rid: 3174895423377375321
+      type: {class: SequenceData, ns: , asm: Assembly-CSharp}
+      data:
+        name: ShootTarget
+        type: 1
+        children:
+        - node:
+            rid: 3174895423377375329
+        - node:
+            rid: 3174895423377375330
+    - rid: 3174895423377375322
+      type: {class: SequenceData, ns: , asm: Assembly-CSharp}
+      data:
+        name: PursueTarget
+        type: 1
+        children:
+        - node:
+            rid: 3174895423377375325
+        - node:
+            rid: 3174895423377375327
+    - rid: 3174895423377375325
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
-        name: Shoot
+        name: TargetVisible
+        type: 0
+        strategyType: 0
+        condition: TargetVisible
+        strategyName: AIDetector
+    - rid: 3174895423377375327
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: PursueTarget
+        type: 0
+        strategyType: 1
+        condition: 
+        strategyName: Pursuit
+    - rid: 3174895423377375329
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: ShootTargetCondition
+        type: 0
+        strategyType: 0
+        condition: FireAtTarget
+        strategyName: AIContext
+    - rid: 3174895423377375330
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: ShootTargetAction
+        type: 0
+        strategyType: 1
+        condition: 
+        strategyName: Shoot
+    - rid: 3174895423377375331
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: HoldPosition
+        type: 0
+        strategyType: 0
+        condition: HoldPosition
+        strategyName: AIContext
+    - rid: 3174895423377375333
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: HoldPosition
+        type: 0
+        strategyType: 1
+        condition: 
+        strategyName: HoldPosition
+    - rid: 3174895423377375335
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: ShootAction
         type: 0
         strategyType: 1
         condition: 

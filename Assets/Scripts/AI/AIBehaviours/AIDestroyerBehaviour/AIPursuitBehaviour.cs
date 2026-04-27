@@ -15,6 +15,8 @@ public class AIPursuitBehaviour : AIBehavior
     }
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
     {
+        Utility.LogAI("Pursuit Action is called", shipController);
+
         Vector3 targetPosition = aIDetector.Target.transform.position;
 
         planer.SetDestination(targetPosition);

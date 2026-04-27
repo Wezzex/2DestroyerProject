@@ -19,8 +19,22 @@ public class AIContext : MonoBehaviour
     private Dictionary<string, AIBehavior> behaviours;
     public ShipController ShipController => shipController;
     public AIDetector Detector => detector;
-
     public UnitManager UnitManager => unitManager;
+
+    [Header("Presuit Settings")]
+    public bool PresuitTarget { get; private set; }
+    [SerializeField] private float persuitRange = 100f;
+    [SerializeField] private float stationOutOfReach = 75f;
+
+
+    [Header("Fire At Target Settings")]
+    public bool FireAtTarget { get; private set; }
+    [SerializeField] private float fireRange = 50f;
+
+
+    [Header("Hold Position Settings")]
+    public bool HoldPosition { get; private set; }
+    [SerializeField] private float toCloseRange = 25f;
 
     private void Awake()
     {
@@ -64,14 +78,54 @@ public class AIContext : MonoBehaviour
         }
     }
 
-    private bool ShouldHoldPosition()
+    private void ShouldHoldPosition()
     {
-        throw new NotImplementedException();
+        if (detector.TargetVisible == false) return;
+
+        Vector3 targetPosition = detector.Target.position;
+        Vector3 unitPosition = detector.transform.position;
+
+        if (Vector3.Distance(unitPosition, targetPosition) < toCloseRange)
+        {
+            HoldPosition = true;
+        }
+
+        HoldPosition = false;
     }
 
-    private bool CanFireAtTarget()
+    private void CanFireAtTarget()
     {
-        throw new NotImplementedException();
+        if (detector.TargetVisible == false) return;
+
+        Vector3 targetPosition = detector.Target.position;
+        Vector3 unitPosition = detector.transform.position;
+
+        if (Vector3.Distance(unitPosition, targetPosition) < fireRange)
+        {
+            HoldPosition = true;
+        }
+
+        HoldPosition = false;
+    }
+
+    private void CanPursuitTarget()
+    {
+        if (detector.TargetVisible == false) return;
+
+        Vector3 targetPosition = detector.Target.position;
+        Vector3 unitPosition = detector.transform.position;
+
+        if (Vector3.Distance(unitPosition, targetPosition) < persuitRange)
+        {
+            HoldPosition = true;
+        }
+
+        HoldPosition = false;
+    }
+
+    public bool CanDetectTarget()
+    {
+        return detector != null && detector.TargetVisible;
     }
 
     public AIBehavior FindBehaviour(string name)
@@ -80,10 +134,6 @@ public class AIContext : MonoBehaviour
         return behaviour;
     }
 
-    public bool CanDetectTarget()
-    {
-        return detector != null && detector.TargetVisible;
-    }
 
     public void ShootAction()
     {

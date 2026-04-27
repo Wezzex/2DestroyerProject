@@ -34,7 +34,7 @@ public class AIPatrolBehaviour : AIBehavior
 
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
     {
-        Debug.Log("Patrol Action is called");
+        Utility.LogAI("Patrol Action is called", shipController);
         if (patrolArea == null) return;
         if (isWaiting) return;
 

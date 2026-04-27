@@ -10,4 +10,17 @@ public static class Utility
         Debug.Log(message);
 #endif
     }
+
+    public static ShipController AIDebugTarget = null;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void LogAI(object message, ShipController shipController)
+    {
+#if AI_LOGGING
+        if (shipController == AIDebugTarget)
+        {
+            Debug.Log(message);
+        }
+#endif
+    }
 }
