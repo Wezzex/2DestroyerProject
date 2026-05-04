@@ -230,6 +230,7 @@ public class EnemySpawner : MonoBehaviour
 
         GameObject ship = Instantiate(enemyShipPrefab, spawnPosition, Quaternion.identity);
 
+        var context = ship.GetComponent<AIContext>();
         Transform defenders = station.Find("Defenders");
         if (defenders == null)
         {
@@ -239,6 +240,12 @@ public class EnemySpawner : MonoBehaviour
         }
 
         ship.transform.SetParent(defenders, true);
+
+
+        if (context != null)
+        {
+            context.SetParentStation(station);
+        }
 
         PatrolArea patrolArea = ship.GetComponentInChildren<PatrolArea>();
         if (patrolArea != null)

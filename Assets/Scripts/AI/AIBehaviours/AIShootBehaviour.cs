@@ -19,7 +19,6 @@ public class AIShootBehaviour : AIBehavior
 
         if (TargetInFOV(shipController, aIDetector))
         {
-            shipController.HandleMoveShip(Vector2.zero);
             shipController.SetShootingState(true);
             shipController.HandleShoot();
         }

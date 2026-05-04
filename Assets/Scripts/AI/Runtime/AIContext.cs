@@ -11,7 +11,7 @@ public class AIContext : MonoBehaviour
     [SerializeField] private UnitManager unitManager;
 
     [Header("Behaviour components")]
-    [SerializeField] private AIBehavior patrolBehaviour, shootBehaviour;
+    [SerializeField] private AIBehavior patrolBehaviour, shootBehaviour, pursuitBehaviour, holdPositionBehaviour;
 
     private Dictionary<string, Func<bool>> conditions;
     private Dictionary<string, Action> actions;
@@ -21,20 +21,16 @@ public class AIContext : MonoBehaviour
     public AIDetector Detector => detector;
     public UnitManager UnitManager => unitManager;
 
-    [Header("Presuit Settings")]
-    public bool PresuitTarget { get; private set; }
-    [SerializeField] private float persuitRange = 100f;
+    [Header("Behaviour Settings")]
     [SerializeField] private float stationOutOfReach = 75f;
-
-
-    [Header("Fire At Target Settings")]
-    public bool FireAtTarget { get; private set; }
+    [SerializeField] private float persuitRange = 75f;
     [SerializeField] private float fireRange = 50f;
-
-
-    [Header("Hold Position Settings")]
-    public bool HoldPosition { get; private set; }
     [SerializeField] private float toCloseRange = 25f;
+
+    private bool bWithinStationReach;
+    private float stationReach;
+
+    private Transform parentStationTransform;
 
     private void Awake()
     {
@@ -78,49 +74,44 @@ public class AIContext : MonoBehaviour
         }
     }
 
-    private void ShouldHoldPosition()
+    public void SetParentStation(Transform station)
     {
-        if (detector.TargetVisible == false) return;
-
-        Vector3 targetPosition = detector.Target.position;
-        Vector3 unitPosition = detector.transform.position;
-
-        if (Vector3.Distance(unitPosition, targetPosition) < toCloseRange)
-        {
-            HoldPosition = true;
-        }
-
-        HoldPosition = false;
+        parentStationTransform = station;
     }
 
-    private void CanFireAtTarget()
+    public bool WithinParentStationReach()
     {
-        if (detector.TargetVisible == false) return;
+        if(parentStationTransform == null) return true;
 
-        Vector3 targetPosition = detector.Target.position;
-        Vector3 unitPosition = detector.transform.position;
-
-        if (Vector3.Distance(unitPosition, targetPosition) < fireRange)
-        {
-            HoldPosition = true;
-        }
-
-        HoldPosition = false;
+        float distance = Vector3.Distance(transform.position, parentStationTransform.position);
+        return distance <= stationOutOfReach;
     }
 
-    private void CanPursuitTarget()
+    public float DistanceBetweenShipAndTarget()
     {
-        if (detector.TargetVisible == false) return;
+        var distance = Vector3.Distance(detector.transform.position, detector.Target.position);
+        return distance;
+    }
 
-        Vector3 targetPosition = detector.Target.position;
-        Vector3 unitPosition = detector.transform.position;
+    public bool HoldPosition()
+    {
+        if (detector == null || detector.Target == null) return false;
 
-        if (Vector3.Distance(unitPosition, targetPosition) < persuitRange)
-        {
-            HoldPosition = true;
-        }
+        return DistanceBetweenShipAndTarget() <= toCloseRange;
+    }
 
-        HoldPosition = false;
+    public bool FireAtTarget()
+    {
+        if (detector == null || detector.Target == null) return false;
+
+        return DistanceBetweenShipAndTarget() <= fireRange;
+    }
+
+    public bool PursuitTarget()
+    {
+        if (detector == null || detector.Target == null) return false;
+
+        return DistanceBetweenShipAndTarget() <= persuitRange;
     }
 
     public bool CanDetectTarget()
@@ -145,6 +136,15 @@ public class AIContext : MonoBehaviour
         patrolBehaviour.PerformAction(shipController, detector);
     }
 
+    public void PursuitAction()
+    {
+        pursuitBehaviour.PerformAction(shipController, detector);
+    }
+
+    public void HoldPositionAction()
+    {
+        holdPositionBehaviour.PerformAction(shipController, detector);
+    }
     public Func<bool> GetCondition(string id)
     {
         if (string.IsNullOrWhiteSpace(id)) return null;

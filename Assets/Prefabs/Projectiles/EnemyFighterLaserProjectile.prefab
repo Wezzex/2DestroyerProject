@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: -5559164559515162761}
   - component: {fileID: 4040448445394777448}
   m_Layer: 7
-  m_Name: EnemyDestroyerLaserProjectile
+  m_Name: EnemyFighterLaserProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b606c43ddbbb4e4ca21d6598b99ae12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaserProjectile
-  laserProjectileData: {fileID: 11400000, guid: 49256f5547e12a948a7c83b5a9c8581b, type: 2}
+  laserProjectileData: {fileID: 11400000, guid: 09ea9a56bef78b74c93e967ec0a45f78, type: 2}
   impactPrefab: {fileID: 3077343761403282166, guid: d6dea1d2a239f984d9d159420252abf1, type: 3}
   OnSpawn:
     m_PersistentCalls:

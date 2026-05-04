@@ -9,6 +9,6 @@ public class AIHoldPositionBehaviour : AIBehavior
 
         Utility.LogAI("HoldPosition Action is called", shipController);
 
-        shipController.HandleMoveShip(Vector3.zero);
+        shipController.HandleMoveShip(Vector2.zero);
     }
 }

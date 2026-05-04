@@ -1065,7 +1065,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &1748395936
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1154,7 +1154,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 500, y: 500, z: 500}
+  m_LocalScale: {x: 250, y: 250, z: 250}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1187,7 +1187,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 1
-  m_VoxelSize: 6.31
+  m_VoxelSize: 1.71
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: ab5a23530c5503848bdd62fdb8cab464, type: 2}
   m_BuildHeightMesh: 0
@@ -1224,6 +1224,7 @@ MonoBehaviour:
   enemyStationPrefab: {fileID: 8312358026214592434, guid: c1d7ad56add07f34585343e02c8ffd1c, type: 3}
   enemyShipsPrefabs:
   - {fileID: 8312358026214592434, guid: ec164bfa38dc2664cba7877546376f35, type: 3}
+  - {fileID: 8312358026214592434, guid: a5a32a6611fcc6941bf076ae9dd7fad2, type: 3}
   stationCount: 3
   stationRadiusMin: 200
   stationRadiusMax: 300

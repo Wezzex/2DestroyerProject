@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2386911194236695002}
   - component: {fileID: 7505375683244000891}
+  - component: {fileID: 1384020579360669870}
   - component: {fileID: 7607777866288305585}
   - component: {fileID: 6813895779606181251}
   - component: {fileID: 472430090276667290}
-  - component: {fileID: 846323887777251927}
+  - component: {fileID: 1614010343902103719}
   - component: {fileID: 5438078125261289468}
   - component: {fileID: 5781356173136096508}
   m_Layer: 11
@@ -68,6 +69,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1384020579360669870
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056823269703326849}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.52, y: 0.28, z: 0.74}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7607777866288305585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipMover
   rb: {fileID: 7505375683244000891}
-  shipMovementData: {fileID: 11400000, guid: f53740f1993aaca488e1fdeca851c0f4, type: 2}
+  shipMovementData: {fileID: 11400000, guid: c17dc1f91361b424493b9ef81c2d6b4e, type: 2}
   currentSpeed: 0
 --- !u!114 &6813895779606181251
 MonoBehaviour:
@@ -118,7 +140,7 @@ NavMeshAgent:
   m_BaseOffset: 0.4
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &846323887777251927
+--- !u!114 &1614010343902103719
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,15 +149,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1056823269703326849}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6747de9ebf67eb343ab3cb7473073562, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b0d96c383aa0e24b85fb7f2ce708fa4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
+  m_EditorClassIdentifier: Assembly-CSharp::FighterManager
   health: 0
-  maxHealth: 100
+  maxHealth: 2
   bIsDead: 0
   shipController: {fileID: 4667717909535961513}
   spawner: {fileID: 0}
-  explotionPrefab: {fileID: 100010, guid: 08eaa035e54502d47a55b3aee5cc0ae8, type: 3}
+  explotionPrefab: {fileID: 3077343761403282166, guid: e3ce9e4415740be49bc8d1c0bc3aec7d, type: 3}
 --- !u!114 &5438078125261289468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,8 +449,10 @@ GameObject:
   - component: {fileID: 931345596167716337}
   - component: {fileID: 4667717909535961513}
   - component: {fileID: 1658400302252655445}
-  - component: {fileID: 1043052546017466886}
+  - component: {fileID: 5157207260209960238}
   - component: {fileID: 6331012635172997626}
+  - component: {fileID: 2090716310442564073}
+  - component: {fileID: 1564004266684722047}
   - component: {fileID: 2239779341316244749}
   - component: {fileID: 6255422106083246354}
   m_Layer: 0
@@ -483,7 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5976c3c054063449a5f591a590c611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestroyUtil
---- !u!114 &1043052546017466886
+--- !u!114 &5157207260209960238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -492,10 +516,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8312358026214592434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91e758139c58baf4f91a34ee4f70fe66, type: 3}
+  m_Script: {fileID: 11500000, guid: c67d3bcd59ced6d42abc2b956d22bc0c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AIShootBehaviour
-  fieldOfVisionForShooting: 60
+  m_EditorClassIdentifier: Assembly-CSharp::AIFighterShootBehaviour
+  fieldOfVisionForShooting: 45
 --- !u!114 &6331012635172997626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,6 +541,33 @@ MonoBehaviour:
   currentPatrolTarget: {x: 0, y: 0, z: 0}
   shipCurrentPosition: {x: 0, y: 0, z: 0}
   shipCPosition: {fileID: 2386911194236695002}
+--- !u!114 &2090716310442564073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312358026214592434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6db3e2934df56e84f8271d7900d5ab1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIPursuitBehaviour
+  followPlannedPath: {fileID: 5781356173136096508}
+  planer: {fileID: 5438078125261289468}
+  detector: {fileID: 2997940716200736302}
+--- !u!114 &1564004266684722047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312358026214592434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de3d0eb013ae04c43bd0d552c2408195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIHoldPositionBehaviour
 --- !u!114 &2239779341316244749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,11 +582,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AIContext
   shipController: {fileID: 4667717909535961513}
   detector: {fileID: 2997940716200736302}
-  unitManager: {fileID: 846323887777251927}
+  unitManager: {fileID: 1614010343902103719}
   patrolBehaviour: {fileID: 6331012635172997626}
-  shootBehaviour: {fileID: 1043052546017466886}
-  persuitRange: 100
+  shootBehaviour: {fileID: 5157207260209960238}
+  pursuitBehaviour: {fileID: 2090716310442564073}
+  holdPositionBehaviour: {fileID: 1564004266684722047}
   stationOutOfReach: 75
+  persuitRange: 100
   fireRange: 50
   toCloseRange: 25
 --- !u!114 &6255422106083246354
@@ -550,7 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a775946387ec5b643931704a91541697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAIRunner
-  behaviourTreeData: {fileID: 11400000, guid: 83bcab00c5084c746bfebbf3d6ba7778, type: 2}
+  behaviourTreeData: {fileID: 11400000, guid: 9b7a74182fc91ad45b4c1d569db46e73, type: 2}
   context: {fileID: 2239779341316244749}
 --- !u!1001 &7621686415559958959
 PrefabInstance:

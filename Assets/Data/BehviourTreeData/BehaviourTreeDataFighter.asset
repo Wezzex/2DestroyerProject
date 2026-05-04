@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ee1e37265f6ec444aaccda16de87758, type: 3}
-  m_Name: BehaviourTreeDataDestroyer
+  m_Name: BehaviourTreeDataFighter
   m_EditorClassIdentifier: Assembly-CSharp::BehaviourTreeData
   rootChildren:
   - node:
@@ -89,11 +89,11 @@ MonoBehaviour:
     - rid: 3174895423377375330
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
-        name: Shoot
+        name: FighterShoot
         type: 0
         strategyType: 1
         condition: 
-        strategyName: Shoot
+        strategyName: FighterShoot
     - rid: 3174895469097123920
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
@@ -133,8 +133,8 @@ MonoBehaviour:
     - rid: 3174895469097123928
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
-        name: Shoot
+        name: FighterShoot
         type: 0
         strategyType: 1
         condition: 
-        strategyName: Shoot
+        strategyName: FighterShoot
