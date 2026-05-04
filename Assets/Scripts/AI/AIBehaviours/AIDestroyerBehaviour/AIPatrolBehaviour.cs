@@ -38,9 +38,10 @@ public class AIPatrolBehaviour : AIBehavior
         if (patrolArea == null) return;
         if (isWaiting) return;
 
-        
 
-        Vector3 shipPosition = shipCPosition.transform.position;
+        followPlannedPath.StopMoving = false;
+
+        Vector3 shipPosition = shipCPosition.position;
         shipPosition.y = 0f;
 
         if (!patrolArea.bIsInitilized)
@@ -61,18 +62,6 @@ public class AIPatrolBehaviour : AIBehavior
         }
 
         shipController.SetShootingState(false);
-
-    }
-
-
-    IEnumerator WaitCoroutine()
-    {
-        yield return new WaitForSeconds(waitTime);
-        patrolArea.OnReachedPoint();
-        followPlannedPath.ResetFollower();
-        var nextPathPoint = patrolArea.GetCurrentTargetPosition();
-        currentPatrolTarget = nextPathPoint;
-        isWaiting = false;
     }
 
 

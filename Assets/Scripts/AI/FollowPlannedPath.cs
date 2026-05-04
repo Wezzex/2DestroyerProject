@@ -18,6 +18,7 @@ public class FollowPlannedPath : MonoBehaviour
 
     private int pathIndex;
 
+    public bool StopMoving { get; set; }
     private void Awake()
     {
         if (planner == null) planner = GetComponent<GlobalPathPlaner>();
@@ -28,6 +29,12 @@ public class FollowPlannedPath : MonoBehaviour
     {
         if (planner == null || shipMover == null) return;
         if (!planner.HasPath)
+        {
+            shipMover.Move(Vector2.zero);
+            return;
+        }
+
+        if (StopMoving)
         {
             shipMover.Move(Vector2.zero);
             return;

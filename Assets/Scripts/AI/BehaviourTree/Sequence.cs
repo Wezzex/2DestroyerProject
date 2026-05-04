@@ -11,8 +11,7 @@ public class Sequence : Node
         {
             var status = children[currentChild].Process();
 
-
-            switch (children[currentChild].Process())
+            switch (status)
             {
                 case Status.Running:
                     return Status.Running;

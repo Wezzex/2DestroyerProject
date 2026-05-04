@@ -14,107 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BehaviourTreeData
   rootChildren:
   - node:
-      rid: 3174895469097123922
-  - node:
-      rid: 3174895423377375321
-  - node:
-      rid: 3174895423377375322
-  - node:
-      rid: 3174895423377375319
+      rid: 4587174708207681537
   references:
     version: 2
     RefIds:
-    - rid: 3174895423377375319
-      type: {class: SequenceData, ns: , asm: Assembly-CSharp}
+    - rid: 4587174708207681537
+      type: {class: SelectorData, ns: , asm: Assembly-CSharp}
       data:
-        name: Patrol
-        type: 1
+        name: root
+        type: 2
         children:
         - node:
-            rid: 3174895423377375320
-    - rid: 3174895423377375320
-      type: {class: LeafData, ns: , asm: Assembly-CSharp}
-      data:
-        name: Patrol
-        type: 0
-        strategyType: 1
-        condition: 
-        strategyName: Patrol
-    - rid: 3174895423377375321
-      type: {class: SequenceData, ns: , asm: Assembly-CSharp}
-      data:
-        name: FireAtTarget
-        type: 1
-        children:
+            rid: 4587174708207681538
         - node:
-            rid: 3174895423377375329
+            rid: 4587174708207681639
         - node:
-            rid: 3174895423377375330
-    - rid: 3174895423377375322
-      type: {class: SequenceData, ns: , asm: Assembly-CSharp}
-      data:
-        name: PursuitTarget
-        type: 1
-        children:
-        - node:
-            rid: 3174895423377375325
-        - node:
-            rid: 3174895423377375327
-        - node:
-            rid: 3174895469097123920
-    - rid: 3174895423377375325
-      type: {class: LeafData, ns: , asm: Assembly-CSharp}
-      data:
-        name: PursuitTarget
-        type: 0
-        strategyType: 0
-        condition: PursuitTarget
-        strategyName: AIContext
-    - rid: 3174895423377375327
-      type: {class: LeafData, ns: , asm: Assembly-CSharp}
-      data:
-        name: PursueTarget
-        type: 0
-        strategyType: 1
-        condition: 
-        strategyName: Pursuit
-    - rid: 3174895423377375329
-      type: {class: LeafData, ns: , asm: Assembly-CSharp}
-      data:
-        name: FireAtTarget
-        type: 0
-        strategyType: 0
-        condition: FireAtTarget
-        strategyName: AIContext
-    - rid: 3174895423377375330
-      type: {class: LeafData, ns: , asm: Assembly-CSharp}
-      data:
-        name: Shoot
-        type: 0
-        strategyType: 1
-        condition: 
-        strategyName: Shoot
-    - rid: 3174895469097123920
-      type: {class: LeafData, ns: , asm: Assembly-CSharp}
-      data:
-        name: WithinParentStationReach
-        type: 0
-        strategyType: 0
-        condition: WithinParentStationReach
-        strategyName: AIContext
-    - rid: 3174895469097123922
+            rid: 4587174708207681638
+    - rid: 4587174708207681538
       type: {class: SequenceData, ns: , asm: Assembly-CSharp}
       data:
         name: HoldPosition
         type: 1
         children:
         - node:
-            rid: 3174895469097123924
+            rid: 4587174708207681545
         - node:
-            rid: 3174895469097123926
+            rid: 4587174708207681547
         - node:
-            rid: 3174895469097123928
-    - rid: 3174895469097123924
+            rid: 4587174708207681637
+    - rid: 4587174708207681545
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
         name: HoldPosition
@@ -122,7 +50,7 @@ MonoBehaviour:
         strategyType: 0
         condition: HoldPosition
         strategyName: AIContext
-    - rid: 3174895469097123926
+    - rid: 4587174708207681547
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
         name: HoldPosition
@@ -130,7 +58,71 @@ MonoBehaviour:
         strategyType: 1
         condition: 
         strategyName: HoldPosition
-    - rid: 3174895469097123928
+    - rid: 4587174708207681637
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Shoot
+        type: 0
+        strategyType: 1
+        condition: 
+        strategyName: Shoot
+    - rid: 4587174708207681638
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Patrol
+        type: 0
+        strategyType: 1
+        condition: 
+        strategyName: Patrol
+    - rid: 4587174708207681639
+      type: {class: SequenceData, ns: , asm: Assembly-CSharp}
+      data:
+        name: PursuitTarget
+        type: 1
+        children:
+        - node:
+            rid: 4587174708207681640
+        - node:
+            rid: 4587174708207681642
+        - node:
+            rid: 4587174708207681644
+        - node:
+            rid: 4587174708207681645
+        - node:
+            rid: 4587174708207681647
+    - rid: 4587174708207681640
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: TargetVisible
+        type: 0
+        strategyType: 0
+        condition: TargetVisible
+        strategyName: AIDetector
+    - rid: 4587174708207681642
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: WithinParentStationReach
+        type: 0
+        strategyType: 0
+        condition: WithinParentStationReach
+        strategyName: AIContext
+    - rid: 4587174708207681644
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: PursuitTarget
+        type: 0
+        strategyType: 0
+        condition: PursuitTarget
+        strategyName: AIContext
+    - rid: 4587174708207681645
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Pursuit
+        type: 0
+        strategyType: 1
+        condition: 
+        strategyName: Pursuit
+    - rid: 4587174708207681647
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
         name: Shoot
