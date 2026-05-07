@@ -568,6 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3d0eb013ae04c43bd0d552c2408195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIHoldPositionBehaviour
+  followPlannedPath: {fileID: 0}
 --- !u!114 &2239779341316244749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -673,7 +674,8 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 64979631015632002, guid: ad7c52a4ec5f9b948bbfc45336f4fa48, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

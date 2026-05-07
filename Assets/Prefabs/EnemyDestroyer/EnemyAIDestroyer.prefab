@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba49a7a63c143c4a817ab6caff7cb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIDetector
-  viewRadius: 100
+  viewRadius: 200
   detectionCheckDelay: 0.1
   target: {fileID: 0}
   playerLayerMask:
@@ -1014,7 +1014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e758139c58baf4f91a34ee4f70fe66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIShootBehaviour
-  fieldOfVisionForShooting: 60
+  fieldOfVisionForShooting: 180
 --- !u!114 &6331012635172997626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1083,10 +1083,10 @@ MonoBehaviour:
   shootBehaviour: {fileID: 1043052546017466886}
   pursuitBehaviour: {fileID: 1150862419151102334}
   holdPositionBehaviour: {fileID: 2575690826409212966}
-  stationOutOfReach: 100
-  persuitRange: 100
-  fireRange: 50
-  toCloseRange: 35
+  stationOutOfReach: 300
+  persuitRange: 300
+  fireRange: 150
+  toCloseRange: 50
 --- !u!114 &6255422106083246354
 MonoBehaviour:
   m_ObjectHideFlags: 0

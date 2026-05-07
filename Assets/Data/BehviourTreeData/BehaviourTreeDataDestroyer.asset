@@ -18,6 +18,14 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 3428787585853161548
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Patrol
+        type: 0
+        strategyType: 1
+        condition: 
+        strategyName: Patrol
     - rid: 4587174708207681537
       type: {class: SelectorData, ns: , asm: Assembly-CSharp}
       data:
@@ -29,7 +37,7 @@ MonoBehaviour:
         - node:
             rid: 4587174708207681639
         - node:
-            rid: 4587174708207681638
+            rid: 3428787585853161548
     - rid: 4587174708207681538
       type: {class: SequenceData, ns: , asm: Assembly-CSharp}
       data:
@@ -66,14 +74,6 @@ MonoBehaviour:
         strategyType: 1
         condition: 
         strategyName: Shoot
-    - rid: 4587174708207681638
-      type: {class: LeafData, ns: , asm: Assembly-CSharp}
-      data:
-        name: Patrol
-        type: 0
-        strategyType: 1
-        condition: 
-        strategyName: Patrol
     - rid: 4587174708207681639
       type: {class: SequenceData, ns: , asm: Assembly-CSharp}
       data:
