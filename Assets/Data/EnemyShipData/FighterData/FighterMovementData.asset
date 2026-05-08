@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FighterMovementData
   m_EditorClassIdentifier: Assembly-CSharp::ShipMovementData
   maxSpeed: 15
-  rotationSpeed: 30
+  rotationSpeed: 100
   acceleration: 50
   deacceleration: 50

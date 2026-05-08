@@ -20,13 +20,19 @@ public class EnemySpawner : MonoBehaviour
     Vector3 worldOrigin = new Vector3(0, 0, 0);
 
 
-    [Header("Reference")]
+    [Header("Destroyer Settings")]
     [SerializeField] private float shipMaxSpawnRadius = 75f;
     [SerializeField] private float shipMinSpawnRadius = 50f;
     [SerializeField] private float spawnInterval = 5f;
     [SerializeField] private int maxShipStart = 3;
     [SerializeField] private int maxShipIncreasAmount = 1;
     [SerializeField] private float maxShipIncreasOverTime = 30f;
+
+    [Header("Destroyer Settings")]
+    [SerializeField] private GameObject[] fighterPrefabs;
+    [SerializeField] private int fighterCount = 5;
+    [SerializeField] private float fighterMinSpawnRadius = 50f;
+    [SerializeField] private float figherMaxSpawnRadius = 100f;
 
 
     private readonly List<Transform> stations = new List<Transform>();
@@ -90,9 +96,52 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < stations.Count; i++)
         {
             TrySpawnShipNearStation(stations[i]);
+            TrySpawnFightersNearStation(stations[i], fighterCount);
         }
         
         
+    }
+
+    private void TrySpawnFightersNearStation(Transform station, int fighterCount)
+    {
+
+        Transform fighters = station.Find("Fighters");
+        
+
+        for (int i = 0; i < fighterCount; i++)
+        {
+            GameObject fighterPrefab = fighterPrefabs[UnityEngine.Random.Range(0, fighterPrefabs.Length)];
+
+            Vector3 spawnPosition = GetRandomPointInRange(station.position, fighterMinSpawnRadius, figherMaxSpawnRadius);
+            spawnPosition.y = station.position.y;
+
+            GameObject fighter = Instantiate(fighterPrefab, spawnPosition, Quaternion.identity);
+            AIContext context = fighter.GetComponent<AIContext>();
+            AIDetector detector = fighter.GetComponent<AIDetector>();
+
+            if (context != null)
+            {
+                context.SetParentStation(station);
+            }
+
+            PatrolArea patrolArea = fighter.GetComponentInChildren<PatrolArea>();
+            FighterStrafePoints fighterStrafe = fighter.GetComponentInChildren<FighterStrafePoints>();
+            if (patrolArea != null)
+            {
+                patrolArea.SetPatrolAncor(station);
+                patrolArea.InitilizeSpawnPoints();
+
+            }
+            if (fighters == null)
+            {
+                var go = new GameObject("Fighters");
+                fighters = go.transform;
+                fighters.SetParent(station, true);
+            }
+
+            aliveShips.Add(fighter);
+        }
+
     }
 
     private Vector3 TryValidStationSpawn()
@@ -265,6 +314,7 @@ public class EnemySpawner : MonoBehaviour
         return candidate;
 
     }
+
 
     private static Vector3 GetRandomPointInRange(Vector3 center, float minRadius, float maxRadius)
     {

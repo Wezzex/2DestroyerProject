@@ -88,7 +88,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.52, y: 0.28, z: 0.74}
+  m_Size: {x: 0.52, y: 0.88, z: 0.74}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7607777866288305585
 MonoBehaviour:
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba49a7a63c143c4a817ab6caff7cb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIDetector
-  viewRadius: 100
+  viewRadius: 75
   detectionCheckDelay: 0.1
   target: {fileID: 0}
   playerLayerMask:
@@ -323,6 +323,54 @@ MonoBehaviour:
   objectToPool: {fileID: 0}
   poolSize: 100
   spawnedObjectsParent: {fileID: 0}
+--- !u!1 &6484248279728592107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2929844324372500501}
+  - component: {fileID: 1497285979311828375}
+  m_Layer: 0
+  m_Name: StrafePoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2929844324372500501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6484248279728592107}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00296}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 931345596167716337}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1497285979311828375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6484248279728592107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506aef1be4542744cacb5d8f36468d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FighterStrafe
+  targetTransform: {fileID: 0}
+  fighterTransform: {fileID: 2386911194236695002}
+  minStrafeRadius: 50
+  maxStrafeRadius: 100
 --- !u!1 &6529470475858507229
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +380,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7366588396389411522}
-  - component: {fileID: 7878243362200287346}
+  - component: {fileID: 6422187944444431452}
   m_Layer: 0
   m_Name: Patrol
   m_TagString: Untagged
@@ -355,7 +403,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 931345596167716337}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7878243362200287346
+--- !u!114 &6422187944444431452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -371,10 +419,10 @@ MonoBehaviour:
   shipTransform: {fileID: 2386911194236695002}
   currentTargetIndex: 0
   radiusMin: 75
-  radiusMax: 75
-  minSpawnDistance: 100
-  minSpawnSeperation: 100
-  pointSize: 1
+  radiusMax: 100
+  minSpawnDistance: 25
+  minSpawnSeperation: 25
+  pointSize: 0.3
   bIsInitilized: 0
 --- !u!1 &6798433828092288941
 GameObject:
@@ -400,13 +448,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6798433828092288941}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.16, y: 0, z: 0.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 634704417385597247}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &7700390674279488446
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,13 +479,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7700390674279488446}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.16, y: 0, z: 0.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 634704417385597247}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &8312358026214592434
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,9 +497,9 @@ GameObject:
   - component: {fileID: 931345596167716337}
   - component: {fileID: 4667717909535961513}
   - component: {fileID: 1658400302252655445}
+  - component: {fileID: 6166823830832116370}
   - component: {fileID: 5157207260209960238}
-  - component: {fileID: 6331012635172997626}
-  - component: {fileID: 2090716310442564073}
+  - component: {fileID: 3258317608173022761}
   - component: {fileID: 1564004266684722047}
   - component: {fileID: 2239779341316244749}
   - component: {fileID: 6255422106083246354}
@@ -477,6 +525,7 @@ Transform:
   m_Children:
   - {fileID: 2386911194236695002}
   - {fileID: 7366588396389411522}
+  - {fileID: 2929844324372500501}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4667717909535961513
@@ -507,6 +556,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5976c3c054063449a5f591a590c611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestroyUtil
+--- !u!114 &6166823830832116370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312358026214592434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da76ba8c1bf18d947b85f61595124ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIFighterPatrolBehaviour
+  patrolArea: {fileID: 6422187944444431452}
+  followPlannedPath: {fileID: 5781356173136096508}
+  planer: {fileID: 5438078125261289468}
+  arriveDistance: 5
+  waitTime: 0.5
+  isWaiting: 0
+  currentPatrolTarget: {x: 0, y: 0, z: 0}
+  shipCurrentPosition: {x: 0, y: 0, z: 0}
+  shipCPosition: {fileID: 2386911194236695002}
 --- !u!114 &5157207260209960238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,7 +590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIFighterShootBehaviour
   fieldOfVisionForShooting: 45
---- !u!114 &6331012635172997626
+--- !u!114 &3258317608173022761
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -529,33 +599,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8312358026214592434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8ae7cc999041304b91a417169d90b2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 11ea23b6acf251b48b785a1aa04e6825, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AIPatrolPathBehaviour
-  patrolArea: {fileID: 7878243362200287346}
+  m_EditorClassIdentifier: Assembly-CSharp::AIFighterPursuitBehaviour
+  strafe: {fileID: 1497285979311828375}
   followPlannedPath: {fileID: 5781356173136096508}
   planer: {fileID: 5438078125261289468}
-  arriveDistance: 10
-  waitTime: 0.5
-  isWaiting: 0
-  currentPatrolTarget: {x: 0, y: 0, z: 0}
-  shipCurrentPosition: {x: 0, y: 0, z: 0}
+  arriveDistance: 5
   shipCPosition: {fileID: 2386911194236695002}
---- !u!114 &2090716310442564073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8312358026214592434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6db3e2934df56e84f8271d7900d5ab1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AIPursuitBehaviour
-  followPlannedPath: {fileID: 5781356173136096508}
-  planer: {fileID: 5438078125261289468}
-  detector: {fileID: 2997940716200736302}
 --- !u!114 &1564004266684722047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,7 +619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3d0eb013ae04c43bd0d552c2408195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIHoldPositionBehaviour
-  followPlannedPath: {fileID: 0}
+  followPlannedPath: {fileID: 5781356173136096508}
 --- !u!114 &2239779341316244749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,14 +635,14 @@ MonoBehaviour:
   shipController: {fileID: 4667717909535961513}
   detector: {fileID: 2997940716200736302}
   unitManager: {fileID: 1614010343902103719}
-  patrolBehaviour: {fileID: 6331012635172997626}
+  patrolBehaviour: {fileID: 6166823830832116370}
   shootBehaviour: {fileID: 5157207260209960238}
-  pursuitBehaviour: {fileID: 2090716310442564073}
+  pursuitBehaviour: {fileID: 3258317608173022761}
   holdPositionBehaviour: {fileID: 1564004266684722047}
-  stationOutOfReach: 75
+  stationOutOfReach: 100
   persuitRange: 100
   fireRange: 50
-  toCloseRange: 25
+  toCloseRange: 0
 --- !u!114 &6255422106083246354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,7 +655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a775946387ec5b643931704a91541697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAIRunner
-  behaviourTreeData: {fileID: 11400000, guid: 9b7a74182fc91ad45b4c1d569db46e73, type: 2}
+  behaviourTreeData: {fileID: 11400000, guid: 2ca173cd61f72544abf3037e4abe3cfa, type: 2}
   context: {fileID: 2239779341316244749}
 --- !u!1001 &7621686415559958959
 PrefabInstance:

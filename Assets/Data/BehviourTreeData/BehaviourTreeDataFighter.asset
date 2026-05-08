@@ -29,27 +29,27 @@ MonoBehaviour:
     - rid: 3428787585853161555
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
-        name: Pursuit
+        name: FighterPursuit
         type: 0
         strategyType: 1
         condition: 
-        strategyName: Pursuit
+        strategyName: FighterPursuit
     - rid: 3428787585853161557
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
-        name: Shoot
+        name: FighterShoot
         type: 0
         strategyType: 1
         condition: 
-        strategyName: Shoot
+        strategyName: FighterShoot
     - rid: 3428787585853161558
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
-        name: Patrol
+        name: FighterPatrol
         type: 0
         strategyType: 1
         condition: 
-        strategyName: Patrol
+        strategyName: FighterPatrol
     - rid: 4587174708207681537
       type: {class: SelectorData, ns: , asm: Assembly-CSharp}
       data:
@@ -63,7 +63,7 @@ MonoBehaviour:
     - rid: 4587174708207681538
       type: {class: SequenceData, ns: , asm: Assembly-CSharp}
       data:
-        name: PursuitTarget
+        name: FighterPursuit
         type: 1
         children:
         - node:

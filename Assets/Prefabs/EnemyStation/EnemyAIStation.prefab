@@ -1256,6 +1256,12 @@ MonoBehaviour:
   unitManager: {fileID: 6363053673204129283}
   patrolBehaviour: {fileID: 7031065514813202374}
   shootBehaviour: {fileID: 1043052546017466886}
+  pursuitBehaviour: {fileID: 0}
+  holdPositionBehaviour: {fileID: 0}
+  stationOutOfReach: 75
+  persuitRange: 75
+  fireRange: 50
+  toCloseRange: 25
 --- !u!114 &6255422106083246354
 MonoBehaviour:
   m_ObjectHideFlags: 0

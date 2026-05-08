@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class FollowPlannedPath : MonoBehaviour
@@ -15,10 +16,10 @@ public class FollowPlannedPath : MonoBehaviour
     [SerializeField] private float reducedThrust = 0.5f;
 
     [SerializeField] int lastPathVersion = -1;
-
     private int pathIndex;
 
     public bool StopMoving { get; set; }
+
     private void Awake()
     {
         if (planner == null) planner = GetComponent<GlobalPathPlaner>();
@@ -28,15 +29,10 @@ public class FollowPlannedPath : MonoBehaviour
     private void Update()
     {
         if (planner == null || shipMover == null) return;
-        if (!planner.HasPath)
-        {
-            shipMover.Move(Vector2.zero);
-            return;
-        }
 
-        if (StopMoving)
+        if (StopMoving || !planner.HasPath)
         {
-            shipMover.Move(Vector2.zero);
+            Stop();
             return;
         }
 
@@ -47,70 +43,78 @@ public class FollowPlannedPath : MonoBehaviour
         }
 
         var points = planner.PathPoints;
-        if (points.Count < 2)
+        if (points == null || points.Count < 2)
         {
-            shipMover.Move(Vector2.zero);
+            Stop();
             return;
         }
 
         pathIndex = Mathf.Clamp(pathIndex, 0, points.Count - 1);
 
-        Vector3 shipPos = transform.position; shipPos.y = 0f;
-        Vector3 current = points[pathIndex]; current.y = 0f;
+        Vector3 shipPosition = FlatY(transform.position);
+        Vector3 currentPoint = FlatY(points[pathIndex]);
 
-        if (Vector3.Distance(shipPos, current) <= arriveDistance)
+        if (Vector3.Distance(shipPosition, currentPoint) <= arriveDistance)
+        {
             pathIndex = Mathf.Min(pathIndex + 1, points.Count - 1);
+        }
 
         int targetIndex = Mathf.Min(pathIndex + lookAheadPoints, points.Count - 1);
-        Vector3 target = points[targetIndex]; target.y = 0f;
+        Vector3 target = FlatY(points[targetIndex]);
 
-        Vector3 toTarget = target - shipPos;
-
+        Vector3 toTarget = target - shipPosition;
         bool closeEnough = toTarget.sqrMagnitude <= arriveDistance * arriveDistance;
 
-        Vector3 forwardFlat = transform.forward;
-        forwardFlat.y = 0f;
+        Vector3 forwardFalt = FlatY(transform.forward);
+        if(forwardFalt.sqrMagnitude > 0.0001) forwardFalt.Normalize();
 
-        if (forwardFlat.sqrMagnitude > 0.00001f)
+        bool passedWaypoints = false;
+        if (toTarget.sqrMagnitude > 0.0001 && forwardFalt.sqrMagnitude > 0.0001)
         {
-            forwardFlat.Normalize();
-        }
-
-        bool passedWaypoint = false;
-        if (toTarget.sqrMagnitude > 0.00001f && forwardFlat.sqrMagnitude > 0.00001f)
-        {
-            toTarget.Normalize();
-            passedWaypoint = Vector3.Dot(forwardFlat, toTarget) < 0.0f;
-        }
-
-        if (closeEnough || passedWaypoint)
-        {
-            pathIndex = Mathf.Min(pathIndex + 1, points.Count - 1);
+            Vector3 toTargetNormalized = toTarget.normalized;
+            passedWaypoints = Vector3.Dot(forwardFalt, toTargetNormalized) < 0.1f;
         }
 
         if (toTarget.sqrMagnitude < 0.0001f)
         {
-            shipMover.Move(Vector2.zero);
+            Stop();
             return;
         }
-        toTarget.Normalize();
 
-        Vector3 forward = transform.forward; forward.y = 0f;
+        Vector3 desiredDirection = toTarget.normalized;
+        Vector3 forward = FlatY(transform.forward);
         if (forward.sqrMagnitude < 0.0001f)
         {
-            shipMover.Move(Vector2.zero);
+            Stop();
             return;
         }
+
         forward.Normalize();
 
-        float angle = Vector3.SignedAngle(forward, toTarget, Vector3.up);
+        float angle = Vector3.SignedAngle(forward, desiredDirection, Vector3.up);
 
-        fullTurnAngle = Mathf.Max(fullTurnAngle, 0.0001f);
-        float turn = Mathf.Clamp(angle / fullTurnAngle, -1f, 1f);
+        float safeTurnAngle = Mathf.Max(fullTurnAngle, 0.0001f);
+        float turn = Mathf.Clamp(angle / safeTurnAngle, -1, 1f);
+
         float thrust = (Mathf.Abs(angle) < alignThreshold) ? 1f : reducedThrust;
 
         shipMover.Move(new Vector2(turn, thrust));
+        
     }
 
-    public void ResetFollower() => pathIndex = 0;
+    public void ResetFollower()
+    {
+        pathIndex = 0;
+    }
+
+    private void Stop()
+    {
+        shipMover.Move(Vector2.zero);
+    }
+
+    private static Vector3 FlatY(Vector3 vector)
+    {
+        vector.y = 0f;
+        return vector;
+    }
 }
