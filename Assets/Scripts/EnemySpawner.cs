@@ -36,7 +36,8 @@ public class EnemySpawner : MonoBehaviour
 
 
     private readonly List<Transform> stations = new List<Transform>();
-    private readonly List<GameObject> aliveShips = new List<GameObject>();
+    private readonly List<GameObject> aliveDestroyers = new List<GameObject>();
+    private readonly List<GameObject> aliveFighters = new List<GameObject>();
     private GameObject[] stationsAlive;
 
     public int aliveStationsCount = 0;
@@ -102,47 +103,7 @@ public class EnemySpawner : MonoBehaviour
         
     }
 
-    private void TrySpawnFightersNearStation(Transform station, int fighterCount)
-    {
-
-        Transform fighters = station.Find("Fighters");
-        
-
-        for (int i = 0; i < fighterCount; i++)
-        {
-            GameObject fighterPrefab = fighterPrefabs[UnityEngine.Random.Range(0, fighterPrefabs.Length)];
-
-            Vector3 spawnPosition = GetRandomPointInRange(station.position, fighterMinSpawnRadius, figherMaxSpawnRadius);
-            spawnPosition.y = station.position.y;
-
-            GameObject fighter = Instantiate(fighterPrefab, spawnPosition, Quaternion.identity);
-            AIContext context = fighter.GetComponent<AIContext>();
-            AIDetector detector = fighter.GetComponent<AIDetector>();
-
-            if (context != null)
-            {
-                context.SetParentStation(station);
-            }
-
-            PatrolArea patrolArea = fighter.GetComponentInChildren<PatrolArea>();
-            FighterStrafePoints fighterStrafe = fighter.GetComponentInChildren<FighterStrafePoints>();
-            if (patrolArea != null)
-            {
-                patrolArea.SetPatrolAncor(station);
-                patrolArea.InitilizeSpawnPoints();
-
-            }
-            if (fighters == null)
-            {
-                var go = new GameObject("Fighters");
-                fighters = go.transform;
-                fighters.SetParent(station, true);
-            }
-
-            aliveShips.Add(fighter);
-        }
-
-    }
+    
 
     private Vector3 TryValidStationSpawn()
     {
@@ -227,7 +188,7 @@ public class EnemySpawner : MonoBehaviour
             IncreaseSpawnWaveSize();
 
             if (stations.Count == 0) continue;
-            if (aliveShips.Count >= maxShips) continue;
+            if (aliveDestroyers.Count >= maxShips) continue;
 
             Transform station = stations[UnityEngine.Random.Range(0, stations.Count)];
             TrySpawnShipNearStation(station);
@@ -246,7 +207,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void CleanupDeadShips()
     {
-        aliveShips.RemoveAll(x => x == null);
+        aliveDestroyers.RemoveAll(x => x == null);
     }
 
     private void CleanupDeadStations()
@@ -266,11 +227,52 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    private void TrySpawnFightersNearStation(Transform station, int fighterCount)
+    {
+
+        for (int i = 0; i < fighterCount; i++)
+        {
+            GameObject fighterPrefab = fighterPrefabs[UnityEngine.Random.Range(0, fighterPrefabs.Length)];
+
+            Vector3 spawnPosition = GetRandomPointInRange(station.position, fighterMinSpawnRadius, figherMaxSpawnRadius);
+            spawnPosition.y = station.position.y;
+
+            GameObject fighter = Instantiate(fighterPrefab, spawnPosition, Quaternion.identity);
+            AIContext context = fighter.GetComponent<AIContext>();
+            AIDetector detector = fighter.GetComponent<AIDetector>();
+
+            if (context != null)
+            {
+                context.SetParentStation(station);
+            }
+
+            PatrolArea patrolArea = fighter.GetComponentInChildren<PatrolArea>();
+            FighterStrafePoints fighterStrafe = fighter.GetComponentInChildren<FighterStrafePoints>();
+            if (patrolArea != null)
+            {
+                patrolArea.SetPatrolAncor(station);
+                patrolArea.InitilizeSpawnPoints();
+
+            }
+            Transform fighters = station.Find("Fighters");
+            if (fighters == null)
+            {
+                var go = new GameObject("Fighters");
+                fighters = go.transform;
+                fighters.SetParent(station, true);
+            }
+            fighter.transform.SetParent(fighters, true);
+
+            aliveFighters.Add(fighter);
+        }
+
+    }
+
 
     private void TrySpawnShipNearStation(Transform station)
     {
         if (station == null) return;
-        if (aliveShips.Count >= maxShips) return;
+        if (aliveDestroyers.Count >= maxShips) return;
 
         GameObject enemyShipPrefab = enemyShipsPrefabs[UnityEngine.Random.Range(0, enemyShipsPrefabs.Length)];
 
@@ -303,7 +305,7 @@ public class EnemySpawner : MonoBehaviour
             patrolArea.InitilizeSpawnPoints();
         }
 
-        aliveShips.Add(ship);
+        aliveDestroyers.Add(ship);
     }
 
     private Vector3 TryShipSpawnCandidate(Transform station)

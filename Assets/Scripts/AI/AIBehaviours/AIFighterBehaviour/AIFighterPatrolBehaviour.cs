@@ -58,7 +58,6 @@ public class AIFighterPatrolBehaviour : AIBehavior
         {
             isWaiting = true;
             StartCoroutine(WaitAndSwapPoint());
-            Debug.LogWarning("Arrived");
         }
 
         shipController.SetShootingState(false);

@@ -57,7 +57,6 @@ public class PatrolArea : MonoBehaviour
 
         TeleportPatrolPoint(reachedPoint);
 
-        Debug.LogWarning("OnReachedPoint");
 
     }
 

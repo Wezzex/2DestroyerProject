@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba49a7a63c143c4a817ab6caff7cb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIDetector
-  viewRadius: 100
+  viewRadius: 105
   detectionCheckDelay: 0.1
   target: {fileID: 0}
   playerLayerMask:

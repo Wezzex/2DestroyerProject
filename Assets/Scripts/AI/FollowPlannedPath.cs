@@ -72,22 +72,24 @@ public class FollowPlannedPath : MonoBehaviour
         if (toTarget.sqrMagnitude > 0.0001 && forwardFalt.sqrMagnitude > 0.0001)
         {
             Vector3 toTargetNormalized = toTarget.normalized;
-            passedWaypoints = Vector3.Dot(forwardFalt, toTargetNormalized) < 0.1f;
+            passedWaypoints = Vector3.Dot(forwardFalt, toTargetNormalized) < 0.0f;
         }
 
         if (toTarget.sqrMagnitude < 0.0001f)
         {
-            Stop();
+            if (pathIndex < points.Count - 1)
+            {
+                pathIndex++;
+                return;
+            }
+
+            shipMover.Move(new Vector2(0f, reducedThrust));
+
             return;
         }
 
         Vector3 desiredDirection = toTarget.normalized;
         Vector3 forward = FlatY(transform.forward);
-        if (forward.sqrMagnitude < 0.0001f)
-        {
-            Stop();
-            return;
-        }
 
         forward.Normalize();
 

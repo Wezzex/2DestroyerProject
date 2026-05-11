@@ -85,7 +85,7 @@ public class GlobalPathPlaner : MonoBehaviour
         }
     }
 
-    private void Replan()
+    public void Replan()
     {
         Vector3 start = shipTransform.position;
         Vector3 end = goal;
@@ -155,7 +155,7 @@ public class GlobalPathPlaner : MonoBehaviour
             Vector3[] segments = curves[i].GetSegments(smoothingSections);
             for (int j = 0; j < segments.Length; j++)
             {
-                points.AddRange(segments);
+                points.Add(segments[j]);
             }
         }
 

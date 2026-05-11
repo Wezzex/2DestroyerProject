@@ -59,6 +59,7 @@ public class FighterStrafePoints : MonoBehaviour
         {
             strafePoints[strafePointIndex] = RandomPointAroundTarget();
         }
+        Utility.LogInfo($"OnReached({reached})");
     }
 
     private Vector3 RandomPointAroundTarget()
