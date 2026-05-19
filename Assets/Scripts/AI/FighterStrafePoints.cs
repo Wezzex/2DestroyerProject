@@ -10,7 +10,6 @@ public class FighterStrafePoints : MonoBehaviour
 
     private readonly Vector3[] strafePoints = new Vector3[2];
     private int currentIndex;
-
     public bool bIsInitilized { get; private set; }
 
     public Transform Target => targetTransform;
