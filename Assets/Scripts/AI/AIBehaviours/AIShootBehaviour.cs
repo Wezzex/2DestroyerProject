@@ -12,18 +12,28 @@ public class AIShootBehaviour : AIBehavior
 
         Utility.LogAI("Shoot Action is called", shipController);
 
+        // Ships holding formation run this every frame, with or without a target in range.
+        if (aIDetector == null || aIDetector.Target == null)
+        {
+            shipController.SetShootingState(false);
+            return;
+        }
+
+        // Squad orders can hold a target beyond sensor range; don't fire at it from across the map.
+        if (NavMeshUtility.FlatDistance(aIDetector.transform.position, aIDetector.Target.position) > aIDetector.ViewRadius)
+        {
+            shipController.SetShootingState(false);
+            return;
+        }
+
         Vector3 direction = aIDetector.Target.position - shipController.aimTurrets[0].transform.position;
         direction.y = 0.0f;
 
         Vector2 aimDirection = new Vector2(direction.x, direction.z);
 
-        if (TargetInFOV(shipController, aIDetector))
-        {
-            shipController.SetShootingState(true);
-            shipController.HandleShoot();
-        }
+        // Previously only ever switched on, so a ship kept firing after the target left its turrets' view.
+        shipController.SetShootingState(TargetInFOV(shipController, aIDetector));
 
-        
         shipController.HandleTurretMovement(aimDirection);
     }
 

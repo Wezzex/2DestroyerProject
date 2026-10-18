@@ -9,16 +9,14 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Reference")]
     [SerializeField] private Transform player;
-    [SerializeField] private GameObject enemyStationPrefab;
+    [SerializeField] private StationSpawner stationSpawner;
     [SerializeField] private GameObject[] enemyShipsPrefabs;
 
-    [Header("Station Settings")]
-    [SerializeField] private int stationCount = 3;
-    [SerializeField] private float stationRadiusMin = 400;
-    [SerializeField] private float stationRadiusMax = 700;
-    [SerializeField] private float stationSpawnDistance = 75;
-    Vector3 worldOrigin = new Vector3(0, 0, 0);
-
+    [Header("Migration")]
+    [Tooltip("Turn off once stations use DeploySpawner/WaveDirector for destroyers.")]
+    [SerializeField] private bool spawnDestroyers = true;
+    [Tooltip("Turn off once stations have a DeploySpawner for fighters.")]
+    [SerializeField] private bool spawnFighters = true;
 
     [Header("Destroyer Settings")]
     [SerializeField] private float shipMaxSpawnRadius = 75f;
@@ -28,19 +26,16 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxShipIncreasAmount = 1;
     [SerializeField] private float maxShipIncreasOverTime = 30f;
 
-    [Header("Destroyer Settings")]
+    [Header("Fighter Settings")]
     [SerializeField] private GameObject[] fighterPrefabs;
     [SerializeField] private int fighterCount = 5;
     [SerializeField] private float fighterMinSpawnRadius = 50f;
     [SerializeField] private float figherMaxSpawnRadius = 100f;
 
 
-    private readonly List<Transform> stations = new List<Transform>();
     private readonly List<GameObject> aliveDestroyers = new List<GameObject>();
     private readonly List<GameObject> aliveFighters = new List<GameObject>();
-    private GameObject[] stationsAlive;
 
-    public int aliveStationsCount = 0;
     private int maxShips;
     private float nextMaxIncreaseTimer;
 
@@ -52,6 +47,11 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
         Instance = this;
+
+        if (stationSpawner == null)
+        {
+            stationSpawner = StationSpawner.Instance;
+        }
     }
 
     private void Start()
@@ -59,120 +59,23 @@ public class EnemySpawner : MonoBehaviour
         maxShips = maxShipStart;
         nextMaxIncreaseTimer = Time.time + maxShipIncreasOverTime;
 
-        SpawnInitialStationAndShips();
+        SpawnInitialShips();
         StartCoroutine(SpawnLoop());
-        
+
     }
 
-    private void SpawnInitialStationAndShips()
+    private void SpawnInitialShips()
     {
-        if (player == null)
-        { 
+        if (player == null || stationSpawner == null)
+        {
             return;
         }
 
-        for (int i = 0; i < stationCount; i++)
+        foreach (Transform station in stationSpawner.Stations)
         {
-            Vector3 spawnPosition = GetRandomPointInRange(worldOrigin, stationRadiusMin, stationRadiusMax);
-           
-
-            if (stations.Count > 0)
-            {
-                
-                    Vector3 newSpawnPosition = TryGetValidStationSpawnFurthest();
-
-                    GameObject station = Instantiate(enemyStationPrefab, newSpawnPosition, Quaternion.identity);
-                    stations.Add(station.transform);
-                
-            }
-            else
-            {
-                GameObject station = Instantiate(enemyStationPrefab, spawnPosition, Quaternion.identity);
-                stations.Add(station.transform);
-            }
-
-            aliveStationsCount++;
+            if (spawnDestroyers) TrySpawnShipNearStation(station);
+            if (spawnFighters) TrySpawnFightersNearStation(station, fighterCount);
         }
-
-        for (int i = 0; i < stations.Count; i++)
-        {
-            TrySpawnShipNearStation(stations[i]);
-            TrySpawnFightersNearStation(stations[i], fighterCount);
-        }
-        
-        
-    }
-
-    
-
-    private Vector3 TryValidStationSpawn()
-    {
-        Vector3 candidat = GetStationCandidateSpawn();
-        int spawnTries = 50;
-        bool validSpawn = true;
-
-        for (int i = 0; i < spawnTries; i++)
-        {
-            candidat = GetStationCandidateSpawn();
-            validSpawn = true;
-            foreach (var station in stations)
-            {
-                if (Vector3.Distance(station.transform.position, candidat) < stationSpawnDistance)
-                {
-                    validSpawn = false;
-                    break;
-                }
-            }
-            if(validSpawn)
-                return candidat;
-            
-        }
-
-        Debug.LogWarning($"Could not find Valid spawn for station: {stations[0]} after: {spawnTries} Tries.");
-        return candidat;
-    }
-
-    private Vector3 TryGetValidStationSpawnFurthest()
-    {
-        Vector3 bestCandidate = GetStationCandidateSpawn();
-        float bestMinDistance = float.NegativeInfinity;
-
-        int spawnTries = 50;
-
-        for (int i = 0; i < spawnTries; i++)
-        {
-            Vector3 candidate = GetStationCandidateSpawn();
-            float minDistanceToAnyStation = float.PositiveInfinity;
-
-            foreach (var station in stations)
-            {
-                float distance = Vector3.Distance(candidate, station.position);
-
-                if (distance < minDistanceToAnyStation)
-                {
-                    minDistanceToAnyStation = distance;
-                }
-            }
-            if (minDistanceToAnyStation >= stationSpawnDistance)
-            {
-                return candidate;
-            }
-
-            if (minDistanceToAnyStation > bestMinDistance)
-            {
-                bestMinDistance = minDistanceToAnyStation;
-                bestCandidate = candidate;
-            }
-
-        }
-        Debug.LogWarning($"No candidate met stationSpawnDistance={stationSpawnDistance}. Using best fallback minDist={bestMinDistance}");
-        return bestCandidate;
-
-    }
-
-    private Vector3 GetStationCandidateSpawn()
-    {
-        return GetRandomPointInRange(worldOrigin, stationRadiusMin, stationRadiusMax);
     }
 
     private IEnumerator SpawnLoop()
@@ -184,13 +87,12 @@ public class EnemySpawner : MonoBehaviour
             yield return wait;
 
             CleanupDeadShips();
-            CleanupDeadStations();
             IncreaseSpawnWaveSize();
 
-            if (stations.Count == 0) continue;
+            if (!spawnDestroyers || stationSpawner == null) continue;
             if (aliveDestroyers.Count >= maxShips) continue;
 
-            Transform station = stations[UnityEngine.Random.Range(0, stations.Count)];
+            Transform station = stationSpawner.GetRandomStation();
             TrySpawnShipNearStation(station);
 
         }
@@ -210,23 +112,6 @@ public class EnemySpawner : MonoBehaviour
         aliveDestroyers.RemoveAll(x => x == null);
     }
 
-    private void CleanupDeadStations()
-    {
-        stations.RemoveAll(s => s == null);
-    }
-
-    public void OnStationDestroyed(GameObject station)
-    {
-
-        Debug.Log("Station Destroyed");
-        aliveStationsCount--;
-
-        if (aliveStationsCount <= 0)
-        {
-            GameManager.Instance.RequestGameOver(GameManager.GameOverReason.AllStationsDestroyed);
-        }
-    }
-
     private void TrySpawnFightersNearStation(Transform station, int fighterCount)
     {
 
@@ -234,7 +119,7 @@ public class EnemySpawner : MonoBehaviour
         {
             GameObject fighterPrefab = fighterPrefabs[UnityEngine.Random.Range(0, fighterPrefabs.Length)];
 
-            Vector3 spawnPosition = GetRandomPointInRange(station.position, fighterMinSpawnRadius, figherMaxSpawnRadius);
+            Vector3 spawnPosition = SpawnUtils.GetRandomPointInRange(station.position, fighterMinSpawnRadius, figherMaxSpawnRadius);
             spawnPosition.y = station.position.y;
 
             GameObject fighter = Instantiate(fighterPrefab, spawnPosition, Quaternion.identity);
@@ -310,23 +195,10 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector3 TryShipSpawnCandidate(Transform station)
     {
-        
-        Vector3 candidate = GetRandomPointInRange(station.transform.position, shipMinSpawnRadius, shipMaxSpawnRadius);
+
+        Vector3 candidate = SpawnUtils.GetRandomPointInRange(station.transform.position, shipMinSpawnRadius, shipMaxSpawnRadius);
 
         return candidate;
-
-    }
-
-
-    private static Vector3 GetRandomPointInRange(Vector3 center, float minRadius, float maxRadius)
-    {
-        float radius = UnityEngine.Random.Range(minRadius, maxRadius);
-        float angle = UnityEngine.Random.Range(0f, 360f) * Mathf.Deg2Rad;
-
-        float x = Mathf.Cos(angle) * radius;
-        float z = Mathf.Sin(angle) * radius;
-
-        return new Vector3(center.x + x, center.y, center.z + z);
 
     }
 }

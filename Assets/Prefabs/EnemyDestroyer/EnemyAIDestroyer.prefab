@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 846323887777251927}
   - component: {fileID: 5438078125261289468}
   - component: {fileID: 5781356173136096508}
+  - component: {fileID: 1670223965464148113}
   m_Layer: 11
   m_Name: Motor
   m_TagString: Untagged
@@ -181,6 +182,7 @@ MonoBehaviour:
   shipController: {fileID: 4667717909535961513}
   spawner: {fileID: 0}
   explotionPrefab: {fileID: 100010, guid: 08eaa035e54502d47a55b3aee5cc0ae8, type: 3}
+  subLightClearance: 80
 --- !u!114 &5438078125261289468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +205,7 @@ MonoBehaviour:
   smoothingFactor: 0.768
   sampleToNavMesh: 0
   removeTooClosePoints: 1
+  navMeshSearchRadius: 60
 --- !u!114 &5781356173136096508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,12 +220,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FollowPlannedPath
   planner: {fileID: 5438078125261289468}
   shipMover: {fileID: 7607777866288305585}
+  flocking: {fileID: 0}
   arriveDistance: 3
   lookAheadPoints: 3
   fullTurnAngle: 45
   alignThreshold: 15
   reducedThrust: 0.5
   lastPathVersion: -1
+--- !u!114 &1670223965464148113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056823269703326849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f1f08c1d9b52543aec0fdf86b25143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubLightDrive
+  chargeTime: 4
+  chargeLostPerDamage: 0.05
+  minChargeLostPerHit: 0.25
+  cruiseSpeed: 250
+  accelerationTime: 0.75
+  exitTime: 1.5
+  minCruiseTime: 0.5
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 512
+  probeRadius: 5
+  probeMargin: 20
+  keepClearOfHostiles: 1
+  logDropOuts: 0
+  shipController: {fileID: 4667717909535961513}
+  unit: {fileID: 846323887777251927}
 --- !u!1 &1131497127567416889
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,6 +982,10 @@ GameObject:
   - component: {fileID: 1150862419151102334}
   - component: {fileID: 2239779341316244749}
   - component: {fileID: 6255422106083246354}
+  - component: {fileID: 4132521765053028472}
+  - component: {fileID: 5377888366865715604}
+  - component: {fileID: 7297973323673459398}
+  - component: {fileID: 9008110113391862028}
   m_Layer: 0
   m_Name: EnemyAIDestroyer
   m_TagString: Untagged
@@ -1101,6 +1137,78 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAIRunner
   behaviourTreeData: {fileID: 11400000, guid: 83bcab00c5084c746bfebbf3d6ba7778, type: 2}
   context: {fileID: 2239779341316244749}
+--- !u!114 &4132521765053028472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312358026214592434}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f43b7683feb87f8488ace6b349973711, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeploySpawner
+  owner: {fileID: 846323887777251927}
+  sensor: {fileID: 2997940716200736302}
+  deployPoint: {fileID: 951951838233276529}
+  unitPrefabs: []
+  maxSquads: 1
+  unitsPerSquad: 4
+  formation: 0
+  formationSpacing: 6
+  launchDistanceMin: 10
+  launchDistanceMax: 20
+  launchSpreadAngle: 45
+  trigger: 1
+  recallMode: 0
+  replenishMode: 0
+  resetTime: 30
+  respawnTime: 45
+--- !u!114 &5377888366865715604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312358026214592434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4df71822252d74397e46a3f8ff4c3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SquadMember
+  orphanDamagePerTick: 5
+  orphanTickInterval: 1
+--- !u!114 &7297973323673459398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312358026214592434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d00e6b585ff797547b5abd18bed61d49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FormationMember
+--- !u!114 &9008110113391862028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312358026214592434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0bf27d6836200a4a8ded719c69288ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIHoldFormationBehaviour
+  member: {fileID: 7297973323673459398}
+  followPlannedPath: {fileID: 5781356173136096508}
+  planer: {fileID: 5438078125261289468}
+  shipCPosition: {fileID: 2386911194236695002}
+  arriveDistance: 12
+  resumeDistance: 25
 --- !u!1 &8689949381709600982
 GameObject:
   m_ObjectHideFlags: 0

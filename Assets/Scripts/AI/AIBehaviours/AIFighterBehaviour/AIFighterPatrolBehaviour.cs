@@ -6,6 +6,8 @@ public class AIFighterPatrolBehaviour : AIBehavior
     [SerializeField] private PatrolArea patrolArea;
     [SerializeField] private FollowPlannedPath followPlannedPath;
     [SerializeField] private GlobalPathPlaner planer;
+    [Tooltip("Optional. Wingmen follow their squad leader's patrol instead of their own points.")]
+    [SerializeField] private SquadFlocking flocking;
     [SerializeField, Range(0.1f, 10f)] private float arriveDistance = 5;
 
     [SerializeField] private float waitTime = 0.5f;
@@ -30,6 +32,11 @@ public class AIFighterPatrolBehaviour : AIBehavior
         {
             followPlannedPath = GetComponentInChildren<FollowPlannedPath>();
         }
+
+        if (flocking == null)
+        {
+            flocking = GetComponentInChildren<SquadFlocking>();
+        }
     }
 
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
@@ -40,16 +47,25 @@ public class AIFighterPatrolBehaviour : AIBehavior
 
 
         followPlannedPath.StopMoving = false;
+        shipController.SetShootingState(false);
 
         Vector3 shipPosition = shipCPosition.position;
         shipPosition.y = 0f;
+
+        // Wingmen fly the leader's route; their own points are used again if they become leader.
+        if (flocking != null && flocking.TryGetFormationTarget(out Vector3 formationTarget))
+        {
+            currentPatrolTarget = planer.SnapToNavMesh(formationTarget);
+            planer.SetDestination(currentPatrolTarget);
+            return;
+        }
 
         if (!patrolArea.bIsInitilized)
         {
             Debug.LogError("PatrolArea has not Initilized yet");
             return;
         }
-        currentPatrolTarget = patrolArea.GetCurrentTargetPosition();
+        currentPatrolTarget = planer.SnapToNavMesh(patrolArea.GetCurrentTargetPosition());
         planer.SetDestination(currentPatrolTarget);
 
         currentPatrolTarget.y = 0f;
@@ -59,8 +75,6 @@ public class AIFighterPatrolBehaviour : AIBehavior
             isWaiting = true;
             StartCoroutine(WaitAndSwapPoint());
         }
-
-        shipController.SetShootingState(false);
     }
 
 
@@ -70,10 +84,16 @@ public class AIFighterPatrolBehaviour : AIBehavior
 
         patrolArea.OnReachedPoint();
 
-        Vector3 newGoal = patrolArea.GetCurrentTargetPosition();
+        Vector3 newGoal = planer.SnapToNavMesh(patrolArea.GetCurrentTargetPosition());
         planer.SetDestination(newGoal);
         followPlannedPath.ResetFollower();
         currentPatrolTarget = newGoal;
+        isWaiting = false;
+    }
+
+    // Coroutines die when the unit is disabled (docked), so make sure we don't stay stuck waiting.
+    private void OnDisable()
+    {
         isWaiting = false;
     }
 

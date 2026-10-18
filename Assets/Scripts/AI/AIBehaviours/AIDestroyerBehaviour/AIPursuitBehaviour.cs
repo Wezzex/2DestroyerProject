@@ -26,8 +26,11 @@ public class AIPursuitBehaviour : AIBehavior
     public override void PerformAction(ShipController shipController, AIDetector aIDetector)
     {
 
+        if (aIDetector == null || aIDetector.Target == null) return;
+
         followPlannedPath.ResetFollower();
         followPlannedPath.StopMoving = false;
+        followPlannedPath.HoldFacing = null;
         Utility.LogAI("Pursuit Action is called", shipController);
 
         Vector3 targetPosition = aIDetector.Target.transform.position;

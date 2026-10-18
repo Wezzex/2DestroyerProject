@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1614010343902103719}
   - component: {fileID: 5438078125261289468}
   - component: {fileID: 5781356173136096508}
+  - component: {fileID: 5745273082641040548}
   m_Layer: 11
   m_Name: Motor
   m_TagString: Untagged
@@ -180,6 +181,7 @@ MonoBehaviour:
   smoothingFactor: 0.768
   sampleToNavMesh: 0
   removeTooClosePoints: 1
+  navMeshSearchRadius: 60
 --- !u!114 &5781356173136096508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,12 +196,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FollowPlannedPath
   planner: {fileID: 5438078125261289468}
   shipMover: {fileID: 7607777866288305585}
+  flocking: {fileID: 5745273082641040548}
   arriveDistance: 3
   lookAheadPoints: 3
   fullTurnAngle: 45
   alignThreshold: 15
   reducedThrust: 0.5
   lastPathVersion: -1
+--- !u!114 &5745273082641040548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056823269703326849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42201ee39af177441b5c4635ae3f4574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SquadFlocking
+  member: {fileID: 2271385026746071718}
+  separationRadius: 8
+  neighbourRadius: 40
+  formationWeights:
+    separation: 1.5
+    cohesion: 0.35
+    alignment: 0.4
+    formation: 0.6
+    wander: 0.25
+  engagedWeights:
+    separation: 1.5
+    cohesion: 0.1
+    alignment: 0.05
+    formation: 0.05
+    wander: 0.3
+  slotDrift: 4
+  wanderFrequency: 0.25
+  formationSlack: 10
+  formationLeadDistance: 15
+  leaderThrottle: 0.8
+  catchUpGain: 0.05
+  minThrottle: 0.3
 --- !u!1 &1131497127567416889
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,6 +540,8 @@ GameObject:
   - component: {fileID: 1564004266684722047}
   - component: {fileID: 2239779341316244749}
   - component: {fileID: 6255422106083246354}
+  - component: {fileID: 2271385026746071718}
+  - component: {fileID: 268503758900756488}
   m_Layer: 0
   m_Name: EnemyAIFighter
   m_TagString: Untagged
@@ -571,6 +610,7 @@ MonoBehaviour:
   patrolArea: {fileID: 6422187944444431452}
   followPlannedPath: {fileID: 5781356173136096508}
   planer: {fileID: 5438078125261289468}
+  flocking: {fileID: 5745273082641040548}
   arriveDistance: 5
   waitTime: 0.5
   isWaiting: 0
@@ -590,6 +630,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIFighterShootBehaviour
   fieldOfVisionForShooting: 45
+  fireRange: 50
+  strafe: {fileID: 0}
+  shipCPosition: {fileID: 0}
 --- !u!114 &3258317608173022761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,6 +649,10 @@ MonoBehaviour:
   followPlannedPath: {fileID: 5781356173136096508}
   planer: {fileID: 5438078125261289468}
   arriveDistance: 5
+  attackPassDistance: 15
+  attackBreakOffDistance: 40
+  strafePassDistance: 20
+  maxLegTime: 10
   shipCPosition: {fileID: 2386911194236695002}
 --- !u!114 &1564004266684722047
 MonoBehaviour:
@@ -657,6 +704,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAIRunner
   behaviourTreeData: {fileID: 11400000, guid: 2ca173cd61f72544abf3037e4abe3cfa, type: 2}
   context: {fileID: 2239779341316244749}
+--- !u!114 &2271385026746071718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312358026214592434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4df71822252d74397e46a3f8ff4c3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SquadMember
+  orphanDamagePerTick: 5
+  orphanTickInterval: 1
+--- !u!114 &268503758900756488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312358026214592434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef4c2977d636d143822b8116c952824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIReturnToOwnerBehaviour
+  squadMember: {fileID: 2271385026746071718}
+  followPlannedPath: {fileID: 5781356173136096508}
+  planer: {fileID: 5438078125261289468}
+  shipCPosition: {fileID: 2386911194236695002}
+  dockDistance: 8
 --- !u!1001 &7621686415559958959
 PrefabInstance:
   m_ObjectHideFlags: 0

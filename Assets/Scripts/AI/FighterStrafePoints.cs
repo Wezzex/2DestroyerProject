@@ -14,6 +14,7 @@ public class FighterStrafePoints : MonoBehaviour
 
     public Transform Target => targetTransform;
     public int CurrentIndex => currentIndex;
+    public bool IsAttackingTarget => currentIndex == playerPointIndex;
 
     private const int playerPointIndex = 0;
     private const int strafePointIndex = 1;
@@ -30,9 +31,10 @@ public class FighterStrafePoints : MonoBehaviour
         }
 
         strafePoints[playerPointIndex] = targetTransform.position;
-        strafePoints[strafePointIndex] = fighterTransform.position;
+        strafePoints[strafePointIndex] = RandomPointAroundTarget();
 
-        currentIndex = strafePointIndex;
+        // Start with an attack run straight at the target.
+        currentIndex = playerPointIndex;
         bIsInitilized = true;
     }
 
@@ -61,9 +63,17 @@ public class FighterStrafePoints : MonoBehaviour
         Utility.LogInfo($"OnReached({reached})");
     }
 
+    private const int walkableTries = 8;
+
+    // Skip points inside a station's non-walkable area; fall back to the closest walkable point.
     private Vector3 RandomPointAroundTarget()
     {
-        return GetRandomPointInRange(targetTransform.position, minStrafeRadius, maxStrafeRadius);
+        Vector3 candidate = GetRandomPointInRange(targetTransform.position, minStrafeRadius, maxStrafeRadius);
+        for (int i = 0; i < walkableTries && !NavMeshUtility.IsWalkable(candidate); i++)
+        {
+            candidate = GetRandomPointInRange(targetTransform.position, minStrafeRadius, maxStrafeRadius);
+        }
+        return NavMeshUtility.ClosestWalkable(candidate);
     }
 
     private static Vector3 GetRandomPointInRange(Vector3 center, float minRadius, float maxRadius)

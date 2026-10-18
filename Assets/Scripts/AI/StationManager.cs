@@ -12,6 +12,11 @@ public class StationManager : UnitManager
 
     public GameObject explotionPrefab;
 
+    [Header("Sub-light")]
+    [Tooltip("A ship in sub-light heading this way drops out in time to stop about this far from the station's centre.")]
+    [SerializeField] private float subLightClearance = 150f;
+    public override float SubLightClearance => subLightClearance;
+
     private void Awake()
     {
         shipController = GetComponentInParent<ShipController>();
@@ -26,7 +31,7 @@ public class StationManager : UnitManager
     public override void OnDestroyedEnd()
     {
 
-        EnemySpawner.Instance.OnStationDestroyed(gameObject);
+        StationSpawner.Instance.OnStationDestroyed(gameObject);
     }
 
     public override void CreateDeathExplotion()

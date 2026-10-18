@@ -5,6 +5,8 @@ public class FollowPlannedPath : MonoBehaviour
 {
     [SerializeField] private GlobalPathPlaner planner;
     [SerializeField] private ShipMover shipMover;
+    [Tooltip("Optional. Blends squad (boid) forces into the path direction.")]
+    [SerializeField] private SquadFlocking flocking;
 
     [Header("Follow")]
     [SerializeField] private float arriveDistance = 3f;
@@ -19,11 +21,14 @@ public class FollowPlannedPath : MonoBehaviour
     private int pathIndex;
 
     public bool StopMoving { get; set; }
+    // While stopped, turn on the spot to face this direction (e.g. a formation's threat axis).
+    public Vector3? HoldFacing { get; set; }
 
     private void Awake()
     {
         if (planner == null) planner = GetComponent<GlobalPathPlaner>();
         if (shipMover == null) shipMover = GetComponent<ShipMover>();
+        if (flocking == null) flocking = GetComponent<SquadFlocking>();
     }
 
     private void Update()
@@ -89,6 +94,12 @@ public class FollowPlannedPath : MonoBehaviour
         }
 
         Vector3 desiredDirection = toTarget.normalized;
+        float throttle = 1f;
+        if (flocking != null)
+        {
+            desiredDirection = flocking.Steer(desiredDirection, out throttle);
+        }
+
         Vector3 forward = FlatY(transform.forward);
 
         forward.Normalize();
@@ -98,7 +109,7 @@ public class FollowPlannedPath : MonoBehaviour
         float safeTurnAngle = Mathf.Max(fullTurnAngle, 0.0001f);
         float turn = Mathf.Clamp(angle / safeTurnAngle, -1, 1f);
 
-        float thrust = (Mathf.Abs(angle) < alignThreshold) ? 1f : reducedThrust;
+        float thrust = ((Mathf.Abs(angle) < alignThreshold) ? 1f : reducedThrust) * throttle;
 
         shipMover.Move(new Vector2(turn, thrust));
         
@@ -111,7 +122,19 @@ public class FollowPlannedPath : MonoBehaviour
 
     private void Stop()
     {
-        shipMover.Move(Vector2.zero);
+        float turn = 0f;
+        if (HoldFacing.HasValue)
+        {
+            Vector3 facing = FlatY(HoldFacing.Value);
+            Vector3 forward = FlatY(transform.forward);
+            if (facing.sqrMagnitude > 0.0001f && forward.sqrMagnitude > 0.0001f)
+            {
+                float angle = Vector3.SignedAngle(forward, facing, Vector3.up);
+                if (Mathf.Abs(angle) > 1f) turn = Mathf.Clamp(angle / Mathf.Max(fullTurnAngle, 0.0001f), -1f, 1f);
+            }
+        }
+
+        shipMover.Move(new Vector2(turn, 0f));
     }
 
     private static Vector3 FlatY(Vector3 vector)

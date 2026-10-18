@@ -69,9 +69,17 @@ public class PatrolArea : MonoBehaviour
 
     }
 
+    private const int walkableTries = 8;
+
+    // Skip points inside a station's non-walkable area; fall back to the closest walkable point.
     private Vector3 RandomPointAroundAncor()
     {
-        return GetRandomPointInRange(patrolAncor.position, radiusMin, radiusMax);
+        Vector3 candidate = GetRandomPointInRange(patrolAncor.position, radiusMin, radiusMax);
+        for (int i = 0; i < walkableTries && !NavMeshUtility.IsWalkable(candidate); i++)
+        {
+            candidate = GetRandomPointInRange(patrolAncor.position, radiusMin, radiusMax);
+        }
+        return NavMeshUtility.ClosestWalkable(candidate);
     }
 
     private void TeleportPatrolPoint(int index)

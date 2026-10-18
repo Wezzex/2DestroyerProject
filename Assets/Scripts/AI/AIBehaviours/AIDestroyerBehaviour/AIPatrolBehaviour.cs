@@ -77,6 +77,12 @@ public class AIPatrolBehaviour : AIBehavior
         isWaiting = false;
     }
 
+    // Coroutines die when the unit is disabled (docked), so make sure we don't stay stuck waiting.
+    private void OnDisable()
+    {
+        isWaiting = false;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

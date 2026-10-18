@@ -22,6 +22,11 @@ public class PlayerInput : MonoBehaviour
     private bool ControlsBlocked => GameManager.Instance != null && GameManager.Instance.IsPaused;
 
     [SerializeField] private ShipController shipController;
+    [Tooltip("Defaults to the SubLightDrive on the ship.")]
+    [SerializeField] private SubLightDrive subLightDrive;
+
+    // Looked up by name so this works before Unity regenerates InputActionsSystem.cs from the asset.
+    private InputAction subLightAction;
 
     [SerializeField] private Transform cameraTransform;
     public Vector2 CameraLookDirection;
@@ -36,6 +41,9 @@ public class PlayerInput : MonoBehaviour
         { 
             shipInput = new InputActionsSystem();
         }
+
+        subLightAction = shipInput.asset.FindAction("Player/SubLight");
+        if (subLightDrive == null && shipController != null) subLightDrive = shipController.GetComponentInChildren<SubLightDrive>();
     }
 
     private void Update()
@@ -56,6 +64,16 @@ public class PlayerInput : MonoBehaviour
 
         shipInput.Player.Pause.performed += OnPausePerformed;
 
+        if (subLightAction != null) subLightAction.performed += OnSubLightPerformed;
+    }
+
+    // One button: start charging (align the ship first), press again to abort the charge or drop out of sub-light.
+    private void OnSubLightPerformed(InputAction.CallbackContext context)
+    {
+        if (ControlsBlocked || subLightDrive == null) return;
+
+        if (subLightDrive.State == SubLightState.Idle) subLightDrive.TryBeginCharge();
+        else subLightDrive.Exit();
     }
 
     private void OnPausePerformed(InputAction.CallbackContext context)
@@ -73,6 +91,8 @@ public class PlayerInput : MonoBehaviour
         shipInput.Player.Shooting.canceled -= OnShootingCanceled;
 
         shipInput.Player.Pause.performed -= OnPausePerformed;
+
+        if (subLightAction != null) subLightAction.performed -= OnSubLightPerformed;
 
         shipInput.Disable();
 

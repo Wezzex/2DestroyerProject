@@ -8,6 +8,11 @@ public class EnemyDestroyerManager : UnitManager
 
     public GameObject explotionPrefab;
 
+    [Header("Sub-light")]
+    [Tooltip("A ship in sub-light heading this way drops out in time to stop about this far from the destroyer.")]
+    [SerializeField] private float subLightClearance = 80f;
+    public override float SubLightClearance => subLightClearance;
+
     private void Awake()
     {
         shipController = GetComponentInParent<ShipController>();

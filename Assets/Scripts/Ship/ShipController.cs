@@ -50,9 +50,13 @@ public class ShipController : MonoBehaviour
         bIsShooting = bShooting;
     }
 
+    // Set by SubLightDrive while charging or cruising. The trigger state is kept, so a held trigger
+    // opens fire again the moment the ship drops out of sub-light.
+    public bool WeaponsLocked { get; set; }
+
     public void HandleShoot()
     {
-        if (bIsShooting)
+        if (bIsShooting && !WeaponsLocked)
         {
             foreach (var turret in turrets)
             {

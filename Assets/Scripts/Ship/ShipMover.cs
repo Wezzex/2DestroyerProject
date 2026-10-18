@@ -14,9 +14,14 @@ public class ShipMover : MonoBehaviour
     [SerializeField] private float currentSpeed = 0;
 
 
+    private SubLightDrive subLightDrive;
+
+    public float CurrentSpeed => currentSpeed;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        subLightDrive = GetComponent<SubLightDrive>();
     }
 
     public void Move(Vector2 movementVector)
@@ -33,6 +38,14 @@ public class ShipMover : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // The drive owns the speed while charging, cruising or dropping out, and the ship can't turn.
+        if (subLightDrive != null && subLightDrive.IsActive)
+        {
+            currentSpeed = subLightDrive.UpdateSpeed(currentSpeed, shipMovementData.maxSpeed, shipMovementData.deacceleration, Time.fixedDeltaTime);
+            rb.linearVelocity = transform.forward * currentSpeed;
+            return;
+        }
+
         float targetSpeed = movementVector.y * shipMovementData.maxSpeed;
 
         float rate = (Mathf.Abs(targetSpeed) > 0.001f) ? shipMovementData.acceleration : shipMovementData.deacceleration;

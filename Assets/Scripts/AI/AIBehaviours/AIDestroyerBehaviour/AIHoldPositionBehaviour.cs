@@ -21,5 +21,6 @@ public class AIHoldPositionBehaviour : AIBehavior
         Utility.LogAI("HoldPosition Action is called", shipController);
 
         followPlannedPath.StopMoving = true;
+        followPlannedPath.HoldFacing = null;
     }
 }

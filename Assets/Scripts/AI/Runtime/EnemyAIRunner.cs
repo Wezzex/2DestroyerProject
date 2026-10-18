@@ -55,7 +55,7 @@ public class EnemyAIRunner : MonoBehaviour
                 if (foundCondition == null)
                 {
                     Debug.LogError("[EnemyAIRunner.CreateStrategy()]: Condition not Found");
-                    new Condition(() => false);
+                    return new Condition(() => false);
                 }
 
                 return new Condition(foundCondition);

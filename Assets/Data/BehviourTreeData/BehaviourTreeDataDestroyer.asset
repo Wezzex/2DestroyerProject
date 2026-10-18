@@ -33,6 +33,10 @@ MonoBehaviour:
         type: 2
         children:
         - node:
+            rid: 8705787251945373770
+        - node:
+            rid: 8705787251945373771
+        - node:
             rid: 4587174708207681538
         - node:
             rid: 4587174708207681639
@@ -123,6 +127,78 @@ MonoBehaviour:
         condition: 
         strategyName: Pursuit
     - rid: 4587174708207681647
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Shoot
+        type: 0
+        strategyType: 1
+        condition: 
+        strategyName: Shoot
+    - rid: 8705787251945373770
+      type: {class: SequenceData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Break
+        type: 1
+        children:
+        - node:
+            rid: 8705787251945373772
+        - node:
+            rid: 8705787251945373773
+        - node:
+            rid: 8705787251945373774
+    - rid: 8705787251945373771
+      type: {class: SequenceData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Formation
+        type: 1
+        children:
+        - node:
+            rid: 8705787251945373775
+        - node:
+            rid: 8705787251945373776
+        - node:
+            rid: 8705787251945373777
+    - rid: 8705787251945373772
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: IsBreakingFormation
+        type: 0
+        strategyType: 0
+        condition: IsBreakingFormation
+        strategyName: FormationMember
+    - rid: 8705787251945373773
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Pursuit
+        type: 0
+        strategyType: 1
+        condition: 
+        strategyName: Pursuit
+    - rid: 8705787251945373774
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: Shoot
+        type: 0
+        strategyType: 1
+        condition: 
+        strategyName: Shoot
+    - rid: 8705787251945373775
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: HasFormationSlot
+        type: 0
+        strategyType: 0
+        condition: HasFormationSlot
+        strategyName: FormationMember
+    - rid: 8705787251945373776
+      type: {class: LeafData, ns: , asm: Assembly-CSharp}
+      data:
+        name: HoldFormation
+        type: 0
+        strategyType: 1
+        condition: 
+        strategyName: HoldFormation
+    - rid: 8705787251945373777
       type: {class: LeafData, ns: , asm: Assembly-CSharp}
       data:
         name: Shoot

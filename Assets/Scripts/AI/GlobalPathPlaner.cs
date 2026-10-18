@@ -24,6 +24,10 @@ public class GlobalPathPlaner : MonoBehaviour
     [SerializeField] private bool sampleToNavMesh = false;
     [SerializeField] private bool removeTooClosePoints = true;
 
+    [Header("Non-walkable Areas")]
+    [Tooltip("How far to look for walkable NavMesh when the ship or its goal is inside a non-walkable area (e.g. a station). Must be larger than the biggest obstacle.")]
+    [SerializeField] private float navMeshSearchRadius = NavMeshUtility.DefaultSearchRadius;
+
     private readonly Vector3 InfinityVector = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
 
     private NavMeshPath navPath;
@@ -58,6 +62,15 @@ public class GlobalPathPlaner : MonoBehaviour
     {
         return useUnscaledTime? Time.unscaledTime: Time.time;
     }
+    private int AreaMask => agent != null ? agent.areaMask : NavMesh.AllAreas;
+
+    // Goals inside a station (or any other NavMesh hole) are moved to its edge. Behaviours should check
+    // arrival against this snapped point, otherwise they wait forever for a point they can't reach.
+    public Vector3 SnapToNavMesh(Vector3 position)
+    {
+        return NavMeshUtility.ClosestWalkable(position, navMeshSearchRadius, AreaMask);
+    }
+
     public void SetDestination(Vector3 position)
     {
         hasGoal = true;
@@ -92,9 +105,18 @@ public class GlobalPathPlaner : MonoBehaviour
 
         end.y = start.y;
 
-        int mask = agent != null ? agent.areaMask : NavMesh.AllAreas;
+        int mask = AreaMask;
 
-        bool ok = NavMesh.CalculatePath(start, end, mask, navPath);
+        // CalculatePath fails if either end is off the NavMesh, which left ships that drifted into a
+        // station's carved area with no path, frozen inside it. Path between the closest walkable points instead.
+        if (!NavMeshUtility.TrySample(start, navMeshSearchRadius, mask, out Vector3 navStart) ||
+            !NavMeshUtility.TrySample(end, navMeshSearchRadius, mask, out Vector3 navEnd))
+        {
+            pathPoints = Array.Empty<Vector3>();
+            return;
+        }
+
+        bool ok = NavMesh.CalculatePath(navStart, navEnd, mask, navPath);
         if (!ok || navPath.corners == null || navPath.corners.Length < 2)
         {
             pathPoints = Array.Empty<Vector3>();
@@ -102,6 +124,16 @@ public class GlobalPathPlaner : MonoBehaviour
         }
 
         Vector3[] corners = navPath.corners;
+
+        // Ship is inside a non-walkable area: lead it straight out to the walkable edge first.
+        if (NavMeshUtility.FlatDistance(start, navStart) > 1f)
+        {
+            start.y = navStart.y;
+            var withExit = new Vector3[corners.Length + 1];
+            withExit[0] = start;
+            Array.Copy(corners, 0, withExit, 1, corners.Length);
+            corners = withExit;
+        }
         BezierCurve[] curves = BuildCurves(corners);
 
         Vector3[] sampled = SamlpleCurves(curves);

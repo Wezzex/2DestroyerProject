@@ -31,6 +31,7 @@ public class AIContext : MonoBehaviour
     private float stationReach;
 
     private Transform parentStationTransform;
+    private SquadMember squadMember;
 
     private void Awake()
     {
@@ -83,8 +84,23 @@ public class AIContext : MonoBehaviour
     {
         if(parentStationTransform == null) return true;
 
-        float distance = Vector3.Distance(transform.position, parentStationTransform.position);
+        // The root stays where the unit spawned; the Motor (UnitManager) is what actually moves.
+        Vector3 position = unitManager != null ? unitManager.transform.position : transform.position;
+        float distance = Vector3.Distance(position, parentStationTransform.position);
         return distance <= stationOutOfReach;
+    }
+
+    // Fighter tree's pursuit gate. A squad member ordered to engage keeps attacking until its owner recalls it,
+    // even while a strafing run takes it out of its own sensor range, line of sight or the station leash.
+    // Otherwise it dropped to Patrol mid-attack and snapped back into formation.
+    public bool ShouldPursueTarget()
+    {
+        if (detector == null || detector.Target == null) return false;
+
+        if (squadMember == null) squadMember = GetComponent<SquadMember>();
+        if (squadMember != null && squadMember.OrderedToEngage) return true;
+
+        return detector.TargetVisible && WithinParentStationReach() && PursuitTarget();
     }
 
     public float DistanceBetweenShipAndTarget()

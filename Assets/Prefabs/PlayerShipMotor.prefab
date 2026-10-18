@@ -1629,6 +1629,7 @@ GameObject:
   - component: {fileID: 5906165121629512770}
   - component: {fileID: 6925278992122360705}
   - component: {fileID: 4874761896263892382}
+  - component: {fileID: 7291770041250023577}
   m_Layer: 10
   m_Name: PlayerShipMotor
   m_TagString: Untagged
@@ -1679,7 +1680,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!65 &7331363466199010788
 BoxCollider:
@@ -1834,6 +1835,34 @@ MonoBehaviour:
   bIsDead: 0
   shipController: {fileID: 5906165121629512770}
   explotionPrefab: {fileID: 1121192042590650, guid: 73e2ed443a24ac5469979f4254db8389, type: 3}
+--- !u!114 &7291770041250023577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283625353866652593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f1f08c1d9b52543aec0fdf86b25143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubLightDrive
+  chargeTime: 3
+  chargeLostPerDamage: 0.05
+  minChargeLostPerHit: 0.25
+  cruiseSpeed: 400
+  accelerationTime: 0.75
+  exitTime: 0.75
+  minCruiseTime: 0.5
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 512
+  probeRadius: 5
+  probeMargin: 20
+  keepClearOfHostiles: 1
+  logDropOuts: 0
+  shipController: {fileID: 5906165121629512770}
+  unit: {fileID: 4874761896263892382}
 --- !u!1 &4360258205611009415
 GameObject:
   m_ObjectHideFlags: 0
