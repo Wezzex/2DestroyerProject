@@ -66,6 +66,8 @@ public class SubLightDrive : MonoBehaviour
     public bool IsCruising => State == SubLightState.Cruising;
     public float ChargeProgress => chargeTime > 0f ? Mathf.Clamp01(charge / chargeTime) : 1f;
     public float CruiseSpeed => cruiseSpeed;
+    // How far the ship travels from now until back at normal speed, if it dropped out now.
+    public float CurrentBrakingDistance { get; private set; }
     // Why the last cruise ended, e.g. "Station ahead". Shown by PlayerHUD.
     public string LastDropOutReason { get; private set; } = "";
     public float LastDropOutTime { get; private set; } = float.NegativeInfinity;
@@ -148,6 +150,7 @@ public class SubLightDrive : MonoBehaviour
                 {
                     float speed = Mathf.MoveTowards(currentSpeed, cruiseSpeed, cruiseSpeed / Mathf.Max(0.01f, accelerationTime) * deltaTime);
                     travelledDistance += speed * deltaTime;
+                    CurrentBrakingDistance = BrakingDistance(speed, normalMaxSpeed);
 
                     if (Time.time - cruiseStartTime >= minCruiseTime && ShouldDropOut(speed, normalMaxSpeed))
                     {

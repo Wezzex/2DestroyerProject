@@ -652,7 +652,7 @@ MonoBehaviour:
   attackPassDistance: 15
   attackBreakOffDistance: 40
   strafePassDistance: 20
-  maxLegTime: 10
+  maxLegTime: 6
   shipCPosition: {fileID: 2386911194236695002}
 --- !u!114 &1564004266684722047
 MonoBehaviour:

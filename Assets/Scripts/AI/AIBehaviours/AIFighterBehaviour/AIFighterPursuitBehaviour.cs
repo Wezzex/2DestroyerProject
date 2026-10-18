@@ -19,7 +19,7 @@ public class AIFighterPursuitBehaviour : AIBehavior
     [Tooltip("Same for a strafe point.")]
     [SerializeField, Range(1f, 100f)] private float strafePassDistance = 20f;
     [Tooltip("A leg (attack run or strafe) taking longer than this is abandoned and the next one starts.")]
-    [SerializeField, Range(1f, 60f)] private float maxLegTime = 10f;
+    [SerializeField, Range(1f, 60f)] private float maxLegTime = 6f;
 
     [SerializeField] private Transform shipCPosition;
 

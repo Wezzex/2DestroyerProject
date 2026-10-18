@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba49a7a63c143c4a817ab6caff7cb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIDetector
-  viewRadius: 105
+  viewRadius: 250
   detectionCheckDelay: 0.1
   target: {fileID: 0}
   playerLayerMask:
@@ -1419,7 +1419,7 @@ MonoBehaviour:
   idleRadius: 90
   alertRadius: 75
   arcAngle: 120
-  facingTurnRate: 20
+  refaceAngle: 30
   maxAdvanceDistance: 150
   engageStandoff: 40
   respondToRemoteAlerts: 1

@@ -1,6 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Lets another component on the owner decide where deployed units appear (e.g. StationDefense puts the
+// garrison straight into its formation slots instead of a launch formation on one random side).
+public interface IDeployPlacement
+{
+    // Pose for unit number rank of count deployed units. False = use the spawner's own launch formation.
+    bool TryGetDeployPose(DeploySpawner spawner, int rank, int count, out Vector3 position, out Quaternion rotation);
+}
+
 public enum DeployTrigger
 {
     OnGameStart,      // e.g. destroyer garrison around a station
@@ -282,6 +290,8 @@ public class DeploySpawner : MonoBehaviour
 
     private void DeployDocked(Transform target)
     {
+        if (TryDeployWithPlacement(target)) return;
+
         // Launch each squad as its own formation.
         for (int squad = 0; squad < maxSquads; squad++)
         {
@@ -305,6 +315,31 @@ public class DeploySpawner : MonoBehaviour
                 Activate(docked[i], position, rotation, target);
             }
         }
+    }
+
+    private bool TryDeployWithPlacement(Transform target)
+    {
+        IDeployPlacement placement = GetComponent<IDeployPlacement>();
+        if (placement == null) return false;
+
+        // Rank = place among all units that will be out after this launch, in slot order.
+        List<Slot> outAfterLaunch = slots.FindAll(s => s.state == SlotState.Deployed || s.state == SlotState.Docked);
+        bool handled = false;
+
+        for (int rank = 0; rank < outAfterLaunch.Count; rank++)
+        {
+            Slot slot = outAfterLaunch[rank];
+            if (slot.state != SlotState.Docked) continue;
+
+            if (!placement.TryGetDeployPose(this, rank, outAfterLaunch.Count, out Vector3 position, out Quaternion rotation))
+            {
+                return handled;
+            }
+
+            Activate(slot, position, rotation, target);
+            handled = true;
+        }
+        return handled;
     }
 
     private void Activate(Slot slot, Vector3 position, Quaternion rotation, Transform target)

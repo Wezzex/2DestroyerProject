@@ -57,11 +57,18 @@ public class FollowPlannedPath : MonoBehaviour
         pathIndex = Mathf.Clamp(pathIndex, 0, points.Count - 1);
 
         Vector3 shipPosition = FlatY(transform.position);
-        Vector3 currentPoint = FlatY(points[pathIndex]);
 
-        if (Vector3.Distance(shipPosition, currentPoint) <= arriveDistance)
+        // Move on past every point already reached or passed. "Passed" matters: a ship pushed sideways
+        // (squadmates, wide turns) can go by a point further than arriveDistance away, and used to turn
+        // back to chase it.
+        while (pathIndex < points.Count - 1)
         {
-            pathIndex = Mathf.Min(pathIndex + 1, points.Count - 1);
+            Vector3 point = FlatY(points[pathIndex]);
+            Vector3 next = FlatY(points[pathIndex + 1]);
+            bool reached = Vector3.Distance(shipPosition, point) <= arriveDistance;
+            bool passed = Vector3.Dot(next - point, shipPosition - point) > 0f;
+            if (!reached && !passed) break;
+            pathIndex++;
         }
 
         int targetIndex = Mathf.Min(pathIndex + lookAheadPoints, points.Count - 1);

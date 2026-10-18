@@ -8,7 +8,7 @@ using UnityEngine;
 //    or lets some wingmen break formation to engage.
 //  * Player gone: the arc stays, facing where the player was last seen, so the station's back is open.
 //  * Another station raises the alarm: an idle, previously alerted station turns its arc towards that station.
-public class StationDefense : MonoBehaviour
+public class StationDefense : MonoBehaviour, IDeployPlacement
 {
     [Header("References")]
     [Tooltip("The station. Defaults to the UnitManager in parents/children.")]
@@ -27,8 +27,9 @@ public class StationDefense : MonoBehaviour
     [Tooltip("Keep it well inside the sensor radius, so the arc sits between the station and the player.")]
     [SerializeField] private float alertRadius = 75f;
     [SerializeField, Range(10f, 360f)] private float arcAngle = 120f;
-    [Tooltip("How fast (degrees/second) the formation swings around to a new threat direction.")]
-    [SerializeField] private float facingTurnRate = 20f;
+    [Tooltip("The arc only re-orients when the threat bearing is more than this many degrees off its current facing. " +
+             "Sweeping it continuously moved the slots far faster than destroyers can fly, so they never arrived.")]
+    [SerializeField, Range(5f, 90f)] private float refaceAngle = 30f;
 
     [Header("Advance")]
     [Tooltip("How far the formation may leave the station when advancing. While advancing, the station keeps " +
@@ -46,6 +47,10 @@ public class StationDefense : MonoBehaviour
     private readonly HashSet<FormationMember> assigned = new HashSet<FormationMember>();
     private readonly HashSet<FormationMember> stillAssigned = new HashSet<FormationMember>();
     private readonly Dictionary<GameObject, FormationMember> memberCache = new Dictionary<GameObject, FormationMember>();
+    private readonly Dictionary<FormationMember, int> slotOf = new Dictionary<FormationMember, int>();
+    private readonly List<FormationMember> members = new List<FormationMember>();
+    private bool bAssignedAlert;
+    private bool bForceReassign;
     private DistressBeacon beacon;
 
     private bool bAlert;
@@ -104,7 +109,12 @@ public class StationDefense : MonoBehaviour
         if (contact != null && !StillTracking()) contact = null;
         if (contact != null) SetDesiredFacing(contact.position - StationPosition);
 
-        facing = Vector3.RotateTowards(facing, desiredFacing, facingTurnRate * Mathf.Deg2Rad * Time.deltaTime, 0f);
+        // Step to the new bearing (and hand out slots again) instead of sweeping round.
+        if (Vector3.Angle(facing, desiredFacing) > refaceAngle)
+        {
+            facing = desiredFacing;
+            bForceReassign = true;
+        }
 
         garrison.GetDeployedUnits(units);
         AssignSlots();
@@ -125,26 +135,27 @@ public class StationDefense : MonoBehaviour
             centre += facing * advance;
         }
 
-        List<Vector3> slots = bAlert
-            ? FormationUtility.GetArcPositions(centre, facing, alertRadius, arcAngle, units.Count)
-            : FormationUtility.GetArcPositions(centre, facing, idleRadius, 360f, units.Count);
+        members.Clear();
+        foreach (GameObject unit in units)
+        {
+            FormationMember member = GetMember(unit);
+            if (member != null && member.TryClaim(this)) members.Add(member);
+        }
 
-        int breakers = contact != null ? Doctrine.GetBreakCount(units.Count - 1, Threat01) : 0;
+        List<Vector3> slots = GetSlots(centre, members.Count);
+        if (NeedsReassignment()) AssignNearest(slots);
+
+        int breakers = contact != null ? Doctrine.GetBreakCount(members.Count - 1, Threat01) : 0;
 
         stillAssigned.Clear();
-        for (int i = 0; i < units.Count; i++)
+        foreach (FormationMember member in members)
         {
-            FormationMember member = GetMember(units[i]);
-            if (member == null || !member.TryClaim(this)) continue;
+            int index = slotOf[member];
+            Vector3 slot = slots[index];
 
-            Vector3 slot = slots[i];
-            Vector3 shipFacing = !bAlert ? slot - station
-                               : contact != null ? contact.position - slot
-                               : facing;
-
-            member.SetSlot(slot, shipFacing);
-            // The outermost wingmen (last slots) are the ones that break off.
-            member.SetBreaking(i > 0 && i >= units.Count - breakers, contact);
+            member.SetSlot(slot, GetShipFacing(slot));
+            // The outermost wingmen (last slots) are the ones that break off; slot 0 is the leader.
+            member.SetBreaking(index > 0 && index >= members.Count - breakers, contact);
 
             stillAssigned.Add(member);
         }
@@ -156,6 +167,76 @@ public class StationDefense : MonoBehaviour
         }
         assigned.Clear();
         assigned.UnionWith(stillAssigned);
+    }
+
+    private List<Vector3> GetSlots(Vector3 centre, int count)
+    {
+        return bAlert
+            ? FormationUtility.GetArcPositions(centre, facing, alertRadius, arcAngle, count)
+            : FormationUtility.GetArcPositions(centre, facing, idleRadius, 360f, count);
+    }
+
+    // Ring: face outwards. Arc: face the player, or where the threat was last seen.
+    private Vector3 GetShipFacing(Vector3 slot)
+    {
+        if (!bAlert) return slot - StationPosition;
+        return contact != null ? contact.position - slot : facing;
+    }
+
+    // Slots are handed out again only when the shape changes (ring <-> arc) or ships come and go,
+    // otherwise ships would keep swapping places as they move.
+    private bool NeedsReassignment()
+    {
+        if (bForceReassign || bAssignedAlert != bAlert || slotOf.Count != members.Count) return true;
+        foreach (FormationMember member in members)
+        {
+            if (!slotOf.ContainsKey(member)) return true;
+        }
+        return false;
+    }
+
+    // Each slot (leader's first) goes to the closest ship still free, so ships move the shortest way
+    // instead of crossing the station. Slow destroyers would otherwise take minutes to reach the arc.
+    private void AssignNearest(List<Vector3> slots)
+    {
+        slotOf.Clear();
+        bAssignedAlert = bAlert;
+        bForceReassign = false;
+
+        var free = new List<FormationMember>(members);
+        for (int i = 0; i < slots.Count && free.Count > 0; i++)
+        {
+            int best = 0;
+            float bestDistance = float.MaxValue;
+            for (int j = 0; j < free.Count; j++)
+            {
+                float distance = NavMeshUtility.FlatDistance(UnitSetup.GetBody(free[j].gameObject).position, slots[i]);
+                if (distance < bestDistance)
+                {
+                    bestDistance = distance;
+                    best = j;
+                }
+            }
+
+            slotOf[free[best]] = i;
+            free.RemoveAt(best);
+        }
+    }
+
+    // IDeployPlacement: the garrison appears directly in its formation slots, facing the right way,
+    // instead of in a launch line on one random side of the station.
+    public bool TryGetDeployPose(DeploySpawner spawner, int rank, int count, out Vector3 position, out Quaternion rotation)
+    {
+        position = StationPosition;
+        rotation = Quaternion.identity;
+        if (spawner != garrison || count <= 0) return false;
+
+        Vector3 slot = GetSlots(StationPosition, count)[Mathf.Clamp(rank, 0, count - 1)];
+        UnitSetup.TryGetNavMeshPoint(slot, NavMeshUtility.DefaultSearchRadius, out position);
+
+        Vector3 shipFacing = Flat(GetShipFacing(slot));
+        rotation = shipFacing.sqrMagnitude > 0.0001f ? Quaternion.LookRotation(shipFacing.normalized, Vector3.up) : Quaternion.identity;
+        return true;
     }
 
     // A holding formation lets the player go at the sensor edge; an advancing one keeps after them

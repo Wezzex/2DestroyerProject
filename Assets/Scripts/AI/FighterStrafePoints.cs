@@ -5,8 +5,17 @@ public class FighterStrafePoints : MonoBehaviour
     [SerializeField] private Transform targetTransform;
     [SerializeField] private Transform fighterTransform;
 
+    [Tooltip("Only used if the fighter's heading is unknown; normally the break-off point below is used.")]
     [SerializeField] private float minStrafeRadius = 5;
     [SerializeField] private float maxStrafeRadius = 10;
+
+    [Header("Break-off after an attack pass")]
+    [Tooltip("How far past the target (along the attack direction) the fighter breaks off before turning back.")]
+    [SerializeField] private float breakOffDistanceMin = 25f;
+    [SerializeField] private float breakOffDistanceMax = 45f;
+    [Tooltip("How far to one side of the attack line, so the next run comes in from a new angle.")]
+    [SerializeField] private float breakOffSideMin = 15f;
+    [SerializeField] private float breakOffSideMax = 30f;
 
     private readonly Vector3[] strafePoints = new Vector3[2];
     private int currentIndex;
@@ -58,12 +67,42 @@ public class FighterStrafePoints : MonoBehaviour
 
         if (reached == playerPointIndex)
         {
-            strafePoints[strafePointIndex] = RandomPointAroundTarget();
+            strafePoints[strafePointIndex] = BreakOffPoint();
         }
         Utility.LogInfo($"OnReached({reached})");
     }
 
     private const int walkableTries = 8;
+
+    // Just past the target and off to one side of the attack line: the fighter overshoots, swings out,
+    // and turns straight back for the next run, instead of flying off to a random point far away.
+    private Vector3 BreakOffPoint()
+    {
+        Vector3 forward = fighterTransform != null ? fighterTransform.forward : Vector3.zero;
+        forward.y = 0f;
+        if (forward.sqrMagnitude < 0.0001f) return RandomPointAroundTarget();
+        forward.Normalize();
+
+        Vector3 right = Vector3.Cross(Vector3.up, forward);
+        Vector3 target = targetTransform.position;
+
+        // A pass can end after the fighter has already flown past the target; measure from wherever it is,
+        // so the break-off point is always ahead of it.
+        Vector3 fromTarget = fighterTransform.position - target;
+        fromTarget.y = 0f;
+        target += forward * Mathf.Max(0f, Vector3.Dot(fromTarget, forward));
+
+        Vector3 candidate = target;
+        for (int i = 0; i < walkableTries; i++)
+        {
+            float side = Random.value < 0.5f ? -1f : 1f;
+            candidate = target
+                      + forward * Random.Range(breakOffDistanceMin, breakOffDistanceMax)
+                      + right * side * Random.Range(breakOffSideMin, breakOffSideMax);
+            if (NavMeshUtility.IsWalkable(candidate)) break;
+        }
+        return NavMeshUtility.ClosestWalkable(candidate);
+    }
 
     // Skip points inside a station's non-walkable area; fall back to the closest walkable point.
     private Vector3 RandomPointAroundTarget()

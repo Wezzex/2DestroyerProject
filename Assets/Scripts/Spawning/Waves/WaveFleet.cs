@@ -18,7 +18,7 @@ public class FleetSettings
     public float arrivalStandoff = 150f;
     [Tooltip("In combat the front of the formation closes to this distance from the target.")]
     public float engageStandoff = 60f;
-    [Tooltip("Ships drop out of sub-light early once the target is this close (inside firing range).")]
+    [Tooltip("Ships drop out of sub-light early so they come to a stop this far from the target (inside firing range).")]
     public float dropOutRange = 120f;
     [Tooltip("Route legs shorter than this are flown at normal speed. Keep it well above the drive's " +
              "spin-up + braking distance, or ships overshoot short jumps.")]
@@ -357,8 +357,10 @@ public class WaveFleet : MonoBehaviour
             if (ship.drive == null || !ship.drive.IsActive) continue;
             finished = false;
 
-            // Drop out as soon as the target is within firing range.
-            if (ship.drive.IsCruising && hasIntel && FlatDistance(ship.body.position, lastKnownPosition) <= settings.dropOutRange)
+            // Drop out so the ship comes to a stop within firing range. Braking from cruise takes a long way
+            // (~190 m for a destroyer), so start early or the wave overshoots and has to turn back.
+            if (ship.drive.IsCruising && hasIntel &&
+                FlatDistance(ship.body.position, lastKnownPosition) <= settings.dropOutRange + ship.drive.CurrentBrakingDistance)
             {
                 ship.drive.Exit();
             }
